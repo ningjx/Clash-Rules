@@ -17,20 +17,23 @@ jobs:
           echo "netflix_ip=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/NetflixIP.list" >> $GITHUB_ENV
         shell: bash
         
+      - name: git_init
+        run: |
+          git init
+          git config --local user.name ""github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git pull "https://github.com/${{ github.repository }}"
         
       - name: Generate NetflixIP.txt file
         run: |
+          rm NetflixIP.txt
           echo "payload:" > NetflixIP.txt
           curl -sSL ${netflix_ip} | grep -E "^IP-CIDR" | awk -F ' ' '{printf "  - |+.%s|\n", $1}' | sed "s/|/'/g" >> NetflixIP.txt
 
       - name: Commit
         run: |
-          git init
-          git config --local user.name "ningjx"
-          git config --local user.email "ninglogin@gmail.com"
-          #git checkout -b release
           git add .
           git commit -m "${{ env.RELEASE_NAME }}"
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f origin master
+          git push origin master
           done
