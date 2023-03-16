@@ -22,12 +22,7 @@ jobs:
         run: |
           echo "payload:" > NetflixIP.txt
           curl -sSL ${netflix_ip} | grep -E "^IP-CIDR" | awk -F ' ' '{printf "  - |+.%s|\n", $1}' | sed "s/|/'/g" >> NetflixIP.txt
-          
-      - name: Move files
-        run: |
-          mkdir -p NetflixRules
-          cp *.txt ./NetflixRules/
-          
+
       - name: Commit
         run: |
           git init
