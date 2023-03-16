@@ -1,2 +1,3 @@
-# Clash-Rule-For-Netflix
+# Clash-Rules
 每天自动从收集的规则集更新Clash规则
+此项目处于试验阶段，不推荐马上使用
