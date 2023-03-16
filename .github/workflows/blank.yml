@@ -1,4 +1,4 @@
-name: pull_ACL4SSR_netflix.list
+name: pull_ACL4SSR_NetflixIP.list
 
 on:
   schedule:
