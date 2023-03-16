@@ -28,7 +28,7 @@ jobs:
         run: |
           rm NetflixIP.txt
           echo "payload:" > NetflixIP.txt
-          curl -sSL ${netflix_ip} | grep -E "^IP-CIDR" | awk -F ' ' {printf "  - |%s|\n", $1} >> NetflixIP.txt
+          curl -sSL ${netflix_ip} | grep -E "^IP-CIDR" | awk -F ' ' '{printf "  - |%s|\n", $1}' >> NetflixIP.txt
 
       - name: Commit
         run: |
