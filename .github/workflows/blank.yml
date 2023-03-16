@@ -37,4 +37,3 @@ jobs:
           git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
           #git remote set-url origin https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}
           git push origin master
-          done
