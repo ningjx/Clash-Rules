@@ -15,6 +15,7 @@ jobs:
           echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "netflix_ip=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/NetflixIP.list" >> $GITHUB_ENV
+          echo "netflix=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Netflix.list" >> $GITHUB_ENV
         shell: bash
         
       - name: git_init
@@ -24,11 +25,17 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git pull "https://github.com/${{ github.repository }}"
         
-      - name: Generate NetflixIP.txt file
+      - name: Generate NetflixIP.txt
         run: |
           rm NetflixIP.txt
           echo "payload:" > NetflixIP.txt
           curl -sSL ${netflix_ip} | grep -E "^IP-CIDR" | awk -F ' ' '{printf "  - %s\n", $1}' >> NetflixIP.txt
+          
+      - name: Generate Netflix.txt
+        run: |
+          rm Netflix.txt
+          echo "payload:" > Netflix.txt
+          curl -sSL ${netflix} | grep -E "^DOMAIN" | awk -F ' ' '{printf "  - %s\n", $1}' >> Netflix.txt
 
       - name: Commit
         run: |
