@@ -38,12 +38,10 @@ jobs:
 
       - name: Commit
         run: |
-          #echo git diff
-          if test ! -z "$(echo git diff)"; then
+          if test ! -z "$(git diff)"; then
             git add .
             git commit -m "${{ env.Commit_Message }}"
             git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
-            #git remote set-url origin https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}
             git push -f origin master
           else
             echo "Nothing was changed."
