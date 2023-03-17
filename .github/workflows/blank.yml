@@ -40,7 +40,12 @@ jobs:
       - name: Commit
         run: |
           git add .
-          git commit -m "${{ env.RELEASE_NAME }}"
-          git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
-          #git remote set-url origin https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}
-          git push -f origin master
+          if do git diff; then
+            git commit -m "${{ env.RELEASE_NAME }}"
+            git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
+            #git remote set-url origin https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}
+            git push -f origin master
+          fi
+          
+          
+         
