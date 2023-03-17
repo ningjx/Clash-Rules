@@ -1,4 +1,4 @@
-name: pull_ACL4SSR_NetflixIP.list
+name: Pull_ACL4SSR_Netflix.list
 
 on:
   schedule:
@@ -12,8 +12,7 @@ jobs:
     steps:
       - name: Set variables
         run: |
-          echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-          echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+          echo "Commit_Message=Generate on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "netflix_ip=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/NetflixIP.list" >> $GITHUB_ENV
           echo "netflix=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Netflix.list" >> $GITHUB_ENV
         shell: bash
@@ -42,13 +41,10 @@ jobs:
           #echo git diff
           if test ! -z "$(echo git diff)"; then
             git add .
-            git commit -m "${{ env.RELEASE_NAME }}"
+            git commit -m "${{ env.Commit_Message }}"
             git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
             #git remote set-url origin https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}
             git push -f origin master
           else
             echo "Nothing was changed."
           fi
-          
-          
-         
