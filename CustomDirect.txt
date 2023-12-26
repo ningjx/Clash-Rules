@@ -1,4 +1,4 @@
 payload:
   - DOMAIN-SUFFIX,pqtunnels.cloudflareresearch.com
   - DOMAIN-SUFFIX,update.argotunnel.com
-  - DOMAIN-SUFFIX,steamcontent.com:443
+  - DOMAIN-SUFFIX,steamcontent.com
