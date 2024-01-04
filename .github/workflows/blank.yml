@@ -34,7 +34,7 @@ jobs:
       - name: Generate YouTube.txt
         run: |
           echo "payload:" > ./auto_generate/YouTube.txt
-          curl-sSl ${youtube} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
+          curl-sSl ${youtube} | grep -v "^#" | awk ' ' '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
       - name: Generate Netflix.txt
         run: |
           echo "payload:" > ./auto_generate/Netflix.txt
