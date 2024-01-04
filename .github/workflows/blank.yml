@@ -27,17 +27,17 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git pull "https://github.com/${{ github.repository }}"
         
-      - name: Generate NetflixIP.txt
+      - name: Generate NetflixIPAuto.txt
         run: |
-          rm NetflixIP.txt
-          echo "payload:" > NetflixIP.txt
-          curl -sSL ${netflix_ip} | grep -E "^IP-CIDR" | awk -F ' ' '{printf "  - %s\n", $1}' >> NetflixIP.txt
+          rm NetflixIPAuto.txt
+          echo "payload:" > NetflixIPAuto.txt
+          curl -sSL ${netflix_ip} | grep -E "^IP-CIDR" | awk -F ' ' '{printf "  - %s\n", $1}' >> NetflixIPAuto.txt
           
-      - name: Generate Netflix.txt
+      - name: Generate NetflixAuto.txt
         run: |
-          rm Netflix.txt
-          echo "payload:" > Netflix.txt
-          curl -sSL ${netflix} | grep -E "^DOMAIN" | awk -F ' ' '{printf "  - %s\n", $1}' >> Netflix.txt
+          rm NetflixAuto.txt
+          echo "payload:" > NetflixAuto.txt
+          curl -sSL ${netflix} | grep -E "^DOMAIN" | awk -F ' ' '{printf "  - %s\n", $1}' >> NetflixAuto.txt
 
       - name: Commit
         run: |
