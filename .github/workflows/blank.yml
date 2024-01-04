@@ -70,8 +70,8 @@ jobs:
           if test ! -z "$(git diff)"; then
             git add .
             git commit -m "${{ env.Commit_Message }}"
-            #git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
-            git push -f origin master
+            git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
+            git push origin master
           else
             echo "Nothing was changed."
           fi
