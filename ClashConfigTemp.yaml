@@ -293,28 +293,28 @@ rule-providers:
   netflix:
     type: http
     behavior: classical
-    url: "http://gh.con.sh/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/Netflix.txt"
+    url: "http://gh.con.sh/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Netflix.txt"
     path: ./ruleset/Netflix.list
     interval: 86400
 
   amazon:
     type: http
     behavior: classical
-    url: "http://gh.con.sh/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/Amazon.txt"
+    url: "http://gh.con.sh/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/PrimeVideo.txt"
     path: ./ruleset/Amazon.list
     interval: 86400
 
   youtube:
     type: http
     behavior: classical
-    url: "http://gh.con.sh/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/YouTube.txt"
+    url: "http://gh.con.sh/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/YouTube.txt"
     path: ./ruleset/YouTube.list
     interval: 86400
 
   disney:
     type: http
     behavior: classical
-    url: "http://gh.con.sh/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/Disney.txt"
+    url: "http://gh.con.sh/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Disney.txt"
     path: ./ruleset/Disney.list
     interval: 86400
 
