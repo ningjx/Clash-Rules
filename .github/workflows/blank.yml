@@ -43,27 +43,27 @@ jobs:
       - name: Generate YouTube.txt
         run: |
           echo "payload:" > ./auto_generate/YouTube.txt
-          curl -sSL ${youtube} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
-          
+      # curl -sSL ${youtube} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
+          wget ${youtube} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
       - name: Generate Netflix.txt
         run: |
           echo "payload:" > ./auto_generate/Netflix.txt
-          curl -sSL ${netflix} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Netflix.txt
+          wget ${netflix} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Netflix.txt
 
       - name: Generate PrimeVideo.txt
         run: |
           echo "payload:" > ./auto_generate/PrimeVideo.txt
-          curl -sSL ${primevideo} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/PrimeVideo.txt
+          wget ${primevideo} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/PrimeVideo.txt
 
       - name: Generate Disney.txt
         run: |
           echo "payload:" > ./auto_generate/Disney.txt
-          curl -sSL ${disney} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Disney.txt
+          wget ${disney} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Disney.txt
         
       - name: Generate Hulu.txt
         run: |
           echo "payload:" > ./auto_generate/Hulu.txt
-          curl -sSL ${hulu} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Hulu.txt
+          wget ${hulu} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Hulu.txt
 
       - name: Commit
         run: |
