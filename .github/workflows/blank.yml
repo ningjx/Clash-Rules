@@ -38,7 +38,7 @@ jobs:
       - name: Generate Netflix.txt
         run: |
           echo "payload:" > ./auto_generate/Netflix.txt
-          curl-sSl ${netflix} | grep -v "^#" | awk ' ' '{printf "  - %s\n", $1}' >> ./auto_generate/Netflix.txt
+          wget ${netflix} | grep -v "^#" | awk ' ' '{printf "  - %s\n", $1}' >> ./auto_generate/Netflix.txt
 
       - name: Generate PrimeVideo.txt
         run: |
