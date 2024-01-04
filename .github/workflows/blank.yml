@@ -30,20 +30,10 @@ jobs:
           git config --local user.name "github-action"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git pull "https://github.com/${{ github.repository }}"
-        
-      #- name: delete_files
-      #  run: |
-      #    find ./auto_generate -name YouTube.txt -type f -delete
-      #    find ./auto_generate -name Netflix.txt -type f -delete
-      #    find ./auto_generate -name PrimeVideo.txt -type f -delete
-      #    find ./auto_generate -name Disney.txt -type f -delete
-      #    find ./auto_generate -name Hulu.txt -type f -delete
 
-        
       - name: Generate YouTube.txt
         run: |
           echo "payload:" > ./auto_generate/YouTube.txt
-      # curl -sSL ${youtube} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
           wget ${youtube} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
       - name: Generate Netflix.txt
         run: |
