@@ -33,6 +33,7 @@ jobs:
         
       - name: Generate YouTube.txt
         run: |
+          ls
           rm auto_generate/YouTube.txt
           echo "payload:" > auto_generate/YouTube.txt
           curl -sSL ${youtube} | grep -E "^IP-CIDR" | awk -F ' ' '{printf "  - %s\n", $1}' >> auto_generate/YouTube.txt
