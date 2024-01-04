@@ -1,4 +1,4 @@
-name: Pull_ACL4SSR_Netflix.list
+name: Pull_blackmatrix7_Rules
 
 on:
   schedule:
@@ -16,8 +16,12 @@ jobs:
       - name: Set variables
         run: |
           echo "Commit_Message=Generate on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-          echo "netflix_ip=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/NetflixIP.list" >> $GITHUB_ENV
-          echo "netflix=https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Netflix.list" >> $GITHUB_ENV
+          echo "youtube=https://github.com/blackmatrix7/ios_rule_script/blob/master/rule/Clash/YouTube/YouTube.list" >> $GITHUB_ENV
+          echo "netflix=https://github.com/blackmatrix7/ios_rule_script/blob/master/rule/Clash/Netflix/Netflix.list" >> $GITHUB_ENV
+          echo "primevideo=https://github.com/blackmatrix7/ios_rule_script/blob/master/rule/Clash/AmazonPrimeVideo/AmazonPrimeVideo.list" >> $GITHUB_ENV
+          echo "disney=https://github.com/blackmatrix7/ios_rule_script/blob/master/rule/Clash/Disney/Disney.list" >> $GITHUB_ENV
+          echo "hulu=https://github.com/blackmatrix7/ios_rule_script/blob/master/rule/Clash/Hulu/Hulu.list" >> $GITHUB_ENV
+
         shell: bash
         
       - name: git_init
@@ -27,17 +31,35 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git pull "https://github.com/${{ github.repository }}"
         
-      - name: Generate NetflixIPAuto.txt
+      - name: Generate YouTube.txt
         run: |
-          rm NetflixIPAuto.txt
-          echo "payload:" > NetflixIPAuto.txt
-          curl -sSL ${netflix_ip} | grep -E "^IP-CIDR" | awk -F ' ' '{printf "  - %s\n", $1}' >> NetflixIPAuto.txt
+          rm auto_generate/YouTube.txt
+          echo "payload:" > auto_generate/YouTube.txt
+          curl -sSL ${youtube} | grep -E "^IP-CIDR" | awk -F ' ' '{printf "  - %s\n", $1}' >> auto_generate/YouTube.txt
           
-      - name: Generate NetflixAuto.txt
+      - name: Generate Netflix.txt
         run: |
-          rm NetflixAuto.txt
-          echo "payload:" > NetflixAuto.txt
-          curl -sSL ${netflix} | grep -E "^DOMAIN" | awk -F ' ' '{printf "  - %s\n", $1}' >> NetflixAuto.txt
+          rm auto_generate/Netflix.txt
+          echo "payload:" > auto_generate/Netflix.txt
+          curl -sSL ${netflix} | grep -E "^DOMAIN" | awk -F ' ' '{printf "  - %s\n", $1}' >> auto_generate/Netflix.txt
+
+      - name: Generate PrimeVideo.txt
+        run: |
+          rm auto_generate/PrimeVideo.txt
+          echo "payload:" > auto_generate/PrimeVideo.txt
+          curl -sSL ${primevideo} | grep -E "^DOMAIN" | awk -F ' ' '{printf "  - %s\n", $1}' >> auto_generate/PrimeVideo.txt
+
+      - name: Generate Disney.txt
+        run: |
+          rm auto_generate/Disney.txt
+          echo "payload:" > auto_generate/Disney.txt
+          curl -sSL ${disney} | grep -E "^DOMAIN" | awk -F ' ' '{printf "  - %s\n", $1}' >> auto_generate/Disney.txt
+        
+      - name: Generate Hulu.txt
+        run: |
+          rm auto_generate/Hulu.txt
+          echo "payload:" > auto_generate/Hulu.txt
+          curl -sSL ${hulu} | grep -E "^DOMAIN" | awk -F ' ' '{printf "  - %s\n", $1}' >> auto_generate/Hulu.txt
 
       - name: Commit
         run: |
