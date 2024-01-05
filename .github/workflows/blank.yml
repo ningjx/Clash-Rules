@@ -11,8 +11,12 @@ jobs:
     permissions:
       contents: write
       packages: write
-
+    
     steps:
+      - uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: UTC+8
+        
       - name: Set variables
         run: |
           echo "Commit_Message=Generate on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
@@ -27,7 +31,7 @@ jobs:
       - name: git_init
         run: |
           git init
-          git config --local user.name "github-action"
+          git config --local user.name "github-actions"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git pull "https://github.com/${{ github.repository }}"
 
