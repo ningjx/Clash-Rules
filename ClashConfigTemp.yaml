@@ -192,7 +192,7 @@ proxy-groups:
       - 日本
       - 荷兰
       - 美国0.1倍流量
-    url: http://www.gstatic.com/generate_204
+    url: https://www.gstatic.com/generate_204
     interval: 300
 
 rule-providers:
