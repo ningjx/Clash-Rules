@@ -11,8 +11,10 @@ jobs:
     permissions:
       contents: write
       packages: write
+    defaults:
+      run:
+        shell: bash
     env:
-      Commit_Message: "Generate on $(date +%Y%m%d%H%M)"
       youtube: "youtube=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list"
       netflix: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.list"
       primevideo: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AmazonPrimeVideo/AmazonPrimeVideo.list"
@@ -35,33 +37,33 @@ jobs:
       - name: Generate YouTube.txt
         run: |
           echo "payload:" > ./auto_generate/YouTube.txt
-          curl $youtube | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
+          curl ${youtube} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
 
       - name: Generate Netflix.txt
         run: |
           echo "payload:" > ./auto_generate/Netflix.txt
-          curl $netflix | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Netflix.txt
+          curl ${netflix} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Netflix.txt
 
       - name: Generate PrimeVideo.txt
         run: |
           echo "payload:" > ./auto_generate/PrimeVideo.txt
-          curl $primevideo | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/PrimeVideo.txt
+          curl ${primevideo} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/PrimeVideo.txt
 
       - name: Generate Disney.txt
         run: |
           echo "payload:" > ./auto_generate/Disney.txt
-          curl $disney | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Disney.txt
+          curl ${disney} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Disney.txt
         
       - name: Generate Hulu.txt
         run: |
           echo "payload:" > ./auto_generate/Hulu.txt
-          curl $hulu | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Hulu.txt
+          curl ${hulu} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Hulu.txt
 
       - name: Commit
         run: |
           if test ! -z "$(git diff)"; then
             git add .
-            git commit -m "$Commit_Message"
+            git commit -m "Generate on $(date +%Y%m%d%H%M)"
             git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
             git push origin master
           else
