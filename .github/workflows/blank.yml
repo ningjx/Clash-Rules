@@ -64,7 +64,7 @@ jobs:
         run: |
           if test ! -z "$(git diff)"; then
             git add .
-            git commit -m "${{ env.Commit_Message }}"
+            git commit -m "${Commit_Message}"
             git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
             git push origin master
           else
