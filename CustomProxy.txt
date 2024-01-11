@@ -4,3 +4,4 @@ payload:
   - DOMAIN-SUFFIX,fanatec.com
   - DOMAIN-KEYWORD,platformio
   - DOMAIN-SUFFIX,platformio.com
+  - DOMAIN-SUFFIX,contabostorage.com
