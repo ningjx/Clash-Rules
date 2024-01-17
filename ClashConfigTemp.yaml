@@ -171,7 +171,7 @@ proxy-groups:
       - 美国3
       - 荷兰
 
-  - name: 未知IP
+  - name: 未知流量
     type: select
     proxies:
       - DIRECT
@@ -351,6 +351,6 @@ rules:
   - RULE-SET,lancidr,DIRECT
   - RULE-SET,cncidr,DIRECT
   - GEOIP,LAN,DIRECT
-  #- GEOIP,CN,DIRECT
-  - GEOIP,CN,DIRECT,no-resolve #禁止对其进行DNS解析
-  - MATCH,未知IP
+  - GEOIP,CN,DIRECT
+  #- GEOIP,CN,DIRECT,no-resolve #禁止对域名进行DNS解析
+  - MATCH,未知流量
