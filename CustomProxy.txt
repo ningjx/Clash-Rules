@@ -5,3 +5,4 @@ payload:
   - DOMAIN-KEYWORD,platformio
   - DOMAIN-SUFFIX,platformio.com
   - DOMAIN-SUFFIX,contabostorage.com
+  - DOMAIN-SUFFIX,pianyuan.org
