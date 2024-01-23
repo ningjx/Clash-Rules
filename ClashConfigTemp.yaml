@@ -42,8 +42,7 @@ dns:
   - +.nflxvideo.net
   - +.media.dssott.com
 
-proxies:
-{ProxyList}
+proxies:{ProxyList}
 
 proxy-groups:
   - name: 全局节点
@@ -78,7 +77,7 @@ proxy-groups:
     type: select
     proxies:
       - 最快节点
- {ProxiesNames}
+{ProxiesNames}
       - DIRECT
 
   - name: 其它国际流媒体
