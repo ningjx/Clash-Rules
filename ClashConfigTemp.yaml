@@ -43,155 +43,62 @@ dns:
   - +.media.dssott.com
 
 proxies:
-  - name: 美国1
-    type: ss
-    server: SSDomainReplace1
-    port: SSPortReplace1
-    cipher: SSCipherReplace1
-    password: SSPasswordReplace1
-    udp: true
-
-  - name: 美国2
-    type: ss
-    server: SSDomainReplace2
-    port: SSPortReplace2
-    cipher: SSCipherReplace2
-    password: SSPasswordReplace2
-    udp: true
-
-  - name: 美国3
-    type: vmess
-    server: V2rayDomainReplace1
-    port: V2rayPortReplace1
-    uuid: V2rayUUIDReplace1
-    alterId: V2rayAIDReplace1
-    cipher: chacha20-poly1305
-    udp: false
-    tls: true
-    skip-cert-verify: true
-
-  - name: 日本
-    type: vmess
-    server: V2rayDomainReplace2
-    port: V2rayPortReplace2
-    uuid: V2rayUUIDReplace2
-    alterId: V2rayAIDReplace2
-    cipher: chacha20-poly1305
-    udp: false
-    tls: true
-    skip-cert-verify: true
-
-  - name: 荷兰
-    type: vmess
-    server: V2rayDomainReplace3
-    port: V2rayPortReplace3
-    uuid: V2rayUUIDReplace3
-    alterId: V2rayAIDReplace3
-    cipher: chacha20-poly1305
-    udp: false
-    tls: true
-    skip-cert-verify: true
-
-  - name: 美国0.1倍流量
-    type: vmess
-    server: V2rayDomainReplace4
-    port: V2rayPortReplace4
-    uuid: V2rayUUIDReplace4
-    alterId: V2rayAIDReplace4
-    cipher: chacha20-poly1305
-    udp: false
-    tls: true
-    skip-cert-verify: true
+{ProxyList}
 
 proxy-groups:
   - name: 全局节点
     type: select
     proxies:
       - 最快节点
-      - 美国3
-      - 美国1
-      - 美国2
-      - 日本
-      - 荷兰
-      - 美国0.1倍流量
+{ProxiesNames}
       - DIRECT
  
   - name: YouTube
     type: select
     proxies:
-      - 日本
-      - 美国0.1倍流量
       - 最快节点
-      - 美国1
-      - 美国2
-      - 美国3
-      - 荷兰
+{ProxiesNames}
+      - DIRECT
 
   - name: Netflix
     type: select
     proxies:
-      - 日本
-      - 美国1
-      - 美国2
-      - 美国3
-      - 美国0.1倍流量
       - 最快节点
-      - 荷兰
+{ProxiesNames}
+      - DIRECT
 
   - name: Amazon
     type: select
     proxies:
-      - 日本
-      - 美国1
-      - 美国2
-      - 美国3
-      - 美国0.1倍流量
       - 最快节点
-      - 荷兰
+{ProxiesNames}
+      - DIRECT
 
   - name: Disney
     type: select
     proxies:
-      - 美国0.1倍流量
       - 最快节点
-      - 美国1
-      - 美国2
-      - 美国3
-      - 日本
-      - 荷兰
+ {ProxiesNames}
+      - DIRECT
 
   - name: 其它国际流媒体
     type: select
     proxies:
-      - 日本
-      - 美国0.1倍流量
       - 最快节点
-      - 美国1
-      - 美国2
-      - 美国3
-      - 荷兰
+{ProxiesNames}
+      - DIRECT
 
   - name: 未知流量
     type: select
     proxies:
       - DIRECT
-      - 日本
-      - 美国0.1倍流量
       - 最快节点
-      - 美国1
-      - 美国2
-      - 美国3
-      - 荷兰
+{ProxiesNames}
 
   - name: 最快节点
     type: url-test
     proxies:
-      - 美国3
-      - 美国1
-      - 美国2
-      - 日本
-      - 荷兰
-      - 美国0.1倍流量
+{ProxiesNames}
     url: https://www.gstatic.com/generate_204
     interval: 300
 
