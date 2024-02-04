@@ -1,7 +1,7 @@
 payload:
   - DOMAIN-SUFFIX,googleapis.cn
   - DOMAIN-SUFFIX,googleapis.com
-- DOMAIN-SUFFIX,google.cn
+  - DOMAIN-SUFFIX,google.cn
   - DOMAIN-SUFFIX,fanatec.com
   - DOMAIN-KEYWORD,platformio
   - DOMAIN-SUFFIX,platformio.com
