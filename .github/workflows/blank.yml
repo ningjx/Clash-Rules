@@ -38,7 +38,7 @@ jobs:
 
       - name: make_dir
         run: |
-          mkdir auto_generate
+          mkdir -p auto_generate
 
       - name: Generate YouTube.txt
         run: |
