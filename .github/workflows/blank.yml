@@ -68,11 +68,11 @@ jobs:
 
       - name: Commit
         run: |
-          if test ! -z "$(git diff)"; then
+          #if test ! -z "$(git diff)"; then
             git add .
             git commit -m "Generate on $(date +%Y%m%d%H%M)"
             git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
             git push origin master
-          else
-            echo "Nothing was changed."
-          fi
+          #else
+          #  echo "Nothing was changed."
+          #fi
