@@ -73,6 +73,13 @@ proxy-groups:
 {ProxiesNames}
       - DIRECT
 
+  - name: Tiktok
+    type: select
+    proxies:
+      - 最快节点
+{ProxiesNames}
+      - DIRECT
+
   - name: Disney
     type: select
     proxies:
@@ -196,6 +203,13 @@ rule-providers:
     path: ./ruleset/Netflix.list
     interval: 86400
 
+  tiktok:
+    type: http
+    behavior: classical
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Tiktok.txt
+    path: ./ruleset/Tiktok.list
+    interval: 86400
+
   amazon:
     type: http
     behavior: classical
@@ -236,6 +250,7 @@ rules:
   - RULE-SET,netflix,Netflix
   - RULE-SET,youtube,YouTube
   - RULE-SET,amazon,Amazon
+  - RULE-SET,tiktok,Tiktok
   - RULE-SET,disney,Disney
   - RULE-SET,streaming,其它国际流媒体
   - RULE-SET,proxy,全局节点
