@@ -36,6 +36,10 @@ jobs:
           git config --global init.defaultBranch master
           git pull "https://github.com/${{ github.repository }}"
 
+      - name: make_dir
+        run: |
+          mkdir auto_generate
+
       - name: Generate YouTube.txt
         run: |
           echo "payload:" > ./auto_generate/YouTube.txt
