@@ -256,7 +256,7 @@ rules:
   - RULE-SET,proxy,全局节点
   - RULE-SET,telegramcidr,全局节点
   
-  - RULE-SET,customdirect,DIRECT
+  - RULE-SET,customdirect,DIRECT,no-resolve
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,icloud,DIRECT
