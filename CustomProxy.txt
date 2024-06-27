@@ -4,6 +4,7 @@ payload:
   - DOMAIN-SUFFIX,google.cn
   - DOMAIN-SUFFIX,fanatec.com
   - DOMAIN-KEYWORD,kelimoe.com
+  - DOMAIN-KEYWORD,kracg.com
   - DOMAIN-KEYWORD,platformio
   - DOMAIN-SUFFIX,platformio.com
   - DOMAIN-SUFFIX,contabostorage.com
