@@ -3,6 +3,7 @@ payload:
   - DOMAIN-SUFFIX,googleapis.com
   - DOMAIN-SUFFIX,google.cn
   - DOMAIN-SUFFIX,fanatec.com
+  - DOMAIN-KEYWORD,kracg.com
   - DOMAIN-KEYWORD,platformio
   - DOMAIN-SUFFIX,platformio.com
   - DOMAIN-SUFFIX,contabostorage.com
