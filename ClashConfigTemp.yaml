@@ -246,16 +246,6 @@ rule-providers:
     interval: 86400
 
 rules:
-  - RULE-SET,customproxy,全局节点
-  - RULE-SET,netflix,Netflix
-  - RULE-SET,youtube,YouTube
-  - RULE-SET,amazon,Amazon
-  - RULE-SET,tiktok,Tiktok
-  - RULE-SET,disney,Disney
-  - RULE-SET,streaming,其它国际流媒体
-  - RULE-SET,proxy,全局节点
-  - RULE-SET,telegramcidr,全局节点
-  
   - RULE-SET,customdirect,DIRECT,no-resolve
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT
@@ -267,4 +257,15 @@ rules:
   - GEOIP,LAN,DIRECT,no-resolve
   #- GEOIP,CN,DIRECT
   - GEOIP,CN,DIRECT,no-resolve
+  
+  - RULE-SET,customproxy,全局节点
+  - RULE-SET,netflix,Netflix
+  - RULE-SET,youtube,YouTube
+  - RULE-SET,amazon,Amazon
+  - RULE-SET,tiktok,Tiktok
+  - RULE-SET,disney,Disney
+  - RULE-SET,streaming,其它国际流媒体
+  - RULE-SET,proxy,全局节点
+  - RULE-SET,telegramcidr,全局节点
+  
   - MATCH,未知流量
