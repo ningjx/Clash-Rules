@@ -7,3 +7,4 @@ payload:
   - DOMAIN-SUFFIX,cn.pool.ntp.org
   - DOMAIN-SUFFIX,ntp.tencent.com
   - DOMAIN-SUFFIX,cn.pool.ntp.org
+  - DOMAIN-SUFFIX,apple.com
