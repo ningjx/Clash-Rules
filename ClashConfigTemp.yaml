@@ -252,8 +252,8 @@ rules:
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
   - RULE-SET,direct,DIRECT
-  - RULE-SET,lancidr,DIRECT
-  - RULE-SET,cncidr,DIRECT
+  - RULE-SET,lancidr,DIRECT,no-resolve
+  - RULE-SET,cncidr,DIRECT,no-resolve
   - GEOIP,LAN,DIRECT,no-resolve
   #- GEOIP,CN,DIRECT
   - GEOIP,CN,DIRECT,no-resolve
@@ -266,6 +266,6 @@ rules:
   - RULE-SET,disney,Disney
   - RULE-SET,streaming,其它国际流媒体
   - RULE-SET,proxy,全局节点
-  - RULE-SET,telegramcidr,全局节点
+  - RULE-SET,telegramcidr,全局节点,no-resolve
   
   - MATCH,未知流量
