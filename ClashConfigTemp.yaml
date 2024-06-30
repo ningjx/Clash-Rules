@@ -246,7 +246,7 @@ rule-providers:
     interval: 86400
 
 rules:
-  - RULE-SET,customdirect,DIRECT,no-resolve
+  - RULE-SET,customdirect,DIRECT
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,icloud,DIRECT
