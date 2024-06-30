@@ -12,3 +12,4 @@ payload:
   - DOMAIN-KEYWORD,zlibrary
   - DOMAIN-SUFFIX,rutracker.org
   - DOMAIN-KEYWORD,imslp
+  - DOMAIN-SUFFIX,heewing.com
