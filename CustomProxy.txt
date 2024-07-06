@@ -14,3 +14,4 @@ payload:
   - DOMAIN-KEYWORD,imslp
   - DOMAIN-SUFFIX,heewing.com
   - DOMAIN-SUFFIX,redircdn.com
+  - DOMAIN-SUFFIX,home-assistant.io
