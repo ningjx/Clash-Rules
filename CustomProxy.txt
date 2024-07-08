@@ -19,3 +19,4 @@ payload:
   - DOMAIN-SUFFIX,github.com
   - DOMAIN-SUFFIX,aliexpress.us
   - DOMAIN-SUFFIX,nexcess.net
+  - DOMAIN-SUFFIX,denx.de
