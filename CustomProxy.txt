@@ -18,3 +18,4 @@ payload:
   - DOMAIN-SUFFIX,cartocdn.com
   - DOMAIN-SUFFIX,github.com
   - DOMAIN-SUFFIX,aliexpress.us
+  - DOMAIN-SUFFIX,nexcess.net
