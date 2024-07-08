@@ -21,3 +21,4 @@ payload:
   - DOMAIN-SUFFIX,nexcess.net
   - DOMAIN-SUFFIX,denx.de
   - DOMAIN-SUFFIX,buildroot.net
+  - DOMAIN-SUFFIX,4kdownload.com
