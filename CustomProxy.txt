@@ -20,3 +20,4 @@ payload:
   - DOMAIN-SUFFIX,aliexpress.us
   - DOMAIN-SUFFIX,nexcess.net
   - DOMAIN-SUFFIX,denx.de
+  - DOMAIN-SUFFIX,buildroot.net
