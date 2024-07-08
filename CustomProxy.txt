@@ -17,3 +17,4 @@ payload:
   - DOMAIN-SUFFIX,home-assistant.io
   - DOMAIN-SUFFIX,cartocdn.com
   - DOMAIN-SUFFIX,github.com
+  - DOMAIN-SUFFIX,aliexpress.us
