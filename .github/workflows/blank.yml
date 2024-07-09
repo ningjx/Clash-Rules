@@ -21,6 +21,7 @@ jobs:
       disney: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.list"
       hulu: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hulu/Hulu.list"
       tiktok: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list"
+      openai: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list"
 
     steps:
       - name: Set_Timezone
@@ -69,6 +70,11 @@ jobs:
         run: |
           echo "payload:" > ./auto_generate/Tiktok.txt
           curl ${tiktok} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Tiktok.txt
+
+      - name: Generate OpenAI.txt
+        run: |
+          echo "payload:" > ./auto_generate/OpenAI.txt
+          curl ${openai} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/OpenAI.txt
 
       - name: Commit
         run: |
