@@ -28,3 +28,4 @@ payload:
   - DOMAIN-SUFFIX,expresslrs.org
   - DOMAIN-SUFFIX,edgetx.org
   - DOMAIN-SUFFIX,rubyfpv.com
+  - DOMAIN-SUFFIX,scamalytics.com
