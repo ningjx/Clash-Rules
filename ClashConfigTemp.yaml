@@ -94,6 +94,13 @@ proxy-groups:
 {ProxiesNames}
       - DIRECT
 
+  - name: Google
+    type: select
+    proxies:
+      - 最快节点
+{ProxiesNames}
+      - DIRECT
+
   - name: 其它国际流媒体
     type: select
     proxies:
@@ -268,7 +275,7 @@ rule-providers:
 
 rules:
   - RULE-SET,customproxy,全局节点
-  - RULE-SET,google,全局节点
+  - RULE-SET,google,Google
   - RULE-SET,openai,OpenAI
   - RULE-SET,netflix,Netflix
   - RULE-SET,youtube,YouTube
