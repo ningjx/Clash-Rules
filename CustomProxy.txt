@@ -1,7 +1,4 @@
 payload:
-  - DOMAIN-SUFFIX,googleapis.cn
-  - DOMAIN-SUFFIX,googleapis.com
-  - DOMAIN-SUFFIX,google.cn
   - DOMAIN-SUFFIX,fanatec.com
   - DOMAIN-SUFFIX,kelimoe.com
   - DOMAIN-SUFFIX,kracg.com
@@ -29,4 +26,3 @@ payload:
   - DOMAIN-SUFFIX,edgetx.org
   - DOMAIN-SUFFIX,rubyfpv.com
   - DOMAIN-SUFFIX,scamalytics.com
-  - DOMAIN-SUFFIX,gstatic.com

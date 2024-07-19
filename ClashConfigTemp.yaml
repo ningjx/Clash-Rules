@@ -217,6 +217,13 @@ rule-providers:
     path: ./ruleset/OpenAI.list
     interval: 86400
 
+  google:
+    type: http
+    behavior: classical
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Google.txt
+    path: ./ruleset/Google.list
+    interval: 86400
+
   tiktok:
     type: http
     behavior: classical
@@ -272,6 +279,7 @@ rules:
   - GEOIP,CN,DIRECT,no-resolve
   
   - RULE-SET,customproxy,全局节点
+  - RULE-SET,google,全局节点
   - RULE-SET,openai,OpenAI
   - RULE-SET,netflix,Netflix
   - RULE-SET,youtube,YouTube
