@@ -84,7 +84,7 @@ jobs:
 
       - name: Generate Telegram.txt
         run: |
-          echo "payload:" > ./auto_generate/Google.txt
+          echo "payload:" > ./auto_generate/Telegram.txt
           curl ${telegram} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Telegram.txt
 
       - name: Commit
