@@ -23,7 +23,7 @@ jobs:
       tiktok: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list"
       openai: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list"
       google: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.list"
-
+      teltgram: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list"
     steps:
       - name: Set_Timezone
         uses: szenius/set-timezone@v2.0
@@ -81,6 +81,11 @@ jobs:
         run: |
           echo "payload:" > ./auto_generate/Google.txt
           curl ${google} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Google.txt
+
+      - name: Generate Telegram.txt
+        run: |
+          echo "payload:" > ./auto_generate/Google.txt
+          curl ${telegram} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Telegram.txt
 
       - name: Commit
         run: |

@@ -101,6 +101,13 @@ proxy-groups:
 {ProxiesNames}
       - DIRECT
 
+  - name: Telegram
+    type: select
+    proxies:
+      - 最快节点
+{ProxiesNames}
+      - DIRECT
+
   - name: 其它国际流媒体
     type: select
     proxies:
@@ -252,6 +259,13 @@ rule-providers:
     path: ./ruleset/YouTube.list
     interval: 86400
 
+  telegram:
+    type: http
+    behavior: classical
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Telegram.txt
+    path: ./ruleset/Telegram.list
+    interval: 86400
+
   disney:
     type: http
     behavior: classical
@@ -282,6 +296,8 @@ rules:
   - RULE-SET,amazon,Amazon
   - RULE-SET,tiktok,Tiktok
   - RULE-SET,disney,Disney
+  - RULE-SET,telegram,Telegram
+  - RULE-SET,telegramcidr,Telegram,no-resolve
 
   - RULE-SET,customdirect,DIRECT
   - RULE-SET,applications,DIRECT
@@ -296,6 +312,5 @@ rules:
 
   - RULE-SET,streaming,其它国际流媒体
   - RULE-SET,proxy,全局节点
-  - RULE-SET,telegramcidr,全局节点,no-resolve
   
   - MATCH,未知流量
