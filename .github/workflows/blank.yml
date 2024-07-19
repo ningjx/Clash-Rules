@@ -80,7 +80,7 @@ jobs:
       - name: Generate Google.txt
         run: |
           echo "payload:" > ./auto_generate/Google.txt
-          curl ${openai} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Google.txt
+          curl ${google} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Google.txt
 
       - name: Commit
         run: |
