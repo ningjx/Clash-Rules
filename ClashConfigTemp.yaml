@@ -35,11 +35,11 @@ dns:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
   fallback:
-    - https://dns.cloudflare.com/dns-query#最快节点
-    - tls://dns.google:853#最快节点
-    - tls://1.1.1.1:853#最快节点
-    - tls://8.8.8.8:853#最快节点
-    - https://jp.tiar.app/dns-query#最快节点
+    - https://dns.cloudflare.com/dns-query
+    - tls://dns.google:853
+    - tls://1.1.1.1:853
+    - tls://8.8.8.8:853
+    - https://jp.tiar.app/dns-query
   fake-ip-filter:
     - "+.nflxvideo.net"
     - "+.media.dssott.com"
