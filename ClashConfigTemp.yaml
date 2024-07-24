@@ -12,16 +12,7 @@ log-level: error
 # RESTful web API listening address
 external-controller: 0.0.0.0:9090
 secret: ''
-# A relative path to the configuration directory or an absolute path to a
-# directory in which you put some static web resource. Clash core will then
-# serve it at `http://{{external-controller}}/ui`.
-#external-ui: folder
 
-# Outbound interface name
-#interface-name: en0
-
-# fwmark on Linux only
-#routing-mark: 6666
 dns:
   enable: true
   ipv6: false
