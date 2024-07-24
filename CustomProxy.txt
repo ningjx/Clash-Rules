@@ -26,3 +26,4 @@ payload:
   - DOMAIN-SUFFIX,edgetx.org
   - DOMAIN-SUFFIX,rubyfpv.com
   - DOMAIN-SUFFIX,scamalytics.com
+  - DOMAIN-SUFFIX,wallhaven.cc
