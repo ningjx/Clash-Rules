@@ -394,7 +394,7 @@ rule-providers:
     type: http
     behavior: classical
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomProxy.txt
-    path: """./ruleset/CustomProxy.list"
+    path: "./ruleset/CustomProxy.list"
     interval: 86400
 
 rules:
