@@ -45,47 +45,47 @@ jobs:
       - name: Generate YouTube.txt
         run: |
           echo "payload:" > ./auto_generate/YouTube.txt
-          curl ${youtube} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
+          curl ${youtube} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
 
       - name: Generate Netflix.txt
         run: |
           echo "payload:" > ./auto_generate/Netflix.txt
-          curl ${netflix} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Netflix.txt
+          curl ${netflix} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Netflix.txt
 
       - name: Generate PrimeVideo.txt
         run: |
           echo "payload:" > ./auto_generate/PrimeVideo.txt
-          curl ${primevideo} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/PrimeVideo.txt
+          curl ${primevideo} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/PrimeVideo.txt
 
       - name: Generate Disney.txt
         run: |
           echo "payload:" > ./auto_generate/Disney.txt
-          curl ${disney} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Disney.txt
+          curl ${disney} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Disney.txt
         
       - name: Generate Hulu.txt
         run: |
           echo "payload:" > ./auto_generate/Hulu.txt
-          curl ${hulu} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Hulu.txt
+          curl ${hulu} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Hulu.txt
 
       - name: Generate Tiktok.txt
         run: |
           echo "payload:" > ./auto_generate/Tiktok.txt
-          curl ${tiktok} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Tiktok.txt
+          curl ${tiktok} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Tiktok.txt
 
       - name: Generate OpenAI.txt
         run: |
           echo "payload:" > ./auto_generate/OpenAI.txt
-          curl ${openai} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/OpenAI.txt
+          curl ${openai} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/OpenAI.txt
 
       - name: Generate Google.txt
         run: |
           echo "payload:" > ./auto_generate/Google.txt
-          curl ${google} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Google.txt
+          curl ${google} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Google.txt
 
       - name: Generate Telegram.txt
         run: |
           echo "payload:" > ./auto_generate/Telegram.txt
-          curl ${telegram} | grep -v "^#" | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Telegram.txt
+          curl ${telegram} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Telegram.txt
 
       - name: Commit
         run: |
