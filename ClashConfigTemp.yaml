@@ -141,9 +141,9 @@ dns:
     - "+.n0808.com"
     - "+.services.googleapis.cn"
     - "+.xn--ngstr-lra8j.cn"
-    - "*.mijia.tech"
-    - "*.mi.com"
-    - "*.xiaomi.net"
+    - "+.mijia.tech"
+    - "+.mi.com"
+    - "+.xiaomi.net"
 
 proxies:
 {ProxyList}
