@@ -36,3 +36,4 @@ payload:
   - PROCESS-NAME,nekox.messenger
   - PROCESS-NAME,org.telegram.messenger
   - PROCESS-NAME,telegram-desktop
+  - PROCESS-NAME,tw.nekomimi.nekogram
