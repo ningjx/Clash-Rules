@@ -33,7 +33,7 @@ dns:
     - https://jp.tiar.app/dns-query
   fake-ip-filter:
     - "+.nflxvideo.net"
-    - "+.media.dssott.com"
+    - "+.media.dssott.com"  
     - "*.lan"
     - "*.localdomain"
     - "*.example"

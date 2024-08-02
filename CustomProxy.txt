@@ -27,3 +27,4 @@ payload:
   - DOMAIN-SUFFIX,rubyfpv.com
   - DOMAIN-SUFFIX,scamalytics.com
   - DOMAIN-SUFFIX,wallhaven.cc
+  - DOMAIN-SUFFIX,一元机场.ink
