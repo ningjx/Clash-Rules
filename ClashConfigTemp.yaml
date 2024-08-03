@@ -225,7 +225,7 @@ proxy-groups:
   - name: 最快节点
     type: url-test
     proxies:
-{ProxiesNames}
+{FastestProxiesNames}
     url: https://www.gstatic.com/generate_204
     interval: 300
 
