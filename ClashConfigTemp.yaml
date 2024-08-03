@@ -155,6 +155,7 @@ proxy-groups:
   - name: YouTube
     type: select
     proxies:
+      - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
@@ -162,6 +163,7 @@ proxy-groups:
   - name: Netflix
     type: select
     proxies:
+      - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
@@ -169,6 +171,7 @@ proxy-groups:
   - name: Amazon
     type: select
     proxies:
+      - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
@@ -176,6 +179,7 @@ proxy-groups:
   - name: Tiktok
     type: select
     proxies:
+      - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
@@ -183,6 +187,7 @@ proxy-groups:
   - name: Disney
     type: select
     proxies:
+      - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
@@ -190,6 +195,7 @@ proxy-groups:
   - name: OpenAI
     type: select
     proxies:
+      - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
@@ -197,6 +203,7 @@ proxy-groups:
   - name: Google
     type: select
     proxies:
+      - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
@@ -204,6 +211,7 @@ proxy-groups:
   - name: Telegram
     type: select
     proxies:
+      - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
@@ -211,6 +219,7 @@ proxy-groups:
   - name: 其它国际流媒体
     type: select
     proxies:
+      - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
@@ -219,6 +228,7 @@ proxy-groups:
     type: select
     proxies:
       - DIRECT
+      - 默认节点
       - 最快节点
 {ProxiesNames}
 
