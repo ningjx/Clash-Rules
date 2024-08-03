@@ -400,6 +400,8 @@ rule-providers:
 
 rules:
   - RULE-SET,customproxy,默认节点
+  - RULE-SET,customdirect,DIRECT
+  
   - RULE-SET,google,Google
   - RULE-SET,openai,OpenAI
   - RULE-SET,netflix,Netflix
@@ -410,7 +412,6 @@ rules:
   - RULE-SET,telegram,Telegram
   - RULE-SET,telegramcidr,Telegram,no-resolve
 
-  - RULE-SET,customdirect,DIRECT
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,icloud,DIRECT
