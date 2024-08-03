@@ -141,6 +141,7 @@ dns:
     - "+.mijia.tech"
     - "+.mi.com"
     - "+.xiaomi.net"
+    - "time.is"
 
 proxies:
 {ProxyList}
