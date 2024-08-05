@@ -30,3 +30,4 @@ payload:
   - DOMAIN-SUFFIX,一元机场.ink
   - DOMAIN-SUFFIX,justmysocks.net
   - DOMAIN-SUFFIX,justmysocks3.net
+  - DOMAIN-SUFFIX,coklw.com
