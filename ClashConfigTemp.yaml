@@ -183,7 +183,6 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-
   - name: Netflix
     type: select
     proxies:
@@ -191,23 +190,13 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-
-  - name: Amazon
+  - name: AmazonPrimeVideo
     type: select
     proxies:
       - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
-
-  - name: Tiktok
-    type: select
-    proxies:
-      - 默认节点
-      - 最快节点
-{ProxiesNames}
-      - DIRECT
-
   - name: Disney
     type: select
     proxies:
@@ -215,7 +204,20 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-
+  - name: Hulu
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+{ProxiesNames}
+      - DIRECT
+  - name: TikTok
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+{ProxiesNames}
+      - DIRECT
   - name: OpenAI
     type: select
     proxies:
@@ -223,7 +225,6 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-
   - name: Google
     type: select
     proxies:
@@ -231,7 +232,6 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-
   - name: Telegram
     type: select
     proxies:
@@ -343,74 +343,74 @@ rule-providers:
     interval: 86400
 #规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件
 #自动生成规则BEGIN
-  netflix:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Netflix.list
-    path: "./rule_provider/Netflix.list"
-    interval: 86400
-
-  openai:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/OpenAI.list
-    path: "./rule_provider/OpenAI.list"
-    interval: 86400
-
-  google:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Google.list
-    path: "./rule_provider/Google.list"
-    interval: 86400
-
-  tiktok:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/TikTok.list
-    path: "./rule_provider/TikTok.list"
-    interval: 86400
-
-  amazon:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/AmazonPrimeVideo.list
-    path: "./rule_provider/AmazonPrimeVideo.list"
-    interval: 86400
-
-  youtube:
+  YouTube:
     type: http
     behavior: classical
     url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/YouTube.list
-    path: "./rule_provider/YouTube.list"
+    path: ./rule_provider/YouTube.list
     interval: 86400
-
-  telegram:
+  Netflix:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Telegram.list
-    path: "./rule_provider/Telegram.list"
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Netflix.list
+    path: ./rule_provider/Netflix.list
     interval: 86400
-
-  disney:
+  AmazonPrimeVideo:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/AmazonPrimeVideo.list
+    path: ./rule_provider/AmazonPrimeVideo.list
+    interval: 86400
+  Disney:
     type: http
     behavior: classical
     url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Disney.list
-    path: "./rule_provider/Disney.list"
+    path: ./rule_provider/Disney.list
+    interval: 86400
+  Hulu:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Hulu.list
+    path: ./rule_provider/Hulu.list
+    interval: 86400
+  TikTok:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/TikTok.list
+    path: ./rule_provider/TikTok.list
+    interval: 86400
+  OpenAI:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/OpenAI.list
+    path: ./rule_provider/OpenAI.list
+    interval: 86400
+  Google:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Google.list
+    path: ./rule_provider/Google.list
+    interval: 86400
+  Telegram:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Telegram.list
+    path: ./rule_provider/Telegram.list
     interval: 86400
 #自动生成规则END
 rules:
   - RULE-SET,customproxy,默认节点
   - RULE-SET,customdirect,DIRECT
 #自动生成分流规则BEGIN
-  - RULE-SET,google,Google
-  - RULE-SET,openai,OpenAI
-  - RULE-SET,netflix,Netflix
-  - RULE-SET,youtube,YouTube
-  - RULE-SET,amazon,Amazon
-  - RULE-SET,tiktok,Tiktok
-  - RULE-SET,disney,Disney
-  - RULE-SET,telegram,Telegram
+  - RULE-SET,YouTube,YouTube
+  - RULE-SET,Netflix,Netflix
+  - RULE-SET,AmazonPrimeVideo,AmazonPrimeVideo
+  - RULE-SET,Disney,Disney
+  - RULE-SET,Hulu,Hulu
+  - RULE-SET,TikTok,TikTok
+  - RULE-SET,OpenAI,OpenAI
+  - RULE-SET,Google,Google
+  - RULE-SET,Telegram,Telegram
 #自动生成分流规则END
   - RULE-SET,telegramcidr,Telegram,no-resolve
   - RULE-SET,applications,DIRECT
