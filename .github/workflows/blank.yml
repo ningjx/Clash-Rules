@@ -76,7 +76,7 @@ jobs:
               echo "    type: http" >> temp4.txt
               echo "    behavior: classical" >> temp4.txt
               echo "    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${filename}" >> temp4.txt
-              echo "    path: "./rule_provider/$filename"" >> temp4.txt
+              echo "    path: \"./rule_provider/${filename}\"" >> temp4.txt
               echo "    interval: 86400" >> temp4.txt
 
               echo "  - RULE-SET,${purename},${purename}" >> temp6.txt
