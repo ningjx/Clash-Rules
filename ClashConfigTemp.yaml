@@ -319,69 +319,13 @@ rule-providers:
     path: "./rule_provider/applications.yaml"
     interval: 86400
 
-#规则来自https://github.com/ningjx/Clash-Rules
+#规则来自https://github.com/ningjx/Clash-Rules  静态文件
 #git 加速 gh.con.sh ghproxy.com
   streaming:
     type: http
     behavior: classical
     url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/Streaming.txt
     path: "./rule_provider/Streaming.yaml"
-    interval: 86400
-
-  netflix:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Netflix.txt
-    path: "./rule_provider/Netflix.list"
-    interval: 86400
-
-  openai:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/OpenAI.txt
-    path: "./rule_provider/OpenAI.list"
-    interval: 86400
-
-  google:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Google.txt
-    path: "./rule_provider/Google.list"
-    interval: 86400
-
-  tiktok:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Tiktok.txt
-    path: "./rule_provider/Tiktok.list"
-    interval: 86400
-
-  amazon:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/PrimeVideo.txt
-    path: "./rule_provider/Amazon.list"
-    interval: 86400
-
-  youtube:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/YouTube.txt
-    path: "./rule_provider/YouTube.list"
-    interval: 86400
-
-  telegram:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Telegram.txt
-    path: "./rule_provider/Telegram.list"
-    interval: 86400
-
-  disney:
-    type: http
-    behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Disney.txt
-    path: "./rule_provider/Disney.list"
     interval: 86400
 
   customdirect:
@@ -397,6 +341,63 @@ rule-providers:
     url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomProxy.txt
     path: "./rule_provider/CustomProxy.list"
     interval: 86400
+  #规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件
+  netflix:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Netflix.list
+    path: "./rule_provider/Netflix.list"
+    interval: 86400
+
+  openai:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/OpenAI.list
+    path: "./rule_provider/OpenAI.list"
+    interval: 86400
+
+  google:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Google.list
+    path: "./rule_provider/Google.list"
+    interval: 86400
+
+  tiktok:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/TikTok.list
+    path: "./rule_provider/TikTok.list"
+    interval: 86400
+
+  amazon:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/AmazonPrimeVideo.list
+    path: "./rule_provider/AmazonPrimeVideo.list"
+    interval: 86400
+
+  youtube:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/YouTube.list
+    path: "./rule_provider/YouTube.list"
+    interval: 86400
+
+  telegram:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Telegram.list
+    path: "./rule_provider/Telegram.list"
+    interval: 86400
+
+  disney:
+    type: http
+    behavior: classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Disney.list
+    path: "./rule_provider/Disney.list"
+    interval: 86400
+
 
 rules:
   - RULE-SET,customproxy,默认节点

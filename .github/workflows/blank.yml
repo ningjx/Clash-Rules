@@ -48,10 +48,10 @@ jobs:
         run: |
           for url in $urls; do
             filename=$(basename $url)
-            filename="${filename%.*}"  # Remove extension .list
+            #filename="${filename%.*}"  # Remove extension .list
             echo "当前文件{$filename}"
-            echo "payload:" > "./auto_generate/${filename}.txt"
-            curl $url | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${filename}.txt"
+            echo "payload:" > "./auto_generate/${filename}"
+            curl $url | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${filename}"
           done
       
       - name: Commit
