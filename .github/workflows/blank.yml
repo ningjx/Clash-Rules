@@ -50,8 +50,13 @@ jobs:
             filename=$(basename $url)
             #filename="${filename%.*}"  # Remove extension .list
             echo "当前文件{$filename}"
-            echo "payload:" > "./auto_generate/${filename}"
-            curl $url | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${filename}"
+            response=$(curl -s -o /dev/null -w "%{http_code}" $url)
+            if [ $response -eq 200 ]; then
+              echo "payload:" > "./auto_generate/${filename}"
+              curl $url | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${filename}"
+            else
+              echo "URL $url returned status code $response, skipping..."
+            fi
           done
       
       - name: Commit
