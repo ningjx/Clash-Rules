@@ -46,19 +46,53 @@ jobs:
 
       - name: Generate Files
         run: |
+          sed -n '/#自动生成代理BEGIN/q;p' ./ClashConfigTemp.yaml > temp1.txt
+          echo "#自动生成代理BEGIN" >> temp1.txt
+          sed -n '/#自动生成代理END/,/#自动生成规则BEGIN/p' ./ClashConfigTemp.yaml > temp3.txt
+          sed -n '/#自动生成规则END/,/#自动生成分流规则BEGIN/p' ./ClashConfigTemp.yaml > temp5.txt
+          sed -n '/^#自动生成分流规则END/,${p}' ./ClashConfigTemp.yaml > temp7.txt
+          #touch temp2.txt #代理
+          #touch temp4.txt #规则集
+          #touch temp6.txt #分流规则
+
           for url in $urls; do
             filename=$(basename $url)
-            #filename="${filename%.*}"  # Remove extension .list
+            purename="${filename%.*}"  # Remove extension .list
             echo "当前文件{$filename}"
             response=$(curl -s -o /dev/null -w "%{http_code}" $url)
             if [ $response -eq 200 ]; then
               echo "payload:" > "./auto_generate/${filename}"
               curl $url | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${filename}"
+
+              echo "  - name: ${purename}" >> temp2.txt
+              echo "    type: select" >> temp2.txt
+              echo "    proxies:" >> temp2.txt
+              echo "      - 默认节点" >> temp2.txt
+              echo "      - 最快节点" >> temp2.txt
+              echo "{ProxiesNames}" >> temp2.txt
+              echo "      - DIRECT" >> temp2.txt
+
+              echo "  ${purename}:" >> temp4.txt
+              echo "    type: http" >> temp4.txt
+              echo "    behavior: classical" >> temp4.txt
+              echo "    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${filename}" >> temp4.txt
+              echo "    path: "./rule_provider/$filename"" >> temp4.txt
+              echo "    interval: 86400" >> temp4.txt
+
+              echo "  - RULE-SET,${purename},${purename}" >> temp6.txt
             else
               echo "URL $url returned status code $response, skipping..."
             fi
           done
-      
+          cat temp1.txt > ./ClashConfigTemp.yaml
+          cat temp2.txt >> ./ClashConfigTemp.yaml
+          cat temp3.txt >> ./ClashConfigTemp.yaml
+          cat temp4.txt >> ./ClashConfigTemp.yaml
+          cat temp5.txt >> ./ClashConfigTemp.yaml
+          cat temp6.txt >> ./ClashConfigTemp.yaml
+          cat temp7.txt >> ./ClashConfigTemp.yaml
+          rm temp1.txt temp2.txt temp3.txt temp4.txt temp5.txt temp6.txt temp7.txt 
+          
       - name: Commit
         run: |
           if test ! -z "$(git status -s)"; then

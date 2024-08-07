@@ -153,6 +153,31 @@ proxy-groups:
 {ProxiesNames}
       - DIRECT
  
+  - name: 其它国际流媒体
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+{ProxiesNames}
+      - DIRECT
+
+  - name: 未知流量
+    type: select
+    proxies:
+      - DIRECT
+      - 默认节点
+      - 最快节点
+{ProxiesNames}
+
+  - name: 最快节点
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    proxies:
+{FastestProxiesNames}
+
+
+#自动生成代理BEGIN
   - name: YouTube
     type: select
     proxies:
@@ -216,29 +241,7 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-
-  - name: 其它国际流媒体
-    type: select
-    proxies:
-      - 默认节点
-      - 最快节点
-{ProxiesNames}
-      - DIRECT
-
-  - name: 未知流量
-    type: select
-    proxies:
-      - DIRECT
-      - 默认节点
-      - 最快节点
-{ProxiesNames}
-
-  - name: 最快节点
-    type: url-test
-    proxies:
-{FastestProxiesNames}
-    url: https://www.gstatic.com/generate_204
-    interval: 300
+#自动生成代理END
 
 rule-providers:
 #规则来自https://github.com/Loyalsoldier/clash-rules
@@ -342,6 +345,7 @@ rule-providers:
     path: "./rule_provider/CustomProxy.list"
     interval: 86400
   #规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件
+#自动生成规则BEGIN
   netflix:
     type: http
     behavior: classical
@@ -397,12 +401,12 @@ rule-providers:
     url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Disney.list
     path: "./rule_provider/Disney.list"
     interval: 86400
-
+#自动生成规则END
 
 rules:
   - RULE-SET,customproxy,默认节点
   - RULE-SET,customdirect,DIRECT
-  
+#自动生成分流规则BEGIN
   - RULE-SET,google,Google
   - RULE-SET,openai,OpenAI
   - RULE-SET,netflix,Netflix
@@ -411,6 +415,7 @@ rules:
   - RULE-SET,tiktok,Tiktok
   - RULE-SET,disney,Disney
   - RULE-SET,telegram,Telegram
+#自动生成分流规则END
   - RULE-SET,telegramcidr,Telegram,no-resolve
 
   - RULE-SET,applications,DIRECT
