@@ -15,15 +15,20 @@ jobs:
       run:
         shell: bash
     env:
-      youtube: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list"
-      netflix: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.list"
-      primevideo: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AmazonPrimeVideo/AmazonPrimeVideo.list"
-      disney: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.list"
-      hulu: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hulu/Hulu.list"
-      tiktok: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list"
-      openai: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list"
-      google: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.list"
-      telegram: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list"
+      urls: |
+        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list
+        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.list
+        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AmazonPrimeVideo/AmazonPrimeVideo.list
+        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.list
+        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hulu/Hulu.list
+        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list
+        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list
+        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.list
+        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list
+    
+      
+
+
     steps:
       - name: Set_Timezone
         uses: szenius/set-timezone@v2.0
@@ -42,51 +47,16 @@ jobs:
         run: |
           mkdir -p auto_generate
 
-      - name: Generate YouTube.txt
+      - name: Generate Files
         run: |
-          echo "payload:" > ./auto_generate/YouTube.txt
-          curl ${youtube} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/YouTube.txt
-
-      - name: Generate Netflix.txt
-        run: |
-          echo "payload:" > ./auto_generate/Netflix.txt
-          curl ${netflix} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Netflix.txt
-
-      - name: Generate PrimeVideo.txt
-        run: |
-          echo "payload:" > ./auto_generate/PrimeVideo.txt
-          curl ${primevideo} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/PrimeVideo.txt
-
-      - name: Generate Disney.txt
-        run: |
-          echo "payload:" > ./auto_generate/Disney.txt
-          curl ${disney} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Disney.txt
-        
-      - name: Generate Hulu.txt
-        run: |
-          echo "payload:" > ./auto_generate/Hulu.txt
-          curl ${hulu} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Hulu.txt
-
-      - name: Generate Tiktok.txt
-        run: |
-          echo "payload:" > ./auto_generate/Tiktok.txt
-          curl ${tiktok} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Tiktok.txt
-
-      - name: Generate OpenAI.txt
-        run: |
-          echo "payload:" > ./auto_generate/OpenAI.txt
-          curl ${openai} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/OpenAI.txt
-
-      - name: Generate Google.txt
-        run: |
-          echo "payload:" > ./auto_generate/Google.txt
-          curl ${google} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Google.txt
-
-      - name: Generate Telegram.txt
-        run: |
-          echo "payload:" > ./auto_generate/Telegram.txt
-          curl ${telegram} | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> ./auto_generate/Telegram.txt
-
+          for url in $urls; do
+            filename=$(basename $url)
+            filename="${filename%.*}"  # Remove extension .list
+            echo "当前文件{$filename}"
+            echo "payload:" > "./auto_generate/${filename}.txt"
+            curl $url | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${filename}.txt"
+          done
+      
       - name: Commit
         run: |
           if test ! -z "$(git status -s)"; then
@@ -97,3 +67,5 @@ jobs:
           else
             echo "Nothing was changed."
           fi
+
+          在Generate Files里循环读取urls里面的链接，并根据链接尾部的xx.list作为文件名，和现有的规则来生成对应文件
