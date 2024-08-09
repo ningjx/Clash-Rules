@@ -1,35 +1,34 @@
-payload:
-  - DOMAIN-SUFFIX,fanatec.com
-  - DOMAIN-SUFFIX,kelimoe.com
-  - DOMAIN-SUFFIX,kracg.com
-  - DOMAIN-KEYWORD,platformio
-  - DOMAIN-SUFFIX,platformio.com
-  - DOMAIN-SUFFIX,contabostorage.com
-  - DOMAIN-SUFFIX,pianyuan.org
-  - DOMAIN-KEYWORD,zlibrary
-  - DOMAIN-SUFFIX,rutracker.org
-  - DOMAIN-KEYWORD,imslp
-  - DOMAIN-SUFFIX,heewing.com
-  - DOMAIN-SUFFIX,redircdn.com
-  - DOMAIN-SUFFIX,home-assistant.io
-  - DOMAIN-SUFFIX,cartocdn.com
-  - DOMAIN-SUFFIX,github.com
-  - DOMAIN-SUFFIX,aliexpress.us
-  - DOMAIN-SUFFIX,nexcess.net
-  - DOMAIN-SUFFIX,denx.de
-  - DOMAIN-SUFFIX,buildroot.net
-  - DOMAIN-SUFFIX,4kdownload.com
-  - DOMAIN-SUFFIX,download.it
-  - DOMAIN-SUFFIX,ardupilot.org
-  - DOMAIN-SUFFIX,openipc.org
-  - DOMAIN-SUFFIX,expresslrs.org
-  - DOMAIN-SUFFIX,edgetx.org
-  - DOMAIN-SUFFIX,rubyfpv.com
-  - DOMAIN-SUFFIX,scamalytics.com
-  - DOMAIN-SUFFIX,wallhaven.cc
-  - DOMAIN-SUFFIX,一元机场.ink
-  - DOMAIN-SUFFIX,justmysocks.net
-  - DOMAIN-SUFFIX,justmysocks3.net
-  - DOMAIN-SUFFIX,coklw.com
-  - DOMAIN-SUFFIX,resilio.com
-  - DOMAIN-SUFFIX,getsync.com
+DOMAIN-SUFFIX,fanatec.com
+DOMAIN-SUFFIX,kelimoe.com
+DOMAIN-SUFFIX,kracg.com
+DOMAIN-KEYWORD,platformio
+DOMAIN-SUFFIX,platformio.com
+DOMAIN-SUFFIX,contabostorage.com
+DOMAIN-SUFFIX,pianyuan.org
+DOMAIN-KEYWORD,zlibrary
+DOMAIN-SUFFIX,rutracker.org
+DOMAIN-KEYWORD,imslp
+DOMAIN-SUFFIX,heewing.com
+DOMAIN-SUFFIX,redircdn.com
+DOMAIN-SUFFIX,home-assistant.io
+DOMAIN-SUFFIX,cartocdn.com
+DOMAIN-SUFFIX,github.com
+DOMAIN-SUFFIX,aliexpress.us
+DOMAIN-SUFFIX,nexcess.net
+DOMAIN-SUFFIX,denx.de
+DOMAIN-SUFFIX,buildroot.net
+DOMAIN-SUFFIX,4kdownload.com
+DOMAIN-SUFFIX,download.it
+DOMAIN-SUFFIX,ardupilot.org
+DOMAIN-SUFFIX,openipc.org
+DOMAIN-SUFFIX,expresslrs.org
+DOMAIN-SUFFIX,edgetx.org
+DOMAIN-SUFFIX,rubyfpv.com
+DOMAIN-SUFFIX,scamalytics.com
+DOMAIN-SUFFIX,wallhaven.cc
+DOMAIN-SUFFIX,一元机场.ink
+DOMAIN-SUFFIX,justmysocks.net
+DOMAIN-SUFFIX,justmysocks3.net
+DOMAIN-SUFFIX,coklw.com
+DOMAIN-SUFFIX,resilio.com
+DOMAIN-SUFFIX,getsync.com

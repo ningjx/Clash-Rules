@@ -1,11 +1,10 @@
-payload:
-  - DOMAIN-SUFFIX,pqtunnels.cloudflareresearch.com
-  - DOMAIN-SUFFIX,update.argotunnel.com
-  - DOMAIN-SUFFIX,steamcontent.com
-  - DOMAIN-SUFFIX,nim.ac.cn
-  - DOMAIN-SUFFIX,ntp.ntsc.ac.cn
-  - DOMAIN-SUFFIX,cn.pool.ntp.org
-  - DOMAIN-SUFFIX,ntp.tencent.com
-  - DOMAIN-SUFFIX,cn.pool.ntp.org
-  - DOMAIN-KEYWORD,apple.com
-  - DOMAIN-SUFFIX,time.is
+DOMAIN-SUFFIX,pqtunnels.cloudflareresearch.com
+DOMAIN-SUFFIX,update.argotunnel.com
+DOMAIN-SUFFIX,steamcontent.com
+DOMAIN-SUFFIX,nim.ac.cn
+DOMAIN-SUFFIX,ntp.ntsc.ac.cn
+DOMAIN-SUFFIX,cn.pool.ntp.org
+DOMAIN-SUFFIX,ntp.tencent.com
+DOMAIN-SUFFIX,cn.pool.ntp.org
+DOMAIN-KEYWORD,apple.com
+DOMAIN-SUFFIX,time.is
