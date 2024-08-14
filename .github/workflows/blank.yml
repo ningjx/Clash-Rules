@@ -62,9 +62,12 @@ jobs:
 
             response=$(curl -s -o /dev/null -w "%{http_code}" $url)
             if [ $response -eq 200 ]; then
-              #echo "payload:" > "./auto_generate/${filename}"
-              #curl $url | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${filename}"
-              curl $url | grep -v 'IP-ASN' > "./auto_generate/${filename}"
+              wget -O tempfile $url 
+              cat tempfile | grep  '^#' > "./auto_generate/${filename}"
+              echo "payload:" >> "./auto_generate/${filename}"
+              cat tempfile | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${filename}"
+              rm tempfile
+              #curl $url | grep -v 'IP-ASN' > "./auto_generate/${filename}"
             else
               echo "${purename}规则链接 $url 失效,保持文件不变"
             fi
