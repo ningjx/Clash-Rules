@@ -63,11 +63,11 @@ jobs:
             response=$(curl -s -o /dev/null -w "%{http_code}" $url)
             if [ $response -eq 200 ]; then
               wget -O tempfile $url 
-              cat tempfile | grep  '^#' > "./auto_generate/${filename}"
-              echo "payload:" >> "./auto_generate/${filename}"
-              cat tempfile | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${filename}"
+              cat tempfile | grep  '^#' > "./auto_generate/${purename}.yaml"
+              echo "payload:" >> "./auto_generate/${purename}.yaml"
+              cat tempfile | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${purename}.yaml"
               rm tempfile
-              #curl $url | grep -v 'IP-ASN' > "./auto_generate/${filename}"
+              #curl $url | grep -v 'IP-ASN' > "./auto_generate/${purename}.yaml"
             else
               echo "${purename}规则链接 $url 失效,保持文件不变"
             fi
@@ -84,8 +84,8 @@ jobs:
             echo "  ${purename}:" >> temp4.txt
             echo "    type: http" >> temp4.txt
             echo "    behavior: classical" >> temp4.txt
-            echo "    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${filename}" >> temp4.txt
-            echo "    path: \"./rule_provider/${filename}\"" >> temp4.txt
+            echo "    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${purename}.yaml" >> temp4.txt
+            echo "    path: \"./rule_provider/${purename}.yaml\"" >> temp4.txt
             echo "    interval: 86400" >> temp4.txt
             #写入分流规则
             echo "  - RULE-SET,${purename},${purename}" >> temp6.txt

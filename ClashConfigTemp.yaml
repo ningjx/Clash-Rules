@@ -324,22 +324,22 @@ rule-providers:
   streaming:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/Streaming.txt
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/Streaming.yaml
     path: "./rule_provider/Streaming.yaml"
     interval: 86400
 
   CosDirect:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomDirect.list
-    path: "./rule_provider/CosDirect.list"
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomDirect.yaml
+    path: "./rule_provider/CosDirect.yaml"
     interval: 86400
 
   CosProxy:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomProxy.list
-    path: "./rule_provider/CosProxy.list"
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomProxy.yaml
+    path: "./rule_provider/CosProxy.yaml"
     interval: 86400
 #规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件
 #自动生成规则BEGIN
