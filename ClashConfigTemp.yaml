@@ -154,22 +154,6 @@ proxy-groups:
 {ProxiesNames}
       - DIRECT
 
-  - name: 负载均衡
-    type: load-balance
-    url: 'http://www.google.com/generate_204'
-    interval: 300
-    strategy: consistent-hashing #round-robin
-    proxies:
-{BalanceProxiesNames}
- 
-  - name: 其它国际流媒体
-    type: select
-    proxies:
-      - 默认节点
-      - 最快节点
-{ProxiesNames}
-      - DIRECT
-
   - name: 未知流量
     type: select
     proxies:
@@ -178,12 +162,6 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
 
-  - name: 最快节点
-    type: url-test
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    proxies:
-{FastestProxiesNames}
 #自动生成代理BEGIN
   - name: YouTube
     type: select
@@ -249,6 +227,30 @@ proxy-groups:
 {ProxiesNames}
       - DIRECT
 #自动生成代理END
+ 
+  - name: 其它国际流媒体
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+{ProxiesNames}
+      - DIRECT
+
+  - name: 最快节点
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    proxies:
+{FastestProxiesNames}
+
+  - name: 负载均衡
+    type: load-balance
+    url: 'http://www.google.com/generate_204'
+    interval: 300
+    strategy: consistent-hashing #round-robin
+    proxies:
+{BalanceProxiesNames}
+
 rule-providers:
 #规则来自https://github.com/Loyalsoldier/clash-rules
   icloud:
