@@ -145,6 +145,7 @@ dns:
 
 proxies:
 {ProxyList}
+
 proxy-groups:
   - name: 默认节点
     type: select
