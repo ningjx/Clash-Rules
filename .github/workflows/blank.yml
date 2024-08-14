@@ -97,7 +97,7 @@ jobs:
           cat temp5.txt >> ./ClashConfigTemp.yaml
           cat temp6.txt >> ./ClashConfigTemp.yaml
           cat temp7.txt >> ./ClashConfigTemp.yaml
-          rm temp1.txt temp2.txt temp3.txt temp4.txt temp5.txt temp6.txt temp7.txt 
+          rm temp*.txt
           
       - name: Commit
         run: |
