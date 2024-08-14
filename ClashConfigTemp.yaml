@@ -328,18 +328,18 @@ rule-providers:
     path: "./rule_provider/Streaming.yaml"
     interval: 86400
 
-  CosDirect:
+  CustomDirect:
     type: http
     behavior: classical
     url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomDirect.yaml
-    path: "./rule_provider/CosDirect.yaml"
+    path: "./rule_provider/CustomDirect.yaml"
     interval: 86400
 
-  CosProxy:
+  CustomProxy:
     type: http
     behavior: classical
     url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomProxy.yaml
-    path: "./rule_provider/CosProxy.yaml"
+    path: "./rule_provider/CustomProxy.yaml"
     interval: 86400
 #规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件
 #自动生成规则BEGIN
@@ -399,8 +399,8 @@ rule-providers:
     interval: 86400
 #自动生成规则END
 rules:
-  - RULE-SET,CosProxy,默认节点
-  - RULE-SET,CosDirect,DIRECT
+  - RULE-SET,CustomProxy,默认节点
+  - RULE-SET,CustomDirect,DIRECT
 #自动生成分流规则BEGIN
   - RULE-SET,YouTube,YouTube
   - RULE-SET,Netflix,Netflix
