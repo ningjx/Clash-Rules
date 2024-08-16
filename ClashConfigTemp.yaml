@@ -255,7 +255,7 @@ proxy-groups:
     type: load-balance
     url: 'http://www.google.com/generate_204'
     interval: 300
-    strategy: consistent-hashing #round-robin
+    strategy: round-robin #consistent-hashing
     proxies:
 {BalanceProxiesNames}
 
