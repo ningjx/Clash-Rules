@@ -47,11 +47,11 @@ jobs:
 
       - name: Generate Files
         run: |
-          sed -n '/#自动生成代理BEGIN/q;p' ./ClashConfigTemp.yaml > ./temp/temp1.txt
+          sed -n '/#自动生成代理BEGIN/q;p' ClashConfigTemp.yaml > ./temp/temp1.txt
           echo "#自动生成代理BEGIN" >> ./temp/temp1.txt
-          sed -n '/#自动生成代理END/,/#自动生成规则BEGIN/p' ./ClashConfigTemp.yaml > ./temp/temp3.txt
-          sed -n '/#自动生成规则END/,/#自动生成分流规则BEGIN/p' ./ClashConfigTemp.yaml > ./temp/temp5.txt
-          sed -n '/^#自动生成分流规则END/,${p}' ./ClashConfigTemp.yaml > ./temp/temp7.txt
+          sed -n '/#自动生成代理END/,/#自动生成规则BEGIN/p' ClashConfigTemp.yaml > ./temp/temp3.txt
+          sed -n '/#自动生成规则END/,/#自动生成分流规则BEGIN/p' ClashConfigTemp.yaml > ./temp/temp5.txt
+          sed -n '/^#自动生成分流规则END/,${p}' ClashConfigTemp.yaml > ./temp/temp7.txt
           #touch ./temp/temp2.txt #代理
           #touch ./temp/temp4.txt #规则集
           #touch ./temp/temp6.txt #分流规则
@@ -92,13 +92,13 @@ jobs:
             #写入分流规则
             echo "  - RULE-SET,${purename},${purename}" >> ./temp/temp6.txt
           done
-          cat ./temp/temp1.txt > ./ClashConfigTemp.yaml
-          cat ./temp/temp2.txt >> ./ClashConfigTemp.yaml
-          cat ./temp/temp3.txt >> ./ClashConfigTemp.yaml
-          cat ./temp/temp4.txt >> ./ClashConfigTemp.yaml
-          cat ./temp/temp5.txt >> ./ClashConfigTemp.yaml
-          cat ./temp/temp6.txt >> ./ClashConfigTemp.yaml
-          cat ./temp/temp7.txt >> ./ClashConfigTemp.yaml
+          cat ./temp/temp1.txt > ClashConfigTemp.yaml
+          cat ./temp/temp2.txt >> ClashConfigTemp.yaml
+          cat ./temp/temp3.txt >> ClashConfigTemp.yaml
+          cat ./temp/temp4.txt >> ClashConfigTemp.yaml
+          cat ./temp/temp5.txt >> ClashConfigTemp.yaml
+          cat ./temp/temp6.txt >> ClashConfigTemp.yaml
+          cat ./temp/temp7.txt >> ClashConfigTemp.yaml
           rm -r ./temp
           
       - name: Commit
