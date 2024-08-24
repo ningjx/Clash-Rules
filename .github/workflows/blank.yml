@@ -70,7 +70,7 @@ jobs:
               rm tempfile
               #curl $url | grep -v 'IP-ASN' > "./auto_generate/${purename}.yaml"
             else
-              echo "${purename}规则链接 $url 失效,保持文件不变"
+              echo "${purename}规则链接 ${url} 失效,保持文件不变"
             fi
             
             #写入节点
