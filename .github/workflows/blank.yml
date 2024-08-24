@@ -58,18 +58,17 @@ jobs:
 
           for url in $urls; do
             filename=$(basename $url)
-            purename="${filename%.*}"  # Remove extension .list
+            purename="${filename%.*}"  #去掉文件后缀.list
             echo "当前文件{$filename}"
 
+            #从URL获取并转换规则
             response=$(curl -s -o /dev/null -w "%{http_code}" $url)
             if [ $response -eq 200 ]; then
-              wget -O ./temp/tempfile $url 
-              cat ./temp/tempfile | grep  '^#' > "./auto_generate/${purename}.yaml"
+              wget -O ./temp/$purename $url 
+              cat ./temp/$purename | grep  '^#' > "./auto_generate/${purename}.yaml" #写入注释
               echo "payload:" >> "./auto_generate/${purename}.yaml"
               #暂时去掉IP-ASN类型规则,兼容旧版本Clash内核
-              cat ./temp/tempfile | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${purename}.yaml"
-              rm ./temp/tempfile
-              #curl $url | grep -v 'IP-ASN' > "./auto_generate/${purename}.yaml"
+              cat ./temp/$purename | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${purename}.yaml"
             else
               echo "${purename}规则链接 ${url} 失效,保持文件不变"
             fi
@@ -92,6 +91,8 @@ jobs:
             #写入分流规则
             echo "  - RULE-SET,${purename},${purename}" >> ./temp/temp6.txt
           done
+
+          #重新生成ClashConfigTemp
           cat ./temp/temp1.txt > ClashConfigTemp.yaml
           cat ./temp/temp2.txt >> ClashConfigTemp.yaml
           cat ./temp/temp3.txt >> ClashConfigTemp.yaml
@@ -99,7 +100,9 @@ jobs:
           cat ./temp/temp5.txt >> ClashConfigTemp.yaml
           cat ./temp/temp6.txt >> ClashConfigTemp.yaml
           cat ./temp/temp7.txt >> ClashConfigTemp.yaml
-          rm -r ./temp
+
+          #删除所有临时文件
+          rm -r ./temp 
           
       - name: Commit
         run: |
