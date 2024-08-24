@@ -65,6 +65,7 @@ jobs:
               wget -O tempfile $url 
               cat tempfile | grep  '^#' > "./auto_generate/${purename}.yaml"
               echo "payload:" >> "./auto_generate/${purename}.yaml"
+              #暂时去掉IP-ASN类型规则,兼容旧版本Clash内核
               cat tempfile | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${purename}.yaml"
               rm tempfile
               #curl $url | grep -v 'IP-ASN' > "./auto_generate/${purename}.yaml"
