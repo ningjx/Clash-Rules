@@ -310,13 +310,6 @@ rule-providers:
     path: "./rule_provider/tld-not-cn.yaml"
     interval: 86400
 
-  telegramcidr:
-    type: http
-    behavior: ipcidr
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt
-    path: "./rule_provider/telegramcidr.yaml"
-    interval: 86400
-
   cncidr:
     type: http
     behavior: ipcidr
@@ -431,7 +424,6 @@ rules:
   - RULE-SET,Google,Google
   - RULE-SET,Telegram,Telegram
 #自动生成分流规则END
-  - RULE-SET,telegramcidr,Telegram,no-resolve
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,icloud,DIRECT
