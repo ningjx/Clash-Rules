@@ -8,3 +8,4 @@ payload:
   - DOMAIN-SUFFIX,ntp.tencent.com
   - DOMAIN-SUFFIX,cn.pool.ntp.org
   - DOMAIN-KEYWORD,apple.com
+  - DOMAIN-SUFFIX,shopping.bing-shopping.microsoft-falcon.io
