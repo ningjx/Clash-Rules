@@ -37,5 +37,4 @@ payload:
   - DOMAIN-SUFFIX,googleapis.com
   - DOMAIN-SUFFIX,gstatic.com
   - DOMAIN-SUFFIX,pitaya-clientai.com
-  - DOMAIN-SUFFIX,hysteria.network
   - DOMAIN-SUFFIX,massgrave.dev
