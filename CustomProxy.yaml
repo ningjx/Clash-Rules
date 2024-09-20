@@ -6,7 +6,9 @@ payload:
   - DOMAIN-SUFFIX,platformio.com
   - DOMAIN-SUFFIX,contabostorage.com
   - DOMAIN-SUFFIX,pianyuan.org
+  - DOMAIN-SUFFIX,singlelogin.re
   - DOMAIN-KEYWORD,zlibrary
+  - DOMAIN-KEYWORD,z-library
   - DOMAIN-SUFFIX,rutracker.org
   - DOMAIN-KEYWORD,imslp
   - DOMAIN-SUFFIX,heewing.com
