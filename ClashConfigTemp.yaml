@@ -150,7 +150,7 @@ proxy-groups:
   - name: 默认节点
     type: select
     proxies:
-      - 负载均衡
+      - 自动回退
       - 最快节点
 {ProxiesNames}
       - DIRECT
@@ -265,6 +265,14 @@ proxy-groups:
     strategy: round-robin #consistent-hashing
     proxies:
 {BalanceProxiesNames}
+
+  - name: 自动回退
+    type: fallback
+    url: 'http://www.google.com/generate_204'
+    interval: 300
+    proxies:
+      - 负载均衡
+{ProxiesNames}
 
 rule-providers:
 #规则来自https://github.com/Loyalsoldier/clash-rules
