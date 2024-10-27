@@ -258,14 +258,6 @@ proxy-groups:
     proxies:
 {FastestProxiesNames}
 
-  - name: 负载均衡
-    type: load-balance
-    url: 'http://www.google.com/generate_204'
-    interval: 300
-    strategy: round-robin #consistent-hashing
-    proxies:
-{BalanceProxiesNames}
-
   - name: 自动回退
     type: fallback
     url: 'http://www.google.com/generate_204'
@@ -273,6 +265,14 @@ proxy-groups:
     proxies:
       - 负载均衡
 {ProxiesNames}
+
+  - name: 负载均衡
+    type: load-balance
+    url: 'http://www.google.com/generate_204'
+    interval: 300
+    strategy: round-robin #consistent-hashing
+    proxies:
+{BalanceProxiesNames}
 
 rule-providers:
 #规则来自https://github.com/Loyalsoldier/clash-rules
