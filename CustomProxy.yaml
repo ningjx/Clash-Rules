@@ -41,3 +41,4 @@ payload:
   - DOMAIN-SUFFIX,pitaya-clientai.com
   - DOMAIN-SUFFIX,massgrave.dev
   - DOMAIN-SUFFIX,activated.win
+  - DOMAIN-SUFFIX,docker.io
