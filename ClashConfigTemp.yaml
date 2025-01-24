@@ -243,13 +243,6 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-  - name: Bing
-    type: select
-    proxies:
-      - 默认节点
-      - 最快节点
-{ProxiesNames}
-      - DIRECT
 #自动生成代理END
  
   - name: 其它国际流媒体
