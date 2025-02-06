@@ -288,93 +288,93 @@ rule-providers:
   icloud:
     type: http
     behavior: domain
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt
     path: "./rule_provider/icloud.yaml"
     interval: 86400
 
   apple:
     type: http
     behavior: domain
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt
     path: "./rule_provider/apple.yaml"
     interval: 86400
 
   proxy:
     type: http
     behavior: domain
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt
     path: "./rule_provider/proxy.yaml"
     interval: 86400
 
   direct:
     type: http
     behavior: domain
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt
     path: "./rule_provider/direct.yaml"
     interval: 86400
 
   private:
     type: http
     behavior: domain
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt
     path: "./rule_provider/private.yaml"
     interval: 86400
 
   gfw:
     type: http
     behavior: domain
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt
     path: "./rule_provider/gfw.yaml"
     interval: 86400
 
   tld-not-cn:
     type: http
     behavior: domain
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/tld-not-cn.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/tld-not-cn.txt
     path: "./rule_provider/tld-not-cn.yaml"
     interval: 86400
 
   cncidr:
     type: http
     behavior: ipcidr
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt
     path: "./rule_provider/cncidr.yaml"
     interval: 86400
 
   lancidr:
     type: http
     behavior: ipcidr
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt
     path: "./rule_provider/lancidr.yaml"
     interval: 86400
 
   applications:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt
     path: "./rule_provider/applications.yaml"
     interval: 86400
 
 #规则来自https://github.com/ningjx/Clash-Rules  静态文件
-#git 加速 gh.con.sh ghproxy.com
+#git 加速 gh.con.sh ning.host
   streaming:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/Streaming.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/Streaming.yaml
     path: "./rule_provider/Streaming.yaml"
     interval: 86400
 
   CustomDirect:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomDirect.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomDirect.yaml
     path: "./rule_provider/CustomDirect.yaml"
     interval: 86400
 
   CustomProxy:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomProxy.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomProxy.yaml
     path: "./rule_provider/CustomProxy.yaml"
     interval: 86400
 #规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件
@@ -382,61 +382,61 @@ rule-providers:
   YouTube:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/YouTube.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/YouTube.yaml
     path: "./rule_provider/YouTube.yaml"
     interval: 86400
   Netflix:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Netflix.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Netflix.yaml
     path: "./rule_provider/Netflix.yaml"
     interval: 86400
   AmazonPrimeVideo:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/AmazonPrimeVideo.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/AmazonPrimeVideo.yaml
     path: "./rule_provider/AmazonPrimeVideo.yaml"
     interval: 86400
   Disney:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Disney.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Disney.yaml
     path: "./rule_provider/Disney.yaml"
     interval: 86400
   Hulu:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Hulu.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Hulu.yaml
     path: "./rule_provider/Hulu.yaml"
     interval: 86400
   TikTok:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/TikTok.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/TikTok.yaml
     path: "./rule_provider/TikTok.yaml"
     interval: 86400
   OpenAI:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/OpenAI.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/OpenAI.yaml
     path: "./rule_provider/OpenAI.yaml"
     interval: 86400
   Google:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Google.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Google.yaml
     path: "./rule_provider/Google.yaml"
     interval: 86400
   Telegram:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Telegram.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Telegram.yaml
     path: "./rule_provider/Telegram.yaml"
     interval: 86400
   Bing:
     type: http
     behavior: classical
-    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Bing.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Bing.yaml
     path: "./rule_provider/Bing.yaml"
     interval: 86400
 #自动生成规则END
