@@ -10,3 +10,4 @@ payload:
   - DOMAIN-KEYWORD,apple.com
   - DOMAIN-SUFFIX,time.windows.com
   - DOMAIN-SUFFIX,ntp.ntsc.ac.cn
+  - DOMAIN-SUFFIX,bing.com
