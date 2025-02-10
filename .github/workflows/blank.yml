@@ -86,7 +86,7 @@ jobs:
             echo "  ${purename}:" >> ./temp/temp4.txt
             echo "    type: http" >> ./temp/temp4.txt
             echo "    behavior: classical" >> ./temp/temp4.txt
-            echo "    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${purename}.yaml" >> ./temp/temp4.txt
+            echo "    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${purename}.yaml" >> ./temp/temp4.txt
             echo "    path: \"./rule_provider/${purename}.yaml\"" >> ./temp/temp4.txt
             echo "    interval: 86400" >> ./temp/temp4.txt
             #写入分流规则
