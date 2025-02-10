@@ -26,6 +26,8 @@ jobs:
         https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.list
         https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list
         https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bing/Bing.list
+
+      proxy: https://mirror.ning.host
     
     steps:
       - name: Set_Timezone
@@ -86,7 +88,7 @@ jobs:
             echo "  ${purename}:" >> ./temp/temp4.txt
             echo "    type: http" >> ./temp/temp4.txt
             echo "    behavior: classical" >> ./temp/temp4.txt
-            echo "    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${purename}.yaml" >> ./temp/temp4.txt
+            echo "    url: $proxy/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${purename}.yaml" >> ./temp/temp4.txt
             echo "    path: \"./rule_provider/${purename}.yaml\"" >> ./temp/temp4.txt
             echo "    interval: 86400" >> ./temp/temp4.txt
             #写入分流规则
