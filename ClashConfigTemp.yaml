@@ -222,13 +222,6 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-  - name: OpenAI
-    type: select
-    proxies:
-      - 默认节点
-      - 最快节点
-{ProxiesNames}
-      - DIRECT
   - name: Google
     type: select
     proxies:
@@ -408,12 +401,6 @@ rule-providers:
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/TikTok.yaml
     path: "./rule_provider/TikTok.yaml"
     interval: 86400
-  OpenAI:
-    type: http
-    behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/OpenAI.yaml
-    path: "./rule_provider/OpenAI.yaml"
-    interval: 86400
   Google:
     type: http
     behavior: classical
@@ -437,7 +424,6 @@ rules:
   - RULE-SET,Disney,Disney
   - RULE-SET,Hulu,Hulu
   - RULE-SET,TikTok,TikTok
-  - RULE-SET,OpenAI,OpenAI
   - RULE-SET,Google,Google
   - RULE-SET,Telegram,Telegram
 #自动生成分流规则END
