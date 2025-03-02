@@ -14,6 +14,7 @@ payload:
   - DOMAIN-SUFFIX,redircdn.com
   - DOMAIN-SUFFIX,home-assistant.io
   - DOMAIN-SUFFIX,cartocdn.com
+  - DOMAIN-SUFFIX,coomer.su
   - DOMAIN-SUFFIX,github.com
   - DOMAIN-SUFFIX,aliexpress.us
   - DOMAIN-SUFFIX,nexcess.net
