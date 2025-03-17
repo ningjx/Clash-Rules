@@ -11,4 +11,6 @@ payload:
   - DOMAIN-SUFFIX,time.windows.com
   - DOMAIN-SUFFIX,ntp.ntsc.ac.cn
   - DOMAIN-SUFFIX,bing.com
+  - DOMAIN-SUFFIX,bingapis.com
+  - DOMAIN-SUFFIX,microsoftapp.net
   - DOMAIN-SUFFIX assets*.xboxlive.com
