@@ -106,10 +106,10 @@ jobs:
             response=$(curl -s -o /dev/null -w "%{http_code}" $ms_url)
             if [ $response -eq 200 ]; then
               wget -O ./temp/$purename $ms_url 
-              if [ $first -eq 1]; then
+              if [ $first -eq 1 ]; then
                 echo "payload:" >> "./auto_generate/${purename}.yaml"
-                $first=0
-
+                first=0
+              fi
               #暂时去掉IP-ASN类型规则,兼容旧版本Clash内核
               cat ./temp/$purename | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${purename}.yaml"
             else
