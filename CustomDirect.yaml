@@ -7,9 +7,9 @@ payload:
   - DOMAIN-SUFFIX,cn.pool.ntp.org
   - DOMAIN-SUFFIX,ntp.tencent.com
   - DOMAIN-SUFFIX,cn.pool.ntp.org
-  - DOMAIN-KEYWORD,apple.com
+  - DOMAIN-SUFFIX,apple.com
   - DOMAIN-SUFFIX,time.windows.com
   - DOMAIN-SUFFIX,ntp.ntsc.ac.cn
-  - DOMAIN-SUFFIX assets*.xboxlive.com
-  - DOMAIN-SUFFIX adobe.io
-  - DOMAIN-SUFFIX adobestats.io
+  - DOMAIN-SUFFIX,assets*.xboxlive.com
+  - DOMAIN-SUFFIX,adobe.io
+  - DOMAIN-SUFFIX,adobestats.io
