@@ -13,3 +13,4 @@ payload:
   - DOMAIN-SUFFIX,assets*.xboxlive.com
   - DOMAIN-SUFFIX,adobe.io
   - DOMAIN-SUFFIX,adobestats.io
+  - DOMAIN-SUFFIX,ipify.org
