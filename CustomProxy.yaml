@@ -44,3 +44,4 @@ payload:
   - DOMAIN-SUFFIX,docker.io
   - DOMAIN-SUFFIX,musescore.com
   - DOMAIN-SUFFIX,incolumitas.com
+  - DOMAIN-SUFFIX,phoebepiano.com
