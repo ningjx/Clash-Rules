@@ -33,7 +33,7 @@ export default {
       const params = {
         service: service,
         id: id,
-        useDomain: useDomain || null,
+        useDomain: useDomain || true, // 默认使用域名
         track: track || null
       };
       
