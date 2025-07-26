@@ -18,7 +18,8 @@ export default {
       // 解析查询参数
       const service = url.searchParams.get('service');
       const id = url.searchParams.get('id');
-      const useDomain = url.searchParams.get('useDomain');
+      const useDomainValue = url.searchParams.get('useDomain');
+      const useDomain = !(useDomainValue === 'false' || useDomainValue === '0');
       const track = url.searchParams.get('track');
       
       // 验证必需参数
@@ -33,7 +34,7 @@ export default {
       const params = {
         service: service,
         id: id,
-        useDomain: useDomain || true, // 默认使用域名
+        useDomain: useDomain, // 只有明确为false/0时为false，否则为true
         track: track || null
       };
       
@@ -305,7 +306,7 @@ export default {
           status: 200,
           headers: {
             'Content-Type': 'application/x-yaml; charset=utf-8',
-            'Content-Disposition': 'attachment; filename="clash-config.yaml"',
+            'Content-Disposition': 'attachment; filename="JustMySock.yaml"',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type',
