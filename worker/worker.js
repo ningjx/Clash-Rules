@@ -64,8 +64,11 @@ export default {
           // 转换为时间戳（秒）
           const expireTimestamp = Math.floor(expireDate.getTime() / 1000);
           
+          // 1024进制转1000进制（乘以1.073741824）
+          const bw_counter_b_1000 = Math.round(bwInfo.bw_counter_b * 1.073741824);
+          const monthly_bw_limit_b_1000 = Math.round(bwInfo.monthly_bw_limit_b * 1.073741824);
           // 构建Subscription-Userinfo字符串
-          subscriptionUserinfo = `upload=0; download=${bwInfo.bw_counter_b}; total=${bwInfo.monthly_bw_limit_b}; expire=${expireTimestamp}`;
+          subscriptionUserinfo = `upload=0; download=${bw_counter_b_1000}; total=${monthly_bw_limit_b_1000}; expire=${expireTimestamp}`;
         }
       } catch (e) {
         console.error('获取流量信息失败:', e);
