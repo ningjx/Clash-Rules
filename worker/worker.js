@@ -302,11 +302,15 @@ export default {
 
       // 始终将生成的Clash配置作为文件下载返回
       if (responseData.clashConfig) {
+        // 动态生成文件名
+        const now = new Date();
+        const pad = n => n.toString().padStart(2, '0');
+        const fileName = `ClashConfig-${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}.yaml`;
         return new Response(responseData.clashConfig, {
           status: 200,
           headers: {
             'Content-Type': 'application/x-yaml; charset=utf-8',
-            'Content-Disposition': 'attachment; filename="JustMySock.yaml"',
+            'Content-Disposition': `attachment; filename="${fileName}"`,
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type',
