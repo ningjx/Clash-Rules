@@ -54,11 +54,11 @@ export default {
           
           // 计算过期时间（基于bw_reset_day_of_month）
           const now = new Date();
-          let expireDate = new Date(now.getFullYear(), now.getMonth(), bwInfo.bw_reset_day_of_month, 15, 0, 0);
+          let expireDate = new Date(now.getFullYear(), now.getMonth(), bwInfo.bw_reset_day_of_month, 7, 0, 0);
           
           // 如果当前日期已经过了重置日，则设置为下个月的重置日
           if (now.getDate() > bwInfo.bw_reset_day_of_month) {
-            expireDate = new Date(now.getFullYear(), now.getMonth() + 1, bwInfo.bw_reset_day_of_month, 15, 0, 0);
+            expireDate = new Date(now.getFullYear(), now.getMonth() + 1, bwInfo.bw_reset_day_of_month, 7, 0, 0);
           }
           
           // 转换为时间戳（秒）
