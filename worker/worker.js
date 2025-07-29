@@ -11,7 +11,7 @@ export default {
       const url = new URL(request.url);
       
       // 检查路径是否为 /justmysocks
-      if (url.pathname !== '/justmysocks') {
+      if (url.pathname.toLowerCase() !== '/justmysocks') {
         return new Response('Not Found', { status: 404 });
       }
       
