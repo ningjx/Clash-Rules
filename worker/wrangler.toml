@@ -1,6 +1,8 @@
 # Top-level configuration
 name = "sub-converter"
-directory = "./worker/"
+compatibility_date = "2025-07-31"
+[assets]
+directory = "./worker"
 workers_dev = false
 route = { pattern = "api-cdn.ning.host/justmysocks*", zone_name = "api-cdn.ning.host" }
 
