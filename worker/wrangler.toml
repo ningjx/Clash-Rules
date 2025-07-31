@@ -2,10 +2,5 @@
 compatibility_date = "2024-07-31"
 workers_dev = false
 
-[env.production]
 name = "sub-converter"
 main = "worker/worker.js"
-
-# Shared resources
-[assets]
-directory = "./worker"
