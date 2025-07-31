@@ -1,6 +1,6 @@
 # Top-level configuration
 name = "sub-converter"
-
+directory = "./worker/"
 workers_dev = false
 route = { pattern = "api-cdn.ning.host/justmysocks*", zone_name = "api-cdn.ning.host" }
 
