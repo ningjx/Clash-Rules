@@ -1,11 +1,11 @@
-# Top-level configuration
+# Top-level defaults
+compatibility_date = "2024-07-31"
+workers_dev = false
+
+[env.production]
 name = "sub-converter"
-compatibility_date = "2025-07-31"
+main = "worker/worker.js"
+
+# Shared resources
 [assets]
 directory = "./worker"
-workers_dev = false
-route = { pattern = "api-cdn.ning.host/justmysocks*", zone_name = "api-cdn.ning.host" }
-
-kv_namespaces = [
-  { binding = "<MY_NAMESPACE>", id = "<KV_ID>" }
-]
