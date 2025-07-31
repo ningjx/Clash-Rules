@@ -1,0 +1,9 @@
+# Top-level configuration
+name = "sub-converter"
+
+workers_dev = false
+route = { pattern = "api-cdn.ning.host/justmysocks*", zone_name = "api-cdn.ning.host" }
+
+kv_namespaces = [
+  { binding = "<MY_NAMESPACE>", id = "<KV_ID>" }
+]
