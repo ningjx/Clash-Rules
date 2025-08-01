@@ -51,3 +51,4 @@ payload:
   - DOMAIN-SUFFIX,roland.com
   - DOMAIN-SUFFIX,claw.cloud
   - DOMAIN-SUFFIX,clawcloudrun.com
+  - DOMAIN-SUFFIX,acme.sh
