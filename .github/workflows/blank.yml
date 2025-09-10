@@ -24,6 +24,7 @@ jobs:
         https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list
         https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.list
         https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list
+        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Bing/Bing.list
 
       microsoft_direct: |
         https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/MicrosoftEdge/MicrosoftEdge.list
@@ -99,41 +100,41 @@ jobs:
           done
 
           #微软节点单独代码，合并了Microsoft Bing MicrosoftEdge 的全部规则
-          first=1
-          for ms_url in $microsoft_direct; do
-            filename=$(basename $ms_url)
-            purename="Microsoft"
-            #从URL获取并转换规则
-            response=$(curl -s -o /dev/null -w "%{http_code}" $ms_url)
-            if [ $response -eq 200 ]; then
-              wget -O ./temp/$purename $ms_url 
-              if [ $first -eq 1 ]; then
-                echo "payload:" > "./auto_generate/${purename}.yaml"
-                first=0
-              fi
-              #暂时去掉IP-ASN类型规则,兼容旧版本Clash内核
-              cat ./temp/$purename | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${purename}.yaml"
-            else
-              echo "${purename}规则链接 ${ms_url} 失效,保持文件不变"
-            fi
-          done
+          #first=1
+          #for ms_url in $microsoft_direct; do
+          #  filename=$(basename $ms_url)
+          #  purename="Microsoft"
+          #  #从URL获取并转换规则
+          #  response=$(curl -s -o /dev/null -w "%{http_code}" $ms_url)
+          #  if [ $response -eq 200 ]; then
+          #    wget -O ./temp/$purename $ms_url 
+          #    if [ $first -eq 1 ]; then
+          #      echo "payload:" > "./auto_generate/${purename}.yaml"
+          #      first=0
+          #    fi
+          #    #暂时去掉IP-ASN类型规则,兼容旧版本Clash内核
+          #    cat ./temp/$purename | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${purename}.yaml"
+          #  else
+          #    echo "${purename}规则链接 ${ms_url} 失效,保持文件不变"
+          #  fi
+          #done
           #写入微软分流Proxy
-          echo "  - name: ${purename}" >> ./temp/temp2.txt
-          echo "    type: select" >> ./temp/temp2.txt
-          echo "    proxies:" >> ./temp/temp2.txt
-          echo "      - DIRECT" >> ./temp/temp2.txt
-          echo "      - 默认节点" >> ./temp/temp2.txt
-          echo "      - 最快节点" >> ./temp/temp2.txt
-          echo "{ProxiesNames}" >> ./temp/temp2.txt
-          #写入微软规则链接
-          echo "  ${purename}:" >> ./temp/temp4.txt
-          echo "    type: http" >> ./temp/temp4.txt
-          echo "    behavior: classical" >> ./temp/temp4.txt
-          echo "    url: $proxy/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${purename}.yaml" >> ./temp/temp4.txt
-          echo "    path: \"./rule_provider/${purename}.yaml\"" >> ./temp/temp4.txt
-          echo "    interval: 86400" >> ./temp/temp4.txt
-          #写入微软分流规则
-          echo "  - RULE-SET,${purename},${purename}" >> ./temp/temp6.txt
+          #echo "  - name: ${purename}" >> ./temp/temp2.txt
+          #echo "    type: select" >> ./temp/temp2.txt
+          #echo "    proxies:" >> ./temp/temp2.txt
+          #echo "      - DIRECT" >> ./temp/temp2.txt
+          #echo "      - 默认节点" >> ./temp/temp2.txt
+          #echo "      - 最快节点" >> ./temp/temp2.txt
+          #echo "{ProxiesNames}" >> ./temp/temp2.txt
+          ##写入微软规则链接
+          #echo "  ${purename}:" >> ./temp/temp4.txt
+          #echo "    type: http" >> ./temp/temp4.txt
+          #echo "    behavior: classical" >> ./temp/temp4.txt
+          #echo "    url: $proxy/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${purename}.yaml" >> ./temp/temp4.txt
+          #echo "    path: \"./rule_provider/${purename}.yaml\"" >> ./temp/temp4.txt
+          #echo "    interval: 86400" >> ./temp/temp4.txt
+          ##写入微软分流规则
+          #echo "  - RULE-SET,${purename},${purename}" >> ./temp/temp6.txt
           ###########################################################################
 
           #重新生成ClashConfigTemp
