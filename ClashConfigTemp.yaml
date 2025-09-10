@@ -236,13 +236,13 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-  - name: Microsoft
+  - name: Bing
     type: select
     proxies:
-      - DIRECT
       - 默认节点
       - 最快节点
 {ProxiesNames}
+      - DIRECT
 #自动生成代理END
  
   - name: 其它国际流媒体
@@ -420,11 +420,11 @@ rule-providers:
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Telegram.yaml
     path: "./rule_provider/Telegram.yaml"
     interval: 86400
-  Microsoft:
+  Bing:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Microsoft.yaml
-    path: "./rule_provider/Microsoft.yaml"
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Bing.yaml
+    path: "./rule_provider/Bing.yaml"
     interval: 86400
 #自动生成规则END
 rules:
@@ -439,7 +439,7 @@ rules:
   - RULE-SET,TikTok,TikTok
   - RULE-SET,Google,Google
   - RULE-SET,Telegram,Telegram
-  - RULE-SET,Microsoft,Microsoft
+  - RULE-SET,Bing,Bing
 #自动生成分流规则END
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT
