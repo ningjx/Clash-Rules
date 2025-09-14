@@ -13,5 +13,3 @@ payload:
   - DOMAIN-SUFFIX,adobestats.io
   - DOMAIN-SUFFIX,ipify.org
   - DOMAIN-SUFFIX,*.rewardsplatform.microsoft.com
-  - DOMAIN-KEYWORD,msn
-  - DOMAIN-KEYWORD,bing
