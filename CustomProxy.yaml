@@ -53,4 +53,4 @@ payload:
   - DOMAIN-SUFFIX,clawcloudrun.com
   - DOMAIN-SUFFIX,acme.sh
   - DOMAIN-SUFFIX,qpic.ws
-  - DOMAIN,msn.com
+  - DOMAIN-SUFFIX,msn.com
