@@ -1,5 +1,6 @@
 payload:
   - DOMAIN-SUFFIX,pqtunnels.cloudflareresearch.com
+  - DOMAIN-SUFFIX,gongjiaxin.com
   - DOMAIN-SUFFIX,update.argotunnel.com
   - DOMAIN-SUFFIX,steamcontent.com
   - DOMAIN-SUFFIX,nim.ac.cn
