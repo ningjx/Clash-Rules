@@ -1,0 +1,10 @@
+{
+  "name": "justmysocks",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./justmysocks.js",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {}
+}

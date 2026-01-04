@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/justmysocks", "destination": "/api/justmysocks.js" }
+  ]
+}
