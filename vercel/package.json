@@ -2,7 +2,7 @@
   "name": "justmysocks",
   "version": "1.0.0",
   "type": "module",
-  "main": "./index.js",
+  "main": "index.js",
   "scripts": {
     "dev": "vercel dev"
   },
