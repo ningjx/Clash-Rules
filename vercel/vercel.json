@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/justmysocks", "destination": "/index.js" }
+    { "source": "/justmysocks", "destination": "/api/index.js" }
   ]
 }
