@@ -149,13 +149,16 @@ jobs:
           ls ./temp
           rm -r ./temp
           
-      - name: Commit
+      - name: Commit and Push Changes
         run: |
-          if test ! -z "$(git status -s)"; then
+          if ! git diff --quiet; then
+            echo "Changes detected. Committing..."
             git add .
             git commit -m "Generate on $(date +%Y%m%d%H%M)"
-            git remote add origin "https://${{ github.actor }}:${{ secrets.action_token }}@github.com/${{ github.repository }}"
-            git push origin master
+            
+            # 使用 GITHUB_TOKEN 推送回当前仓库
+            git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+            git push origin HEAD:master
           else
-            echo "Nothing was changed."
+            echo "No changes detected. Skipping commit."
           fi
