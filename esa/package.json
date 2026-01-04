@@ -1,0 +1,12 @@
+{
+  "name": "justmysocks",
+  "version": "1.0.0",
+  "description": "Edge function for Clash rules and JMS proxy",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'No build needed.'"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

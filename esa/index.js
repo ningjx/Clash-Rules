@@ -9,12 +9,10 @@
 exports.handler = async (event, context) => {
   try {
     // 从event中解析URL和查询参数
-    // 由于阿里云ESA可能不直接提供URL对象，手动解析路径和查询参数
-    const path = event.path || '/';
-    const queryString = event.queryStringParameters || {};
+    const url = new URL(`https://${event.headers.host}${event.path}`);
     
     // 检查路径是否为 /justmysocks
-    if (path.toLowerCase() !== '/justmysocks') {
+    if (url.pathname.toLowerCase() !== '/justmysocks') {
       return {
         statusCode: 404,
         headers: {
@@ -25,11 +23,11 @@ exports.handler = async (event, context) => {
     }
     
     // 解析查询参数
-    const service = queryString.service || null;
-    const id = queryString.id || null;
-    const useDomainValue = queryString.useDomain || null;
+    const service = url.searchParams.get('service');
+    const id = url.searchParams.get('id');
+    const useDomainValue = url.searchParams.get('useDomain');
     const useDomain = !(useDomainValue === 'false' || useDomainValue === '0');
-    const track = queryString.track || null;
+    const track = url.searchParams.get('track');
     
     // 验证必需参数
     if (!service || !id) {
@@ -363,6 +361,3 @@ exports.handler = async (event, context) => {
     };
   }
 };
-
-
-
