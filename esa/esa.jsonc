@@ -1,0 +1,8 @@
+{
+  "name": "justmysocks",
+  "entry": "./index.js",
+  "installCommand": "npm install",
+  "assets": {
+    "directory": "./out"
+  }
+}

@@ -6,7 +6,7 @@
  */
 
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request) {
     try {
       const url = new URL(request.url);
       
