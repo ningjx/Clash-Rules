@@ -281,70 +281,70 @@ rule-providers:
   icloud:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/clash_rules/icloud.txt
     path: "./rule_provider/icloud.yaml"
     interval: 86400
 
   apple:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/clash_rules/apple.txt
     path: "./rule_provider/apple.yaml"
     interval: 86400
 
   proxy:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/clash_rules/proxy.txt
     path: "./rule_provider/proxy.yaml"
     interval: 86400
 
   direct:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/clash_rules/direct.txt
     path: "./rule_provider/direct.yaml"
     interval: 86400
 
   private:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/clash_rules/private.txt
     path: "./rule_provider/private.yaml"
     interval: 86400
 
   gfw:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/clash_rules/gfw.txt
     path: "./rule_provider/gfw.yaml"
     interval: 86400
 
   tld-not-cn:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/tld-not-cn.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/clash_rules/tld-not-cn.txt
     path: "./rule_provider/tld-not-cn.yaml"
     interval: 86400
 
   cncidr:
     type: http
     behavior: ipcidr
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/clash_rules/cncidr.txt
     path: "./rule_provider/cncidr.yaml"
     interval: 86400
 
   lancidr:
     type: http
     behavior: ipcidr
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/clash_rules/lancidr.txt
     path: "./rule_provider/lancidr.yaml"
     interval: 86400
 
   applications:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/clash_rules/applications.txt
     path: "./rule_provider/applications.yaml"
     interval: 86400
 
