@@ -8,12 +8,24 @@ on:
 jobs:
   update-rules:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    defaults:
+      run:
+        shell: bash
     
     steps:
       - name: Checkout current repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global init.defaultBranch master
 
       - name: Get latest release from Loyalsoldier/clash-rules
         id: get-release
@@ -106,9 +118,6 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          
           if ! git diff --quiet; then
             echo "Changes detected. Committing..."
             git add .
@@ -117,8 +126,7 @@ jobs:
             RELEASE_TAG=$(curl -s https://api.github.com/repos/Loyalsoldier/clash-rules/releases/latest | jq -r '.tag_name')
             git commit -m "chore: update clash-rules from $RELEASE_TAG on $(date +%Y%m%d%H%M)"
             
-            # 使用 GITHUB_TOKEN 推送回当前仓库
-            git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+            # 推送回当前仓库
             git push origin HEAD:master
           else
             echo "No changes detected. Skipping commit."
