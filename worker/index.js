@@ -7,6 +7,9 @@
 
 export default {
   async fetch(request) {
+    const requestStartTime = Date.now();
+    const requestId = Math.random().toString(36).substring(7);
+    
     try {
       const url = new URL(request.url);
       
@@ -38,18 +41,39 @@ export default {
         track: track || null
       };
       
-      // 记录请求信息
-      console.log('Received request with parameters:', params);
+      // 记录请求入口信息
+      console.log(`[${requestId}] ========== REQUEST START ==========`);
+      console.log(`[${requestId}] Timestamp: ${new Date().toISOString()}`);
+      console.log(`[${requestId}] Parameters:`, JSON.stringify(params));
+      console.log(`[${requestId}] User-Agent: ${request.headers.get('user-agent') || 'unknown'}`);
       
-      // TODO: 在这里添加后续的业务逻辑
-      // 获取流量信息
+      // 并行发送所有网络请求
+      const fetchStartTime = Date.now();
+      console.log(`[${requestId}] Starting parallel network requests...`);
+      
+      // 准备所有网络请求
       const bwUrl = `https://justmysocks3.net/members/getbwcounter.php?service=${encodeURIComponent(service)}&id=${encodeURIComponent(id)}`;
+      const baseUrl = 'https://jmssub.net/members/getsub.php';
+      const usedomains = useDomain ? 1 : 0;
+      const queryUrl = `${baseUrl}?service=${encodeURIComponent(service)}&id=${encodeURIComponent(id)}&usedomains=${encodeURIComponent(usedomains)}`;
+      const templateUrl = 'https://raw.githubusercontent.com/ningjx/Clash-Rules/master/ClashConfigTemp.yaml';
+      
+      // 并行执行三个网络请求
+      const [bwResp, upstreamResp, templateResp] = await Promise.all([
+        fetch(bwUrl).catch(e => { console.error(`[${requestId}] BW fetch error:`, e); return null; }),
+        fetch(queryUrl).catch(e => { console.error(`[${requestId}] Upstream fetch error:`, e); return null; }),
+        fetch(templateUrl).catch(e => { console.error(`[${requestId}] Template fetch error:`, e); return null; })
+      ]);
+      
+      const fetchEndTime = Date.now();
+      console.log(`[${requestId}] Parallel requests completed in ${fetchEndTime - fetchStartTime}ms`);
+      
+      // 处理流量信息
       let bwInfo = null;
       let subscriptionUserinfo = '';
-      
-      try {
-        const bwResp = await fetch(bwUrl);
-        if (bwResp.ok) {
+      if (bwResp && bwResp.ok) {
+        try {
+          const bwParseStart = Date.now();
           bwInfo = await bwResp.json();
           
           // 计算过期时间（基于bw_reset_day_of_month）
@@ -69,35 +93,38 @@ export default {
           const monthly_bw_limit_b_1000 = Math.round(bwInfo.monthly_bw_limit_b * 1.073741824);
           // 构建Subscription-Userinfo字符串
           subscriptionUserinfo = `upload=0; download=${bw_counter_b_1000}; total=${monthly_bw_limit_b_1000}; expire=${expireTimestamp}`;
+          
+          console.log(`[${requestId}] BW info parsed in ${Date.now() - bwParseStart}ms`);
+        } catch (e) {
+          console.error(`[${requestId}] 获取流量信息失败:`, e.message);
         }
-      } catch (e) {
-        console.error('获取流量信息失败:', e);
+      } else {
+        console.warn(`[${requestId}] BW API request failed or returned non-ok status`);
       }
       
-      // 拼接目标URL
-      const baseUrl = 'https://jmssub.net/members/getsub.php';
-      const usedomains = useDomain ? 1 : 0;
-      const queryUrl = `${baseUrl}?service=${encodeURIComponent(service)}&id=${encodeURIComponent(id)}&usedomains=${encodeURIComponent(usedomains)}`;
-
-      // 请求目标URL
-      const upstreamResp = await fetch(queryUrl);
-      if (!upstreamResp.ok) {
+      // 处理上游响应
+      if (!upstreamResp || !upstreamResp.ok) {
+        console.error(`[${requestId}] Upstream fetch failed with status: ${upstreamResp?.status || 'no response'}`);
         return new Response(JSON.stringify({
           success: false,
           error: 'Upstream fetch failed',
-          status: upstreamResp.status
+          status: upstreamResp?.status || 'no response'
         }, null, 2), {
           status: 502,
           headers: { 'Content-Type': 'application/json; charset=utf-8' }
         });
       }
       // 获取base64文本
+      const base64ParseStart = Date.now();
       const base64Text = await upstreamResp.text();
+      
       // base64解码
       let decodedText = '';
       try {
         decodedText = atob(base64Text.replace(/\s/g, ''));
+        console.log(`[${requestId}] Base64 decoded in ${Date.now() - base64ParseStart}ms`);
       } catch (e) {
+        console.error(`[${requestId}] Base64 decode failed:`, e.message);
         return new Response(JSON.stringify({
           success: false,
           error: 'Base64 decode failed',
@@ -107,9 +134,12 @@ export default {
           headers: { 'Content-Type': 'application/json; charset=utf-8' }
         });
       }
+      
       // 解析代理配置
+      const proxyParseStart = Date.now();
       const lines = decodedText.split('\n').filter(line => line.trim());
       const proxyConfigs = [];
+      let ssCount = 0, vmessCount = 0;
       
       for (const line of lines) {
         const trimmedLine = line.trim();
@@ -140,10 +170,11 @@ export default {
                     skipCertVerify: true
                   }
                 });
+                ssCount++;
               }
             }
           } catch (e) {
-            console.error('SS解析错误:', e);
+            console.error(`[${requestId}] SS解析错误:`, e.message);
           }
         } else if (trimmedLine.startsWith('vmess://')) {
           // 解析vmess://配置
@@ -164,12 +195,15 @@ export default {
                   allowInsecure: true
                 }
               });
+              vmessCount++;
             }
           } catch (e) {
-            console.error('VMess解析错误:', e);
+            console.error(`[${requestId}] VMess解析错误:`, e.message);
           }
         }
       }
+      
+      console.log(`[${requestId}] Proxy configs parsed in ${Date.now() - proxyParseStart}ms (SS: ${ssCount}, VMess: ${vmessCount})`);
       
       // 返回解析后的配置
       const responseData = {
@@ -181,12 +215,24 @@ export default {
       };
       
       // 获取Clash模板并生成配置
-      try {
-        const templateUrl = 'https://raw.githubusercontent.com/ningjx/Clash-Rules/master/ClashConfigTemp.yaml';
-        const templateResp = await fetch(templateUrl);
-        
-        if (templateResp.ok) {
-          let template = await templateResp.text();
+      let clashConfigGenerated = false;
+      let template = null;
+      
+      if (templateResp && templateResp.ok) {
+        try {
+          const templateParseStart = Date.now();
+          template = await templateResp.text();
+          clashConfigGenerated = true;
+          console.log(`[${requestId}] Clash template loaded in ${Date.now() - templateParseStart}ms`);
+        } catch (e) {
+          console.error(`[${requestId}] 获取Clash模板失败:`, e.message);
+        }
+      } else {
+        console.warn(`[${requestId}] Template API request failed or returned non-ok status`);
+      }
+      
+      if (clashConfigGenerated && template) {
+        const clashGenStart = Date.now();
 
           // 生成代理列表
           let proxyList = '';
@@ -285,10 +331,7 @@ export default {
           
           // 添加生成的Clash配置到响应数据
           responseData.clashConfig = template;
-        }
-      } catch (e) {
-        console.error('获取Clash模板失败:', e);
-      }
+          console.log(`[${requestId}] Clash config generated in ${Date.now() - clashGenStart}ms (Total proxies: ${proxyNames.length})`);
       
       // 构建响应头
       const responseHeaders = {
@@ -305,10 +348,18 @@ export default {
 
       // 始终将生成的Clash配置作为文件下载返回
       if (responseData.clashConfig) {
-        // 动态生成文件名
+        // 动态生成文件名（UTC+8 时区）
         const now = new Date();
+        const utc8Time = new Date(now.getTime() + 8 * 60 * 60 * 1000);
         const pad = n => n.toString().padStart(2, '0');
-        const fileName = `ClashConfig-${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}.yaml`;
+        const fileName = `ClashConfig-${utc8Time.getUTCFullYear()}-${pad(utc8Time.getUTCMonth() + 1)}-${pad(utc8Time.getUTCDate())}-${pad(utc8Time.getUTCHours())}-${pad(utc8Time.getUTCMinutes())}-${pad(utc8Time.getUTCSeconds())}.yaml`;
+        
+        const totalTime = Date.now() - requestStartTime;
+        console.log(`[${requestId}] ========== REQUEST END ==========`);
+        console.log(`[${requestId}] Total time: ${totalTime}ms`);
+        console.log(`[${requestId}] Response: YAML file (${fileName.length} chars)`);
+        console.log(`[${requestId}] ===================================`);
+        
         return new Response(responseData.clashConfig, {
           status: 200,
           headers: {
@@ -322,13 +373,24 @@ export default {
         });
       }
       
+      const totalTime = Date.now() - requestStartTime;
+      console.log(`[${requestId}] ========== REQUEST END ==========`);
+      console.log(`[${requestId}] Total time: ${totalTime}ms`);
+      console.log(`[${requestId}] Response: JSON data`);
+      console.log(`[${requestId}] ===================================`);
+      
       return new Response(JSON.stringify(responseData, null, 2), {
         status: 200,
         headers: responseHeaders
       });
       
     } catch (error) {
-      console.error('Error processing request:', error);
+      const totalTime = Date.now() - requestStartTime;
+      console.error(`[${requestId}] ========== REQUEST ERROR ==========`);
+      console.error(`[${requestId}] Total time: ${totalTime}ms`);
+      console.error(`[${requestId}] Error:`, error.message);
+      console.error(`[${requestId}] Stack:`, error.stack);
+      console.error(`[${requestId}] ===================================`);
       
       return new Response(JSON.stringify({
         success: false,
