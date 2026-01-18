@@ -347,10 +347,11 @@ export default async function handler(req, res) {
 
       // 始终将生成的Clash配置作为文件下载返回
       if (responseData.clashConfig) {
-        // 动态生成文件名
+        // 动态生成文件名（UTC+8 时区）
         const now = new Date();
+        const utc8Time = new Date(now.getTime() + 8 * 60 * 60 * 1000);
         const pad = n => n.toString().padStart(2, '0');
-        const fileName = `ClashConfig-${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}.yaml`;
+        const fileName = `ClashConfig-${utc8Time.getUTCFullYear()}-${pad(utc8Time.getUTCMonth() + 1)}-${pad(utc8Time.getUTCDate())}-${pad(utc8Time.getUTCHours())}-${pad(utc8Time.getUTCMinutes())}-${pad(utc8Time.getUTCSeconds())}.yaml`;
 
         // 设置响应头
         res.setHeader('Content-Type', 'application/x-yaml; charset=utf-8');
