@@ -124,7 +124,7 @@ jobs:
             
             # 获取release信息用于commit消息
             RELEASE_TAG=$(curl -s https://api.github.com/repos/Loyalsoldier/clash-rules/releases/latest | jq -r '.tag_name')
-            git commit -m "chore: update clash-rules from $RELEASE_TAG on $(date +%Y%m%d%H%M)"
+            git commit -m "Generate Loyalsoldier from $RELEASE_TAG on $(date +%Y%m%d%H%M)"
             
             # 推送回当前仓库
             git push origin HEAD:master

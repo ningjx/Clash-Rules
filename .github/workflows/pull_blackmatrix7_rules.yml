@@ -154,7 +154,7 @@ jobs:
           if ! git diff --quiet; then
             echo "Changes detected. Committing..."
             git add .
-            git commit -m "Generate on $(date +%Y%m%d%H%M)"
+            git commit -m "Generate blackmatrix7 on $(date +%Y%m%d%H%M)"
             
             # 使用 GITHUB_TOKEN 推送回当前仓库
             git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
