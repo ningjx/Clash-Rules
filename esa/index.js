@@ -363,19 +363,6 @@ async function main(request, context) {
       responseData.clashConfig = template;
       console.log(`[${requestId}] Clash config generated in ${Date.now() - clashGenStart}ms (Total proxies: ${proxyNames.length})`);
 
-      // 构建响应头
-      const responseHeaders = {
-        'Content-Type': 'application/x-yaml; charset=utf-8',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type'
-      };
-
-      // 如果有流量信息，添加到响应头
-      if (subscriptionUserinfo) {
-        responseHeaders['Subscription-Userinfo'] = subscriptionUserinfo;
-      }
-
       // 动态生成文件名（UTC+8 时区）
       const now = new Date();
       const utc8Time = new Date(now.getTime() + 8 * 60 * 60 * 1000);
