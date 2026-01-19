@@ -449,4 +449,6 @@ async function main(request, context) {
   }
 }
 
-module.exports = main;
+export default {
+  fetch: main
+};
