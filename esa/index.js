@@ -15,11 +15,10 @@ async function main(request, context) {
     
     // 检查路径是否为 /justmysocks
     if (url.pathname.toLowerCase() !== '/justmysocks') {
-      return {
-        statusCode: 404,
-        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-        body: 'Not Found'
-      };
+      return new Response('Not Found', {
+        status: 404,
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+      });
     }
 
     // 解析查询参数
@@ -31,16 +30,15 @@ async function main(request, context) {
 
     // 验证必需参数
     if (!service || !id) {
-      return {
-        statusCode: 400,
+      return new Response('Missing required parameters: service and id', {
+        status: 400,
         headers: { 
           'Content-Type': 'text/plain; charset=utf-8',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type'
-        },
-        body: 'Missing required parameters: service and id'
-      };
+        }
+      });
     }
 
     // 构建参数对象
@@ -126,20 +124,19 @@ async function main(request, context) {
     if (!upstreamResp || upstreamResp.status < 200 || upstreamResp.status >= 300) {
       console.error(`[${requestId}] Upstream fetch failed with status: ${upstreamResp?.status || 'no response'}`);
       
-      return {
-        statusCode: 502,
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Upstream fetch failed',
+        status: upstreamResp?.status || 'no response'
+      }, null, 2), {
+        status: 502,
         headers: { 
           'Content-Type': 'application/json; charset=utf-8',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type'
-        },
-        body: JSON.stringify({
-          success: false,
-          error: 'Upstream fetch failed',
-          status: upstreamResp?.status || 'no response'
-        }, null, 2)
-      };
+        }
+      });
     }
     
     // 获取base64文本
@@ -153,20 +150,19 @@ async function main(request, context) {
       console.log(`[${requestId}] Base64 decoded in ${Date.now() - base64ParseStart}ms`);
     } catch (e) {
       console.error(`[${requestId}] Base64 decode failed:`, e.message);
-      return {
-        statusCode: 500,
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Base64 decode failed',
+        message: e.message
+      }, null, 2), {
+        status: 500,
         headers: { 
           'Content-Type': 'application/json; charset=utf-8',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type'
-        },
-        body: JSON.stringify({
-          success: false,
-          error: 'Base64 decode failed',
-          message: e.message
-        }, null, 2)
-      };
+        }
+      });
     }
 
     // 解析代理配置
@@ -392,18 +388,22 @@ async function main(request, context) {
       console.log(`[${requestId}] Response: YAML file (${fileName.length} chars)`);
       console.log(`[${requestId}] ===================================`);
 
-      return {
-        statusCode: 200,
-        headers: {
-          'Content-Type': 'application/x-yaml; charset=utf-8',
-          'Content-Disposition': `attachment; filename="${fileName}"`,
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type',
-          ...(subscriptionUserinfo ? { 'Subscription-Userinfo': subscriptionUserinfo } : {})
-        },
-        body: responseData.clashConfig
+      const responseHeaders = {
+        'Content-Type': 'application/x-yaml; charset=utf-8',
+        'Content-Disposition': `attachment; filename="${fileName}"`,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
       };
+
+      if (subscriptionUserinfo) {
+        responseHeaders['Subscription-Userinfo'] = subscriptionUserinfo;
+      }
+
+      return new Response(responseData.clashConfig, {
+        status: 200,
+        headers: responseHeaders
+      });
     }
 
     const totalTime = Date.now() - requestStartTime;
@@ -412,17 +412,21 @@ async function main(request, context) {
     console.log(`[${requestId}] Response: JSON data`);
     console.log(`[${requestId}] ===================================`);
 
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        ...(subscriptionUserinfo ? { 'Subscription-Userinfo': subscriptionUserinfo } : {})
-      },
-      body: JSON.stringify(responseData, null, 2)
+    const responseHeaders = {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
     };
+
+    if (subscriptionUserinfo) {
+      responseHeaders['Subscription-Userinfo'] = subscriptionUserinfo;
+    }
+
+    return new Response(JSON.stringify(responseData, null, 2), {
+      status: 200,
+      headers: responseHeaders
+    });
 
   } catch (error) {
     const totalTime = Date.now() - requestStartTime;
@@ -432,20 +436,19 @@ async function main(request, context) {
     console.error(`[${requestId}] Stack:`, error.stack);
     console.error(`[${requestId}] ===================================`);
 
-    return {
-      statusCode: 500,
+    return new Response(JSON.stringify({
+      success: false,
+      error: 'Internal Server Error',
+      message: error.message
+    }, null, 2), {
+      status: 500,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type'
-      },
-      body: JSON.stringify({
-        success: false,
-        error: 'Internal Server Error',
-        message: error.message
-      }, null, 2)
-    };
+      }
+    });
   }
 }
 
