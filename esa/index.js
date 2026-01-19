@@ -5,7 +5,7 @@
  * 其中useDomain和track参数可选
  */
 
-module.exports = async function main(request, context) {
+async function main(request, context) {
   const requestStartTime = Date.now();
   const requestId = Math.random().toString(36).substring(7);
 
@@ -447,4 +447,6 @@ module.exports = async function main(request, context) {
       }, null, 2)
     };
   }
-};
+}
+
+module.exports = main;
