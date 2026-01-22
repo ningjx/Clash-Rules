@@ -240,7 +240,7 @@ async function main() {
  * 清理多余文件
  */
 async function cleanup() {
-  const toRemove = ['node_modules', '.git', 'bodejs'];
+  const toRemove = ['node_modules', 'bodejs'];
   
   console.log('\n🧹 Cleaning up unnecessary files...');
   for (const item of toRemove) {
