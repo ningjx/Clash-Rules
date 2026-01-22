@@ -1,8 +1,8 @@
-# Cloudflare Worker JustMySocks Clash 配置生成器
+# JustMySocks Clash 配置生成器
 
 ## 概述
 
-这是一个运行在Cloudflare Workers全球CDN网络上的函数，提供了API服务，用于将JustMySocks账户的代理配置转换为Clash兼容格式的配置文件。通过Cloudflare的全球分布式网络，可以在世界各地获得超快的响应速度。
+这个Vercel函数提供了一个API服务，用于将JustMySocks账户的代理配置转换为Clash兼容格式的配置文件。它支持自动解析、格式转换，并生成可直接导入的Clash配置文件。
 
 ## 使用方法
 
@@ -24,7 +24,7 @@ GET /justmysocks?service=SERVICE_ID&id=SUBSCRIPTION_ID&useDomain=true&track=TRAC
 ### 请求示例
 
 ```
-https://your-workers-domain.com/justmysocks?service=0000000&id=guid-string&useDomain=true
+https://your-vercel-domain.com/api/justmysocks?service=0000000&id=guid-string&useDomain=true
 ```
 
 ### 响应
@@ -38,7 +38,7 @@ https://your-workers-domain.com/justmysocks?service=0000000&id=guid-string&useDo
 ### 工作流程
 
 1. **请求验证**
-   - 验证请求路径是否为 `/justmysocks`
+   - 验证请求路径是否为 `/api/justmysocks`
    - 检查必需参数 `service` 和 `id`
 
 2. **并行网络请求**
@@ -77,21 +77,11 @@ https://your-workers-domain.com/justmysocks?service=0000000&id=guid-string&useDo
 
 ### 主要特性
 
-- **全球分布式部署**：运行在Cloudflare全球CDN网络，低延迟高可用
 - **高效处理**：使用Promise.all并行化三个网络请求
 - **性能监控**：详细的时间戳记录各处理阶段耗时
 - **错误恢复**：单个请求失败不影响其他功能（如无法获取流量信息，仍返回代理配置）
 - **CORS支持**：响应头包含跨域访问配置
 - **请求追踪**：为每个请求生成唯一ID和日志，便于调试和监控
-- **HTTP状态码**：正确使用HTTP状态码（200、400、404、500、502）
-- **缓存友好**：支持CDN缓存优化
-
-### Worker特性
-
-- **Fetch API**：使用标准Web APIs编写（与ESA类似）
-- **Response对象**：返回标准的Response对象
-- **Header操作**：使用Headers对象或对象字面量操作响应头
-- **环境适配**：同时支持Workers开发和生产环境
 
 ## 业务逻辑
 
@@ -131,13 +121,14 @@ https://your-workers-domain.com/justmysocks?service=0000000&id=guid-string&useDo
 
 ### 日志记录
 
-每个请求都会生成包括以下信息的完整日志（可在Cloudflare Dashboard中查看）：
+每个请求都会生成包括以下信息的完整日志：
 
 ```
 [requestId] ========== REQUEST START ==========
 [requestId] Timestamp: ISO 8601 时间
 [requestId] Parameters: 请求参数
 [requestId] User-Agent: 用户代理
+[requestId] IP: 客户端IP地址
 [requestId] Parallel requests completed in Xms
 [requestId] Proxy configs parsed in Xms (SS: X, VMess: Y)
 [requestId] Clash config generated in Xms (Total proxies: Z)
@@ -150,31 +141,17 @@ https://your-workers-domain.com/justmysocks?service=0000000&id=guid-string&useDo
 ### 项目结构
 
 ```
-worker/
-├── wrangler.toml         # Cloudflare Worker配置
-└── index.js              # 主处理函数
+vercel/
+├── package.json          # 项目配置和依赖
+├── vercel.json           # Vercel路由配置
+└── api/
+    └── index.js          # 主处理函数
 ```
 
-### 配置说明
+### Vercel配置说明
 
-#### wrangler.toml
-- `compatibility_date`：Cloudflare Workers兼容性日期
-- `name`：Worker项目名称
-- `main`：入口文件（./index.js）
-- `workers_dev`：是否启用preview功能
-
-#### index.js 导出格式
-```javascript
-export default {
-  async fetch(request) {
-    // 处理逻辑
-  }
-}
-```
-
-### 依赖
-- 无外部npm依赖
-- 使用Cloudflare Workers原生API
+- **rewrites**：将 `/justmysocks` 路径重写到 `/api/index.js` 函数
+- 依赖：无外部依赖（使用Node.js原生API）
 
 ## 响应示例
 
@@ -223,27 +200,15 @@ Subscription-Userinfo: upload=0; download=5368709120; total=10737418240; expire=
 | 状态码 | 错误类型 | 描述 |
 |--------|--------|------|
 | 400 | Missing Parameters | 缺少必需的 `service` 或 `id` 参数 |
-| 404 | Not Found | 请求路径不是 `/justmysocks` |
+| 404 | Not Found | 请求路径不是 `/api/justmysocks` |
 | 502 | Upstream Error | 无法从JustMySocks获取代理配置 |
 | 500 | Server Error | Base64解码失败或其他服务器错误 |
 
 ## 性能特性
 
-- **全球CDN部署**：自动利用Cloudflare全球数据中心
-- **边缘执行**：代码在距用户最近的Cloudflare边缘节点执行
 - **并行处理**：利用Promise.all同时处理三个网络请求
-- **缓存优化**：可配置缓存策略优化性能
 - **流式响应**：直接返回生成的YAML内容，无需中间缓存
-
-## Cloudflare特有优势
-
-- **全球分布**：200+数据中心，低延迟全球覆盖
-- **DDoS防护**：自动获得Cloudflare DDoS防护
-- **SSL/TLS**：自动HTTPS加密
-- **分析日志**：详细的请求分析和日志
-- **实时监控**：在Cloudflare Dashboard实时监控性能
-- **版本管理**：支持灰度发布和版本回滚
-- **开发工具**：Wrangler CLI提供本地开发和调试
+- **时间戳记录**：精确记录各阶段处理时间，便于性能分析
 
 ## 三个版本的对比
 
