@@ -1,3 +1,4 @@
-# Clash-Rules [![.github/workflows/gen_blackmatrix7.yml](https://github.com/ningjx/Clash-Rules/actions/workflows/gen_blackmatrix7.yml/badge.svg)](https://github.com/ningjx/Clash-Rules/actions/workflows/gen_blackmatrix7.yml)[![.github/workflows/gen_loyalsoldier.yml](https://github.com/ningjx/Clash-Rules/actions/workflows/gen_loyalsoldier.yml/badge.svg)](https://github.com/ningjx/Clash-Rules/actions/workflows/gen_loyalsoldier.yml.yml)
+# Clash-Rules ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ningjx/Clash-Rules/gen_blackmatrix7.yml?label=blackmatrix7&labelColor=%23000000)![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ningjx/Clash-Rules/gen_loyalsoldier.yml?label=loyalsoldier&labelColor=%23000000)[![Checks Status](https://img.shields.io/github/checks-status/ningjx/Clash-Rules/master?labelColor=%23000000)](https://github.com/ningjx/Clash-Rules)
+
 个人使用
 
