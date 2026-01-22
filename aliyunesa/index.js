@@ -60,11 +60,11 @@ async function main(request, context) {
     console.log(`[${requestId}] Starting parallel network requests...`);
 
     // 准备所有网络请求
-    const bwUrl = `https://justmysocks3.net/members/getbwcounter.php?service=${encodeURIComponent(service)}&id=${encodeURIComponent(id)}`;
-    const baseUrl = 'https://jmssub.net/members/getsub.php';
+    const bwUrl = `https://mirror.ning.host/https://justmysocks3.net/members/getbwcounter.php?service=${encodeURIComponent(service)}&id=${encodeURIComponent(id)}`;
+    const baseUrl = 'https://mirror.ning.host/https://jmssub.net/members/getsub.php';
     const usedomains = useDomain ? 1 : 0;
     const queryUrl = `${baseUrl}?service=${encodeURIComponent(service)}&id=${encodeURIComponent(id)}&usedomains=${encodeURIComponent(usedomains)}`;
-    const templateUrl = 'https://raw.githubusercontent.com/ningjx/Clash-Rules/master/ClashConfigTemp.yaml';
+    const templateUrl = 'https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/ClashConfigTemp.yaml';
 
     // 并行执行三个网络请求
     const [bwResp, upstreamResp, templateResp] = await Promise.all([
