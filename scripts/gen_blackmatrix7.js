@@ -232,8 +232,8 @@ async function main() {
 
         // 提取标记之间的内容（不包括标签）
         const part1 = originalContent.substring(0, proxyBeginIdx + '#自动生成代理BEGIN'.length);
-        const part3 = originalContent.substring(proxyEndIdx, ruleBeginIdx);
-        const part5 = originalContent.substring(ruleEndIdx, flowBeginIdx);
+        const part3 = originalContent.substring(proxyEndIdx, ruleBeginIdx + '#自动生成规则BEGIN'.length);
+        const part5 = originalContent.substring(ruleEndIdx, flowBeginIdx + '#自动生成分流规则BEGIN'.length);
         const part7 = originalContent.substring(flowEndIdx);
 
         // 组合新内容：覆盖每对标签之间的内容
