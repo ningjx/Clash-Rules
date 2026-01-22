@@ -45,14 +45,16 @@ jobs:
           
       - name: Commit and Push Changes
         run: |
-          if ! git diff --quiet; then
+          # 检查是否有需要提交的文件
+          if git diff --quiet gen_blackmatrix7/ ClashConfigTemp.yaml; then
+            echo "No changes detected. Skipping commit."
+          else
             echo "Changes detected. Committing..."
-            git add .
+            # 只提交必要的文件
+            git add gen_blackmatrix7/ ClashConfigTemp.yaml
             git commit -m "Generate blackmatrix7 on $(date +%Y%m%d%H%M)"
             
             # 使用 GITHUB_TOKEN 推送回当前仓库
             git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
             git push origin HEAD:master
-          else
-            echo "No changes detected. Skipping commit."
           fi

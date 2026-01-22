@@ -213,7 +213,28 @@ async function main() {
   console.log(`\n✨ Done! Generated files in: ${target_dir}`);
 }
 
-main().catch(error => {
-  console.error(`❌ Fatal error: ${error.message}`);
-  process.exit(1);
-});
+/**
+ * 清理多余文件
+ */
+async function cleanup() {
+  const toRemove = ['node_modules', '.git', 'bodejs'];
+  
+  console.log('\n🧹 Cleaning up unnecessary files...');
+  for (const item of toRemove) {
+    if (fs.existsSync(item)) {
+      try {
+        fs.rmSync(item, { recursive: true, force: true });
+        console.log(`  ✅ Removed: ${item}`);
+      } catch (error) {
+        console.error(`  ❌ Error removing ${item}: ${error.message}`);
+      }
+    }
+  }
+}
+
+main()
+  .then(() => cleanup())
+  .catch(error => {
+    console.error(`❌ Fatal error: ${error.message}`);
+    process.exit(1);
+  });
