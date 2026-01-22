@@ -213,40 +213,39 @@ async function main() {
     // 组合最终的 Clash 配置
     console.log(`\n📝 Regenerating Clash config...`);
     try {
-        const originalContent = fs.readFileSync(clashConfigPath, 'utf8');
+        let content = fs.readFileSync(clashConfigPath, 'utf8');
 
-        // 查找各个标记的位置
-        const proxyBeginIdx = originalContent.indexOf('#自动生成代理BEGIN');
-        const proxyEndIdx = originalContent.indexOf('#自动生成代理END');
-        const ruleBeginIdx = originalContent.indexOf('#自动生成规则BEGIN');
-        const ruleEndIdx = originalContent.indexOf('#自动生成规则END');
-        const flowBeginIdx = originalContent.indexOf('#自动生成分流规则BEGIN');
-        const flowEndIdx = originalContent.indexOf('#自动生成分流规则END');
+        // 定义需要替换的块：[开始标签, 结束标签, 替换内容]
+        const blocks = [
+            ['#自动生成代理BEGIN', '#自动生成代理END', temp.proxies.join('\n')],
+            ['#自动生成规则BEGIN', '#自动生成规则END', temp.ruleProviders.join('\n')],
+            ['#自动生成分流规则BEGIN', '#自动生成分流规则END', temp.flowRules.join('\n')]
+        ];
 
-        // 检查所有标记是否存在
-        if (proxyBeginIdx === -1 || proxyEndIdx === -1 || 
-            ruleBeginIdx === -1 || ruleEndIdx === -1 || 
-            flowBeginIdx === -1 || flowEndIdx === -1) {
-            throw new Error('Missing required markers in ClashConfigTemp.yaml');
+        // 从后往前替换（避免前面替换影响后面的索引）
+        for (let i = blocks.length - 1; i >= 0; i--) {
+            const [beginTag, endTag, replacement] = blocks[i];
+            
+            // 找到标签位置
+            const beginIdx = content.indexOf(beginTag);
+            const endIdx = content.indexOf(endTag);
+
+            if (beginIdx === -1 || endIdx === -1) {
+                throw new Error(`Missing markers: ${beginTag} or ${endTag}`);
+            }
+
+            // 标签后的换行和标签前的换行
+            const contentStart = content.indexOf('\n', beginIdx) + 1;
+            const contentEnd = content.lastIndexOf('\n', endIdx);
+
+            // 替换内容块（保留标签和前后空行）
+            content = 
+                content.substring(0, contentStart) +
+                replacement + '\n' +
+                content.substring(contentEnd);
         }
 
-        // 提取标记之间的内容（不包括标签）
-        const part1 = originalContent.substring(0, proxyBeginIdx + '#自动生成代理BEGIN'.length);
-        const part3 = originalContent.substring(proxyEndIdx, ruleBeginIdx + '#自动生成规则BEGIN'.length);
-        const part5 = originalContent.substring(ruleEndIdx, flowBeginIdx + '#自动生成分流规则BEGIN'.length);
-        const part7 = originalContent.substring(flowEndIdx);
-
-        // 组合新内容：覆盖每对标签之间的内容
-        const newContent =
-            part1 + '\n' +
-            temp.proxies.join('\n') + '\n' +
-            part3 + '\n' +
-            temp.ruleProviders.join('\n') + '\n' +
-            part5 + '\n' +
-            temp.flowRules.join('\n') + '\n' +
-            part7;
-
-        fs.writeFileSync(clashConfigPath, newContent);
+        fs.writeFileSync(clashConfigPath, content);
         console.log(`✅ Clash config updated: ${clashConfigPath}`);
     } catch (error) {
         console.error(`❌ Error updating Clash config: ${error.message}`);
