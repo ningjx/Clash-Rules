@@ -183,11 +183,10 @@ proxy-groups:
   - name: Microsoft
     type: select
     proxies:
-      - Direct
+      - DIRECT
       - 默认节点
       - 最快节点
 {ProxiesNames}
-      - DIRECT
   - name: YouTube
     type: select
     proxies:
