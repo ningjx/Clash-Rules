@@ -239,10 +239,7 @@ async function main() {
             const contentEnd = content.lastIndexOf('\n', endIdx);
 
             // 替换内容块（保留标签和前后空行）
-            content = 
-                content.substring(0, contentStart) +
-                replacement + '\n' +
-                content.substring(contentEnd);
+            content = content.substring(0, contentStart) + replacement + content.substring(contentEnd);
         }
 
         fs.writeFileSync(clashConfigPath, content);
