@@ -375,55 +375,55 @@ rule-providers:
   YouTube:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/YouTube.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/YouTube.yaml
     path: "./rule_provider/YouTube.yaml"
     interval: 86400
   Netflix:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Netflix.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Netflix.yaml
     path: "./rule_provider/Netflix.yaml"
     interval: 86400
   AmazonPrimeVideo:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/AmazonPrimeVideo.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/AmazonPrimeVideo.yaml
     path: "./rule_provider/AmazonPrimeVideo.yaml"
     interval: 86400
   Disney:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Disney.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Disney.yaml
     path: "./rule_provider/Disney.yaml"
     interval: 86400
   Hulu:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Hulu.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Hulu.yaml
     path: "./rule_provider/Hulu.yaml"
     interval: 86400
   TikTok:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/TikTok.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/TikTok.yaml
     path: "./rule_provider/TikTok.yaml"
     interval: 86400
   Google:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Google.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Google.yaml
     path: "./rule_provider/Google.yaml"
     interval: 86400
   Telegram:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Telegram.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Telegram.yaml
     path: "./rule_provider/Telegram.yaml"
     interval: 86400
   Microsoft:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Microsoft.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Microsoft.yaml
     path: "./rule_provider/Microsoft.yaml"
     interval: 86400
 #自动生成规则END
