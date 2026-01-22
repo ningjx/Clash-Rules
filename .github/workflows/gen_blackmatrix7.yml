@@ -14,23 +14,6 @@ jobs:
     defaults:
       run:
         shell: bash
-    env:
-      urls: |
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.list
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AmazonPrimeVideo/AmazonPrimeVideo.list
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.list
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hulu/Hulu.list
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.list
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list
-
-      microsoft_direct: |
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/MicrosoftEdge/MicrosoftEdge.list
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Microsoft/Microsoft.list
-        https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Bing/Bing.list
-
-      proxy: https://mirror.ning.host
     
     steps:
       - name: Set_Timezone
@@ -47,108 +30,18 @@ jobs:
           git remote add origin "https://github.com/${{ github.repository }}"
           git pull origin master
 
-      - name: make_dir
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
         run: |
-          mkdir -p gen_blackmatrix7
-          mkdir -p temp
+          npm install js-yaml
 
-      - name: Generate Files
+      - name: Generate Files from Config
         run: |
-          sed -n '/#自动生成代理BEGIN/q;p' ClashConfigTemp.yaml > ./temp/temp1.txt
-          echo "#自动生成代理BEGIN" >> ./temp/temp1.txt
-          sed -n '/#自动生成代理END/,/#自动生成规则BEGIN/p' ClashConfigTemp.yaml > ./temp/temp3.txt
-          sed -n '/#自动生成规则END/,/#自动生成分流规则BEGIN/p' ClashConfigTemp.yaml > ./temp/temp5.txt
-          sed -n '/^#自动生成分流规则END/,${p}' ClashConfigTemp.yaml > ./temp/temp7.txt
-          #touch ./temp/temp2.txt #代理
-          #touch ./temp/temp4.txt #规则集
-          #touch ./temp/temp6.txt #分流规则
-
-          for url in $urls; do
-            filename=$(basename $url)
-            purename="${filename%.*}"  #去掉文件后缀.list
-            echo "当前文件{$filename}"
-
-            #从URL获取并转换规则
-            response=$(curl -s -o /dev/null -w "%{http_code}" $url)
-            if [ $response -eq 200 ]; then
-              wget -O ./temp/$purename $url 
-              cat ./temp/$purename | grep  '^#' > "./gen_blackmatrix7/${purename}.yaml" #写入注释
-              echo "payload:" >> "./gen_blackmatrix7/${purename}.yaml"
-              #暂时去掉IP-ASN类型规则,兼容旧版本Clash内核
-              cat ./temp/$purename | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./gen_blackmatrix7/${purename}.yaml"
-            else
-              echo "${purename}规则链接 ${url} 失效,保持文件不变"
-            fi
-            
-            #写入分流Proxy
-            echo "  - name: ${purename}" >> ./temp/temp2.txt
-            echo "    type: select" >> ./temp/temp2.txt
-            echo "    proxies:" >> ./temp/temp2.txt
-            echo "      - 默认节点" >> ./temp/temp2.txt
-            echo "      - 最快节点" >> ./temp/temp2.txt
-            echo "{ProxiesNames}" >> ./temp/temp2.txt
-            echo "      - DIRECT" >> ./temp/temp2.txt
-            #写入规则链接
-            echo "  ${purename}:" >> ./temp/temp4.txt
-            echo "    type: http" >> ./temp/temp4.txt
-            echo "    behavior: classical" >> ./temp/temp4.txt
-            echo "    url: $proxy/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/${purename}.yaml" >> ./temp/temp4.txt
-            echo "    path: \"./rule_provider/${purename}.yaml\"" >> ./temp/temp4.txt
-            echo "    interval: 86400" >> ./temp/temp4.txt
-            #写入分流规则
-            echo "  - RULE-SET,${purename},${purename}" >> ./temp/temp6.txt
-          done
-
-          #微软节点单独代码，合并了Microsoft Bing MicrosoftEdge 的全部规则
-          first=1
-          for ms_url in $microsoft_direct; do
-            filename=$(basename $ms_url)
-            purename="Microsoft"
-            #从URL获取并转换规则
-            response=$(curl -s -o /dev/null -w "%{http_code}" $ms_url)
-            if [ $response -eq 200 ]; then
-              wget -O ./temp/$purename $ms_url 
-              if [ $first -eq 1 ]; then
-                echo "payload:" > "./gen_blackmatrix7/${purename}.yaml"
-                first=0
-              fi
-              #暂时去掉IP-ASN类型规则,兼容旧版本Clash内核
-              cat ./temp/$purename | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./gen_blackmatrix7/${purename}.yaml"
-            else
-              echo "${purename}规则链接 ${ms_url} 失效,保持文件不变"
-            fi
-          done
-          #写入微软分流Proxy
-          echo "  - name: ${purename}" >> ./temp/temp2.txt
-          echo "    type: select" >> ./temp/temp2.txt
-          echo "    proxies:" >> ./temp/temp2.txt
-          echo "      - DIRECT" >> ./temp/temp2.txt
-          echo "      - 默认节点" >> ./temp/temp2.txt
-          echo "      - 最快节点" >> ./temp/temp2.txt
-          echo "{ProxiesNames}" >> ./temp/temp2.txt
-          #写入微软规则链接
-          echo "  ${purename}:" >> ./temp/temp4.txt
-          echo "    type: http" >> ./temp/temp4.txt
-          echo "    behavior: classical" >> ./temp/temp4.txt
-          echo "    url: $proxy/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/${purename}.yaml" >> ./temp/temp4.txt
-          echo "    path: \"./rule_provider/${purename}.yaml\"" >> ./temp/temp4.txt
-          echo "    interval: 86400" >> ./temp/temp4.txt
-          #写入微软分流规则
-          echo "  - RULE-SET,${purename},${purename}" >> ./temp/temp6.txt
-          ###########################################################################
-
-          #重新生成ClashConfigTemp
-          cat ./temp/temp1.txt > ClashConfigTemp.yaml
-          cat ./temp/temp2.txt >> ClashConfigTemp.yaml
-          cat ./temp/temp3.txt >> ClashConfigTemp.yaml
-          cat ./temp/temp4.txt >> ClashConfigTemp.yaml
-          cat ./temp/temp5.txt >> ClashConfigTemp.yaml
-          cat ./temp/temp6.txt >> ClashConfigTemp.yaml
-          cat ./temp/temp7.txt >> ClashConfigTemp.yaml
-
-          #删除所有临时文件
-          ls ./temp
-          rm -r ./temp
+          node ./scripts/gen_blackmatrix7.js ./configs/config_blackmatrix7.yml ./ClashConfigTemp.yaml
           
       - name: Commit and Push Changes
         run: |
