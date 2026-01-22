@@ -490,6 +490,252 @@ proxy-groups:
       - 最快节点
       - {ProxiesNames}
       - DIRECT
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7895
+allow-lan: true
+ipv6: false
+bind-address: "*"
+mode: rule
+# info / warning / error / debug / silent
+log-level: error
+# RESTful web API listening address
+external-controller: 0.0.0.0:9090
+secret: ''
+
+dns:
+  enable: true
+  ipv6: false
+  listen: 0.0.0.0:7874
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - 223.5.5.5
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+    - 119.29.29.29
+    - 114.114.114.114
+  fallback:
+    - https://dns.cloudflare.com/dns-query
+    - tls://dns.google:853
+    - tls://1.1.1.1:853
+    - tls://8.8.8.8:853
+    - https://jp.tiar.app/dns-query
+  fake-ip-filter:
+    - "+.nflxvideo.net"
+    - "+.media.dssott.com"  
+    - "*.lan"
+    - "*.localdomain"
+    - "*.example"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.local"
+    - "*.home.arpa"
+    - ntp.ntsc.ac.cn
+    - "time.*.com"
+    - "time.*.gov"
+    - "time.*.edu.cn"
+    - "time.*.apple.com"
+    - "time-ios.apple.com"
+    - "time1.*.com"
+    - "time2.*.com"
+    - "time3.*.com"
+    - "time4.*.com"
+    - "time5.*.com"
+    - "time6.*.com"
+    - "time7.*.com"
+    - "ntp.*.com"
+    - "ntp1.*.com"
+    - "ntp2.*.com"
+    - "ntp3.*.com"
+    - "ntp4.*.com"
+    - "ntp5.*.com"
+    - "ntp6.*.com"
+    - "ntp7.*.com"
+    - "ntp.*.cn"
+    - "ntp1.*.cn"
+    - "ntp2.*.cn"
+    - "ntp3.*.cn"
+    - "ntp4.*.cn"
+    - "ntp5.*.cn"
+    - "ntp6.*.cn"
+    - "ntp7.*.cn"
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - "+.pool.ntp.org"
+    - "time1.cloud.tencent.com"
+    - "+.music.163.com"
+    - "*.126.net"
+    - "musicapi.taihe.com"
+    - "music.taihe.com"
+    - "songsearch.kugou.com"
+    - "trackercdn.kugou.com"
+    - "*.kuwo.cn"
+    - "api-jooxtt.sanook.com"
+    - "api.joox.com"
+    - "joox.com"
+    - "+.y.qq.com"
+    - "streamoc.music.tc.qq.com"
+    - "mobileoc.music.tc.qq.com"
+    - "isure.stream.qqmusic.qq.com"
+    - "dl.stream.qqmusic.qq.com"
+    - "aqqmusic.tc.qq.com"
+    - "amobile.music.tc.qq.com"
+    - "*.xiami.com"
+    - "+.music.migu.cn"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "localhost.ptlogin2.qq.com"
+    - "localhost.sec.qq.com"
+    - "+.qq.com"
+    - "+.tencent.com"
+    - "+.srv.nintendo.net"
+    - "*.n.n.srv.nintendo.net"
+    - "+.stun.playstation.net"
+    - "xbox.*.*.microsoft.com"
+    - "*.*.xboxlive.com"
+    - "xbox.*.microsoft.com"
+    - "xnotify.xboxlive.com"
+    - "+.battlenet.com.cn"
+    - "+.wotgame.cn"
+    - "+.wggames.cn"
+    - "+.wowsgame.cn"
+    - "+.wargaming.net"
+    - "proxy.golang.org"
+    - "stun.*.*"
+    - "stun.*.*.*"
+    - "+.stun.*.*"
+    - "+.stun.*.*.*"
+    - "+.stun.*.*.*.*"
+    - "+.stun.*.*.*.*.*"
+    - "heartbeat.belkin.com"
+    - "*.linksys.com"
+    - "*.linksyssmartwifi.com"
+    - "*.router.asus.com"
+    - "mesu.apple.com"
+    - "swscan.apple.com"
+    - "swquery.apple.com"
+    - "swdownload.apple.com"
+    - "swcdn.apple.com"
+    - "swdist.apple.com"
+    - "lens.l.google.com"
+    - "stun.l.google.com"
+    - "na.b.g-tun.com"
+    - "*.square-enix.com"
+    - "*.finalfantasyxiv.com"
+    - "*.ffxiv.com"
+    - "*.ff14.sdo.com"
+    - "ff.dorado.sdo.com"
+    - "*.mcdn.bilivideo.cn"
+    - "shark007.net"
+    - "Mijia Cloud"
+    - "+.cmbchina.com"
+    - "+.cmbimg.com"
+    - "local.adguard.org"
+    - "+.sandai.net"
+    - "+.n0808.com"
+    - "+.services.googleapis.cn"
+    - "+.xn--ngstr-lra8j.cn"
+    - "+.mijia.tech"
+    - "+.mi.com"
+    - "+.xiaomi.net"
+    - "time.is"
+
+proxies:
+{ProxyList}
+
+proxy-groups:
+  - name: 默认节点
+    type: select
+    proxies:
+      - 自动回退
+      - 最快节点
+{ProxiesNames}
+      - DIRECT
+
+#  - name: "链式代理"
+#    type: relay
+#    proxies:
+#      - proxy1
+#      - proxy2
+#      - proxy3
+
+  - name: 未知流量
+    type: select
+    proxies:
+      - DIRECT
+      - 默认节点
+      - 最快节点
+{ProxiesNames}
+
+#自动生成代理BEGIN
+  - name: Microsoft
+    type: select
+    proxies:
+      - Direct
+      - 默认节点
+      - 最快节点
+      - {ProxiesNames}
+      - DIRECT
+  - name: YouTube
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+      - {ProxiesNames}
+      - DIRECT
+  - name: Netflix
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+      - {ProxiesNames}
+      - DIRECT
+  - name: AmazonPrimeVideo
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+      - {ProxiesNames}
+      - DIRECT
+  - name: Disney
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+      - {ProxiesNames}
+      - DIRECT
+  - name: Hulu
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+      - {ProxiesNames}
+      - DIRECT
+  - name: TikTok
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+      - {ProxiesNames}
+      - DIRECT
+  - name: Google
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+      - {ProxiesNames}
+      - DIRECT
+  - name: Telegram
+    type: select
+    proxies:
+      - 默认节点
+      - 最快节点
+      - {ProxiesNames}
+      - DIRECT
 
   Microsoft:
     type: http
@@ -791,134 +1037,6 @@ proxy-groups:
       - 最快节点
       - {ProxiesNames}
       - DIRECT
-#自动生成代理END
- 
-  - name: 其它国际流媒体
-    type: select
-    proxies:
-      - 默认节点
-      - 最快节点
-{ProxiesNames}
-      - DIRECT
-
-  - name: 最快节点
-    type: url-test
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    proxies:
-{FastestProxiesNames}
-
-  - name: 自动回退
-    type: fallback
-    url: 'http://www.google.com/generate_204'
-    interval: 300
-    proxies:
-      - 负载均衡
-{ProxiesNames}
-
-  - name: 负载均衡
-    type: load-balance
-    url: 'http://www.google.com/generate_204'
-    interval: 300
-    strategy: round-robin #consistent-hashing
-    proxies:
-{BalanceProxiesNames}
-
-rule-providers:
-#规则来自https://github.com/Loyalsoldier/clash-rules
-  icloud:
-    type: http
-    behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/icloud.txt
-    path: "./rule_provider/icloud.yaml"
-    interval: 86400
-
-  apple:
-    type: http
-    behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/apple.txt
-    path: "./rule_provider/apple.yaml"
-    interval: 86400
-
-  proxy:
-    type: http
-    behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/proxy.txt
-    path: "./rule_provider/proxy.yaml"
-    interval: 86400
-
-  direct:
-    type: http
-    behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/direct.txt
-    path: "./rule_provider/direct.yaml"
-    interval: 86400
-
-  private:
-    type: http
-    behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/private.txt
-    path: "./rule_provider/private.yaml"
-    interval: 86400
-
-  gfw:
-    type: http
-    behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/gfw.txt
-    path: "./rule_provider/gfw.yaml"
-    interval: 86400
-
-  tld-not-cn:
-    type: http
-    behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/tld-not-cn.txt
-    path: "./rule_provider/tld-not-cn.yaml"
-    interval: 86400
-
-  cncidr:
-    type: http
-    behavior: ipcidr
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/cncidr.txt
-    path: "./rule_provider/cncidr.yaml"
-    interval: 86400
-
-  lancidr:
-    type: http
-    behavior: ipcidr
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/lancidr.txt
-    path: "./rule_provider/lancidr.yaml"
-    interval: 86400
-
-  applications:
-    type: http
-    behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/applications.txt
-    path: "./rule_provider/applications.yaml"
-    interval: 86400
-
-#规则来自https://github.com/ningjx/Clash-Rules  静态文件
-#git 加速 gh.con.sh ning.host
-  streaming:
-    type: http
-    behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/local_rules/Streaming.yaml
-    path: "./rule_provider/Streaming.yaml"
-    interval: 86400
-
-  CustomDirect:
-    type: http
-    behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/local_rules/CustomDirect.yaml
-    path: "./rule_provider/CustomDirect.yaml"
-    interval: 86400
-
-  CustomProxy:
-    type: http
-    behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/local_rules/CustomProxy.yaml
-    path: "./rule_provider/CustomProxy.yaml"
-    interval: 86400
-#规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件
 
   Microsoft:
     type: http
