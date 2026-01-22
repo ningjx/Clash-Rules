@@ -258,7 +258,7 @@ proxy-groups:
     url: https://www.gstatic.com/generate_204
     interval: 300
     proxies:
-{FastestProxiesNames}
+{ProxiesNames}
 
   - name: 自动回退
     type: fallback

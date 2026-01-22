@@ -327,18 +327,6 @@ async function main(request, context) {
         }
       }
 
-      // 生成快速测试代理名称列表（排除25倍流量节点）
-      let testFastNames = '';
-      for (let i = 0; i < proxyNames.length; i++) {
-        const name = proxyNames[i];
-        if (!name.includes('25倍')) {
-          testFastNames += `      - ${name}`;
-          if (i < proxyNames.length - 1) {
-            testFastNames += '\n';
-          }
-        }
-      }
-
       // 生成负载均衡代理名称列表（选择包含美国、s1、s2、s3的节点，排除倍率节点）
       let balanceNames = '';
       const blanProxyNames = proxyNames.filter(name =>
@@ -356,7 +344,6 @@ async function main(request, context) {
       // 替换模板中的占位符
       template = template.replaceAll('{ProxyList}', proxyList);
       template = template.replaceAll('{ProxiesNames}', proxyNameStr);
-      template = template.replaceAll('{FastestProxiesNames}', testFastNames);
       template = template.replaceAll('{BalanceProxiesNames}', balanceNames);
 
       // 添加生成的Clash配置到响应数据
