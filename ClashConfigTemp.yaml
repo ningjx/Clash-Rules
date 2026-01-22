@@ -353,21 +353,21 @@ rule-providers:
   streaming:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/Streaming.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/local_rules/Streaming.yaml
     path: "./rule_provider/Streaming.yaml"
     interval: 86400
 
   CustomDirect:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomDirect.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/local_rules/CustomDirect.yaml
     path: "./rule_provider/CustomDirect.yaml"
     interval: 86400
 
   CustomProxy:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/CustomProxy.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/local_rules/CustomProxy.yaml
     path: "./rule_provider/CustomProxy.yaml"
     interval: 86400
 #规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件

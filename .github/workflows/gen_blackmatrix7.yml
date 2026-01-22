@@ -1,4 +1,4 @@
-name: Pull_blackmatrix7_Rules
+name: gen_blackmatrix7
 
 on:
   schedule:
@@ -48,7 +48,7 @@ jobs:
 
       - name: make_dir
         run: |
-          mkdir -p auto_generate
+          mkdir -p gen_blackmatrix7
           mkdir -p temp
 
       - name: Generate Files
@@ -71,10 +71,10 @@ jobs:
             response=$(curl -s -o /dev/null -w "%{http_code}" $url)
             if [ $response -eq 200 ]; then
               wget -O ./temp/$purename $url 
-              cat ./temp/$purename | grep  '^#' > "./auto_generate/${purename}.yaml" #写入注释
-              echo "payload:" >> "./auto_generate/${purename}.yaml"
+              cat ./temp/$purename | grep  '^#' > "./gen_blackmatrix7/${purename}.yaml" #写入注释
+              echo "payload:" >> "./gen_blackmatrix7/${purename}.yaml"
               #暂时去掉IP-ASN类型规则,兼容旧版本Clash内核
-              cat ./temp/$purename | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${purename}.yaml"
+              cat ./temp/$purename | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./gen_blackmatrix7/${purename}.yaml"
             else
               echo "${purename}规则链接 ${url} 失效,保持文件不变"
             fi
@@ -91,7 +91,7 @@ jobs:
             echo "  ${purename}:" >> ./temp/temp4.txt
             echo "    type: http" >> ./temp/temp4.txt
             echo "    behavior: classical" >> ./temp/temp4.txt
-            echo "    url: $proxy/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${purename}.yaml" >> ./temp/temp4.txt
+            echo "    url: $proxy/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/${purename}.yaml" >> ./temp/temp4.txt
             echo "    path: \"./rule_provider/${purename}.yaml\"" >> ./temp/temp4.txt
             echo "    interval: 86400" >> ./temp/temp4.txt
             #写入分流规则
@@ -108,11 +108,11 @@ jobs:
             if [ $response -eq 200 ]; then
               wget -O ./temp/$purename $ms_url 
               if [ $first -eq 1 ]; then
-                echo "payload:" > "./auto_generate/${purename}.yaml"
+                echo "payload:" > "./gen_blackmatrix7/${purename}.yaml"
                 first=0
               fi
               #暂时去掉IP-ASN类型规则,兼容旧版本Clash内核
-              cat ./temp/$purename | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./auto_generate/${purename}.yaml"
+              cat ./temp/$purename | grep -v '^#' | grep -v 'IP-ASN' | awk '{printf "  - %s\n", $1}' >> "./gen_blackmatrix7/${purename}.yaml"
             else
               echo "${purename}规则链接 ${ms_url} 失效,保持文件不变"
             fi
@@ -129,7 +129,7 @@ jobs:
           echo "  ${purename}:" >> ./temp/temp4.txt
           echo "    type: http" >> ./temp/temp4.txt
           echo "    behavior: classical" >> ./temp/temp4.txt
-          echo "    url: $proxy/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/${purename}.yaml" >> ./temp/temp4.txt
+          echo "    url: $proxy/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/${purename}.yaml" >> ./temp/temp4.txt
           echo "    path: \"./rule_provider/${purename}.yaml\"" >> ./temp/temp4.txt
           echo "    interval: 86400" >> ./temp/temp4.txt
           #写入微软分流规则

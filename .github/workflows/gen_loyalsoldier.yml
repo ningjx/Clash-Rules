@@ -1,4 +1,4 @@
-name: Update Clash Rules
+name: gen_loyalsoldier
 
 on:
   schedule:
@@ -78,7 +78,7 @@ jobs:
 
       - name: Sync clash_rules files
         run: |
-          CLASH_RULES_DIR="clash_rules"
+          CLASH_RULES_DIR="gen_loyalsoldier"
           RELEASE_DIR="/tmp/clash-rules-release"
           
           # 创建clash_rules目录如果不存在
