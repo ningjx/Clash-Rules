@@ -180,6 +180,14 @@ proxy-groups:
 {ProxiesNames}
 
 #自动生成代理BEGIN
+  - name: Microsoft
+    type: select
+    proxies:
+      - Direct
+      - 默认节点
+      - 最快节点
+{ProxiesNames}
+      - DIRECT
   - name: YouTube
     type: select
     proxies:
@@ -236,13 +244,6 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-  - name: Microsoft
-    type: select
-    proxies:
-      - DIRECT
-      - 默认节点
-      - 最快节点
-{ProxiesNames}
 #自动生成代理END
  
   - name: 其它国际流媒体
@@ -371,66 +372,67 @@ rule-providers:
     path: "./rule_provider/CustomProxy.yaml"
     interval: 86400
 #规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件
-#自动生成规则BEGIN
+
+  Microsoft:
+    type: http
+    behavior: classical
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Microsoft.yaml
+    path: "./rule_provider/Microsoft.yaml"
+    interval: 86400
   YouTube:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/YouTube.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/YouTube.yaml
     path: "./rule_provider/YouTube.yaml"
     interval: 86400
   Netflix:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Netflix.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Netflix.yaml
     path: "./rule_provider/Netflix.yaml"
     interval: 86400
   AmazonPrimeVideo:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/AmazonPrimeVideo.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/AmazonPrimeVideo.yaml
     path: "./rule_provider/AmazonPrimeVideo.yaml"
     interval: 86400
   Disney:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Disney.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Disney.yaml
     path: "./rule_provider/Disney.yaml"
     interval: 86400
   Hulu:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Hulu.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Hulu.yaml
     path: "./rule_provider/Hulu.yaml"
     interval: 86400
   TikTok:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/TikTok.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/TikTok.yaml
     path: "./rule_provider/TikTok.yaml"
     interval: 86400
   Google:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Google.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Google.yaml
     path: "./rule_provider/Google.yaml"
     interval: 86400
   Telegram:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Telegram.yaml
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Telegram.yaml
     path: "./rule_provider/Telegram.yaml"
-    interval: 86400
-  Microsoft:
-    type: http
-    behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/auto_generate/Microsoft.yaml
-    path: "./rule_provider/Microsoft.yaml"
     interval: 86400
 #自动生成规则END
 rules:
   - RULE-SET,CustomProxy,默认节点
   - RULE-SET,CustomDirect,DIRECT
-#自动生成分流规则BEGIN
+
+  - RULE-SET,Microsoft,Microsoft
   - RULE-SET,YouTube,YouTube
   - RULE-SET,Netflix,Netflix
   - RULE-SET,AmazonPrimeVideo,AmazonPrimeVideo
@@ -439,7 +441,6 @@ rules:
   - RULE-SET,TikTok,TikTok
   - RULE-SET,Google,Google
   - RULE-SET,Telegram,Telegram
-  - RULE-SET,Microsoft,Microsoft
 #自动生成分流规则END
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT
