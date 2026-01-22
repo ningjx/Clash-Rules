@@ -272,10 +272,5 @@ A: 目前支持SS和VMess协议。其他协议支持需要扩展代码。
 
 ## 相关链接
 
-- [Clash项目](https://github.com/Dreamacro/clash)
 - [blackmatrix7规则项目](https://github.com/blackmatrix7/ios_rule_script)
-- [Loyalsoldier规则项目](https://github.com/Loyalsoldier/v2ray-rules-dat)
-- [Vercel官网](https://vercel.com)
-- [阿里云ESA](https://www.alibabacloud.com/product/edge-serverless)
-- [Cloudflare Workers](https://workers.cloudflare.com)
-
+- [Loyalsoldier规则项目](https://github.com/Loyalsoldier/clash-rules)
