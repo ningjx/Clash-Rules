@@ -46,12 +46,12 @@ jobs:
       - name: Commit and Push Changes
         run: |
           # 检查是否有需要提交的文件
-          if git diff --quiet gen_blackmatrix7/ ClashConfigTemp.yaml; then
+          if git diff --quiet gen_blackmatrix7/ -- ClashConfigTemp.yaml; then
             echo "No changes detected. Skipping commit."
           else
             echo "Changes detected. Committing..."
             # 只提交必要的文件
-            git add gen_blackmatrix7/ ClashConfigTemp.yaml
+            git add -A gen_blackmatrix7/ ClashConfigTemp.yaml
             git commit -m "Generate blackmatrix7 on $(date +%Y%m%d%H%M)"
             
             # 使用 GITHUB_TOKEN 推送回当前仓库

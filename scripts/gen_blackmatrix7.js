@@ -46,14 +46,37 @@ function downloadFileContent(url) {
 function checkUrl(url) {
   return new Promise((resolve) => {
     const protocol = url.startsWith('https') ? https : http;
-    const req = protocol.request(url, { method: 'HEAD', timeout: 5000 }, (res) => {
-      resolve(res.statusCode === 200);
+    let resolved = false;
+    
+    const req = protocol.request(url, { 
+      method: 'GET',
+      timeout: 8000,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; Node.js)'
+      }
+    }, (res) => {
+      resolved = true;
+      // 状态码 200-399 都认为是成功
+      resolve(res.statusCode >= 200 && res.statusCode < 400);
     });
-    req.on('error', () => resolve(false));
+    
+    req.on('error', (err) => {
+      if (!resolved) {
+        resolved = true;
+        console.error(`    └─ URL check error: ${err.message}`);
+        resolve(false);
+      }
+    });
+    
     req.on('timeout', () => {
-      req.destroy();
-      resolve(false);
+      if (!resolved) {
+        resolved = true;
+        req.destroy();
+        resolve(false);
+      }
     });
+    
+    req.end();
   });
 }
 
@@ -121,7 +144,7 @@ async function main() {
       const isAvailable = await checkUrl(url);
 
       if (isAvailable) {
-        console.log(`  ├─ ✅ Downloading...`);
+        console.log(`  ├─ ✅ Available`);
         try {
           const content = await downloadFileContent(url);
           const processedContent = processRuleContent(content);
