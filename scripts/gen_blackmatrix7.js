@@ -202,7 +202,11 @@ async function main() {
         temp.ruleProviders.push(`  ${name}:`);
         temp.ruleProviders.push(`    type: http`);
         temp.ruleProviders.push(`    behavior: classical`);
-        temp.ruleProviders.push(`    url: ${mirror_site}/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/${target_dir}/${name}.yaml`);
+        
+        // 构建规则URL：如果配置了mirror_site则使用镜像，否则使用GitHub原生连接
+        const rawUrl = `https://raw.githubusercontent.com/ningjx/Clash-Rules/master/${target_dir}/${name}.yaml`;
+        const ruleUrl = mirror_site ? `${mirror_site}/${rawUrl}` : rawUrl;
+        temp.ruleProviders.push(`    url: ${ruleUrl}`);
         temp.ruleProviders.push(`    path: "./rule_provider/${name}.yaml"`);
         temp.ruleProviders.push(`    interval: 86400`);
 

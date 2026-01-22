@@ -38,8 +38,9 @@ Clash配置模板文件，定义了Clash的基础配置结构和策略组定义�
 - `Hulu.yaml` - Hulu流媒体规则
 
 **特点**:
-- 自动化生成：通过GitHub Actions读取 [gen_blackmatrix7.yml](https://github.com/ningjx/Clash-Rules/blob/master/.github/workflows/gen_blackmatrix7.yml) 中的 `env: urls:` 配置自动更新
-- 写入代理模块：可以灵活修改分流节点
+- 自动化生成：通过GitHub Actions读取 [configs/config_blackmatrix7.yml](configs/config_blackmatrix7.yml) 配置文件自动更新
+- 配置驱动：在配置文件中定义规则源URL、名称和默认代理，即可自动生成对应的规则文件
+- 灵活管理：修改配置文件可轻松添加、删除或调整指定服务规则
 
 #### 2. [gen_loyalsoldier/](gen_loyalsoldier) - 总体分流规则集
 包含来自 [Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules) 项目的通用规则文件。这是作为总体分流基础的规则集，用于将流量分类为不同的路由策略（代理、直连、拒绝等）。
@@ -92,32 +93,59 @@ Clash配置模板文件，定义了Clash的基础配置结构和策略组定义�
 ### 规则处理流程
 
 ```
-原始规则源
-├─→ blackmatrix7/ios_rule_script (指定服务规则)
+配置文件
+├─→ configs/config_blackmatrix7.yml (指定服务规则配置)
+│   ├─ mirror_site: 镜像站点
+│   ├─ target_dir: 输出目录
+│   └─ rules: 规则列表（含URLs、默认代理等）
 │   ↓
 │   gen_blackmatrix7.yml (GitHub Actions工作流)
 │   ↓
-│   [gen_blackmatrix7/] (各服务YAML规则文件)
+│   scripts/gen_blackmatrix7.js (Node.js处理脚本)
 │   ↓
-│   用户按需添加到Clash配置（优先级高）
+│   [gen_blackmatrix7/] (生成服务YAML规则文件)
+│   ↓
+│   ClashConfigTemp.yaml (自动更新proxy-groups、规则来源和分流逻辑)
+│   ↓
+│   用户按需使用
 │
 └─→ Loyalsoldier/clash-rules (总体分流规则)
     ↓
     gen_loyalsoldier.yml (GitHub Actions工作流)
     ↓
-    [gen_loyalsoldier/] (总体分流文本规则)
+    [gen_loyalsoldier/] (生成总体分流文本规则)
     ↓
-    用户作为基础规则引入Clash配置（优先级低）
+    用户作为基础规则引入Clash配置
 
-合并后的规则流程：
+工作流执行步骤：
     ↓
-本项目各文件夹存储
-    ↓
-用户拉取规则 (通过Clash订阅或直接引用)
-    ↓
-Clash应用加载 (指定服务规则优先，总体规则作为后备)
-    ↓
-流量分类转发
+1. 读取 configs/config_blackmatrix7.yml 配置
+2. 遍历配置中的每个规则
+3. 检查规则URL可用性
+4. 下载并处理规则内容
+5. 生成YAML格式规则文件
+6. 更新ClashConfigTemp.yaml中的三个区块：
+   - 代理配置（含default_proxy优先级）
+   - 规则提供者配置
+   - 分流规则配置
+7. 清理临时文件
+8. 提交变更
+```
+
+**配置文件格式说明**（configs/config_blackmatrix7.yml）：
+```yaml
+mirror_site: https://mirror.ning.host          # 镜像站点用于加速URL访问
+target_dir: gen_blackmatrix7                    # 规则输出目录
+rules:
+  - name: Microsoft                             # 规则名称
+    urls:                                       # 规则源URLs（支持多个）
+      - https://raw.githubusercontent.com/...
+      - https://raw.githubusercontent.com/...
+    default_proxy: Direct                       # 可选：默认代理（优先级最高）
+  - name: YouTube
+    urls:
+      - https://raw.githubusercontent.com/...
+    # 不指定default_proxy则使用默认代理顺序
 ```
 
 **规则加载顺序说明**：
@@ -259,7 +287,7 @@ A: 两者都是规则集，功能不同：
 - gen_blackmatrix7：指定服务的精细规则，每个文件针对一个具体应用（如Netflix、YouTube），规则数量多、覆盖详细，优先级高
 - gen_loyalsoldier：总体分流的基础规则，包含通用的代理/直连/拦截列表，优先级低
 - 推荐组合使用：先用gen_blackmatrix7精确控制已知服务，再用gen_loyalsoldier处理其他流量
-- 可通过修改gen_blackmatrix7.yml工作流中的env: urls:配置来添加或删除指定的服务规则文件
+- 管理方式：通过编辑 [configs/config_blackmatrix7.yml](configs/config_blackmatrix7.yml) 来添加、删除或调整指定的服务规则
 
 **Q: 如何选择合适的部署方案？**
 A: 建议使用Cloudflare Workers，或者Vercel。
