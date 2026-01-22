@@ -1,8 +1,4 @@
 payload:
-  - DOMAIN,edge.activity.windows.com
-  - DOMAIN,edge.microsoft.com
-  - DOMAIN,iecvlist.microsoft.com
-  - DOMAIN,msedge.api.cdp.microsoft.com
   - DOMAIN,vsmarketplacebadge.apphb.com
   - DOMAIN-SUFFIX,1drv.ms
   - DOMAIN-SUFFIX,21vbc.com
@@ -673,6 +669,10 @@ payload:
   - DOMAIN-KEYWORD,skydrive
   - PROCESS-NAME,OneDrive
   - PROCESS-NAME,OneDriveUpdater
+  - DOMAIN,edge.activity.windows.com
+  - DOMAIN,edge.microsoft.com
+  - DOMAIN,iecvlist.microsoft.com
+  - DOMAIN,msedge.api.cdp.microsoft.com
   - DOMAIN-SUFFIX,bing.com
   - DOMAIN-SUFFIX,bing.com.cn
   - DOMAIN-SUFFIX,bing.net
