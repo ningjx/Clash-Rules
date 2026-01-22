@@ -243,6 +243,7 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
+
 #自动生成代理END
  
   - name: 其它国际流媒体
@@ -426,6 +427,7 @@ rule-providers:
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Telegram.yaml
     path: "./rule_provider/Telegram.yaml"
     interval: 86400
+
 #自动生成规则END
 rules:
   - RULE-SET,CustomProxy,默认节点
@@ -440,6 +442,7 @@ rules:
   - RULE-SET,TikTok,TikTok
   - RULE-SET,Google,Google
   - RULE-SET,Telegram,Telegram
+
 #自动生成分流规则END
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT
