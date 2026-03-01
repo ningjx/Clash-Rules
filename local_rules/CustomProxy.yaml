@@ -61,3 +61,4 @@ payload:
   - DOMAIN-SUFFIX,hyperion-project.org
   - DOMAIN-SUFFIX,vscode-cdn.net
   - DOMAIN-SUFFIX,vsassets.io
+  - DOMAIN-SUFFIX,openclaw.ai
