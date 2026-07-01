@@ -68,3 +68,8 @@ payload:
   - DOMAIN-SUFFIX,cdn77.org
   - DOMAIN-SUFFIX,juicyads.com
   - DOMAIN-SUFFIX,cloudflare.com
+  - DOMAIN-SUFFIX,docker.io
+  - DOMAIN-SUFFIX,registry-1.docker.io
+  - DOMAIN-SUFFIX,auth.docker.io
+  - DOMAIN-SUFFIX,index.docker.io
+  - DOMAIN-SUFFIX,production.cloudflare.docker.com
