@@ -34,3 +34,6 @@ rules:
   - name: OpenAI
     urls:
       - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OpenAI/OpenAI.list
+  - name: Claude
+    urls:
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list
