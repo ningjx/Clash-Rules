@@ -174,7 +174,7 @@ export function transformClashConfig(upstreamYaml, template) {
   }
 
   if (!proxyBlocks.length) throw new HttpError(502, "上游配置中没有有效代理");
-  const nameLines = (names) => names.map((name) => `        - ${JSON.stringify(name)}`).join("\n");
+  const nameLines = (names) => names.map((name) => `      - ${JSON.stringify(name)}`).join("\n");
   return template
     .replaceAll("{ProxyList}", proxyBlocks.join("\n"))
     .replaceAll("{ProxiesNames}", nameLines(proxyNames))
