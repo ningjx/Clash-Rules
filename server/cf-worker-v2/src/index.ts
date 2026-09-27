@@ -91,6 +91,7 @@ function compile(source: string, subscriptions: Subscription[], options: { inclu
       proxy: options.providerProxy ?? 'DIRECT',
       'health-check': { enable: true, url: 'https://www.gstatic.com/generate_204', interval: 300 },
     };
+    if (subscriptions.length > 1) provider.override = { 'additional-prefix': `【${name}】` };
     if (options.include) provider.filter = options.include;
     if (options.exclude) provider['exclude-filter'] = options.exclude;
     providers[name] = provider;
