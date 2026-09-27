@@ -94,8 +94,10 @@ function compile(source: string, subscriptions: Subscription[], options: { inclu
   });
   config['proxy-providers'] = providers;
   let modified = 0;
+  const groupTypes = new Set(['select', 'url-test', 'fallback', 'load-balance', 'relay']);
   for (const group of config['proxy-groups'] as unknown[]) {
     if (!isObject(group) || !Array.isArray(group.proxies)) fail('公共模板策略组无效', 422);
+    if (typeof group.type !== 'string' || !groupTypes.has(group.type)) fail('公共模板策略组类型无效', 422);
     const entries = group.proxies as unknown[];
     if (!entries.includes(MARKER)) continue;
     group.proxies = entries.filter(x => x !== MARKER);

@@ -7,7 +7,7 @@ allow-lan: true
 ipv6: false
 bind-address: "*"
 mode: rule
-# info / warning / error / debug / silen
+# info / warning / error / debug / silent
 log-level: error
 # RESTful web API listening address
 external-controller: 0.0.0.0:9090
@@ -157,7 +157,7 @@ proxies:
 
 proxy-groups:
   - name: 默认节点
-    type: selec
+    type: select
     proxies:
       - 自动回退
       - 最快节点
@@ -172,7 +172,7 @@ proxy-groups:
 #      - proxy3
 
   - name: 未知流量
-    type: selec
+    type: select
     proxies:
       - DIRECT
       - 默认节点
@@ -180,78 +180,78 @@ proxy-groups:
 {ProxiesNames}
 
 #自动生成代理BEGIN
-  - name: Microsof
-    type: selec
+  - name: Microsoft
+    type: select
     proxies:
       - DIRECT
       - 默认节点
       - 最快节点
 {ProxiesNames}
   - name: YouTube
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
   - name: Netflix
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
   - name: AmazonPrimeVideo
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
   - name: Disney
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
   - name: Hulu
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
   - name: TikTok
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
   - name: Google
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
   - name: Telegram
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
   - name: OpenAI
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
 {ProxiesNames}
       - DIRECT
   - name: Claude
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
@@ -260,7 +260,7 @@ proxy-groups:
 #自动生成代理END
 
   - name: 其它国际流媒体
-    type: selec
+    type: select
     proxies:
       - 默认节点
       - 最快节点
@@ -268,7 +268,7 @@ proxy-groups:
       - DIRECT
 
   - name: 最快节点
-    type: url-tes
+    type: url-test
     url: https://www.gstatic.com/generate_204
     interval: 300
     proxies:
@@ -295,75 +295,75 @@ rule-providers:
   icloud:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/icloud.tx
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/icloud.txt
     path: "./rule_provider/icloud.yaml"
     interval: 86400
 
   apple:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/apple.tx
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/apple.txt
     path: "./rule_provider/apple.yaml"
     interval: 86400
 
   proxy:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/proxy.tx
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/proxy.txt
     path: "./rule_provider/proxy.yaml"
     interval: 86400
 
   direct:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/direct.tx
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/direct.txt
     path: "./rule_provider/direct.yaml"
     interval: 86400
 
   private:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/private.tx
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/private.txt
     path: "./rule_provider/private.yaml"
     interval: 86400
 
   gfw:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/gfw.tx
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/gfw.txt
     path: "./rule_provider/gfw.yaml"
     interval: 86400
 
   tld-not-cn:
     type: http
     behavior: domain
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/tld-not-cn.tx
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/tld-not-cn.txt
     path: "./rule_provider/tld-not-cn.yaml"
     interval: 86400
 
   cncidr:
     type: http
     behavior: ipcidr
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/cncidr.tx
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/cncidr.txt
     path: "./rule_provider/cncidr.yaml"
     interval: 86400
 
   lancidr:
     type: http
     behavior: ipcidr
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/lancidr.tx
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/lancidr.txt
     path: "./rule_provider/lancidr.yaml"
     interval: 86400
 
   applications:
     type: http
     behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/applications.tx
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/gen_loyalsoldier/applications.txt
     path: "./rule_provider/applications.yaml"
     interval: 86400
 
 #规则来自https://github.com/ningjx/Clash-Rules  静态文件
-#git 加速 gh.con.sh ning.hos
+#git 加速 gh.con.sh ning.host
   streaming:
     type: http
     behavior: classical
@@ -457,7 +457,7 @@ rules:
   - RULE-SET,CustomProxy,默认节点
   - RULE-SET,CustomDirect,DIRECT
 #自动生成分流规则BEGIN
-  - RULE-SET,Microsoft,Microsof
+  - RULE-SET,Microsoft,Microsoft
   - RULE-SET,YouTube,YouTube
   - RULE-SET,Netflix,Netflix
   - RULE-SET,AmazonPrimeVideo,AmazonPrimeVideo

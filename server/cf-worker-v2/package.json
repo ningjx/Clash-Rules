@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Provider-only Clash configuration compiler for OpenClash and Mihomo",
   "scripts": {
-    "check": "tsc --noEmit && wrangler deploy --dry-run",
+    "check": "node --test && tsc --noEmit && wrangler deploy --dry-run",
     "dev": "wrangler dev --local",
     "deploy": "wrangler deploy"
   },
