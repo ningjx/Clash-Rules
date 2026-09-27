@@ -49,6 +49,7 @@ function parseSubscriptions(raw: string): Subscription[] {
   const parts = raw.split('|').map(x => x.trim()).filter(Boolean);
   if (parts.length < 1 || parts.length > 8) fail('一次支持 1–8 个订阅');
   const used = new Set<string>();
+  const usedUrls = new Set<string>();
   return parts.map((part, index) => {
     let name = `订阅${index + 1}`;
     let address = part;
@@ -56,6 +57,8 @@ function parseSubscriptions(raw: string): Subscription[] {
     if (named) { name = named[1].trim(); address = named[2]; }
     if (!name || /[\r\n\x00-\x1f]/.test(name)) fail('Provider 名称无效');
     subscriptionUrl(address);
+    if (usedUrls.has(address)) fail('订阅地址不能重复');
+    usedUrls.add(address);
     const base = name;
     for (let suffix = 2; used.has(name); suffix++) name = `${base}-${suffix}`;
     used.add(name);
@@ -81,9 +84,9 @@ function compile(source: string, subscriptions: Subscription[], options: { inclu
   const config = prepareTemplate(source);
   config.proxies = [];
   const providers: Plain = {};
-  subscriptions.forEach(({ name, url }, index) => {
+  subscriptions.forEach(({ name, url }) => {
     const provider: Plain = {
-      type: 'http', url, path: `./proxy_providers/provider_${index + 1}.yaml`,
+      type: 'http', url,
       interval: options.interval ?? 3600,
       proxy: options.providerProxy ?? 'DIRECT',
       'health-check': { enable: true, url: 'https://www.gstatic.com/generate_204', interval: 300 },

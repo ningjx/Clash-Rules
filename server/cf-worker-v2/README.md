@@ -24,6 +24,8 @@ OpenClash 的“订阅转换模板”下拉框属于它通用的 subconverter �
 
 `url` 可用 `|` 分隔最多 8 个订阅，也可使用 `provider:名称,https://...`。`include` 和 `exclude` 映射为 Mihomo Provider 正则筛选；`interval` 可设置为 300–86400 秒。`explain=true` 返回脱敏诊断 JSON。`list=true` 会被拒绝。OpenClash 传来的 `config` 参数不改变固定模板。
 
+Provider 不显式设置 `path`；Mihomo 会根据订阅 URL 自动生成缓存文件名，避免不同配置都写入 `provider_1.yaml`。同一份配置中重复的订阅地址会被拒绝。
+
 三份参考 YAML 包含 TUIC、VLESS、AnyTLS、Trojan、Hysteria2、VMess、SS 节点。本 Worker 不解析或重写节点及其扩展字段，由用户设备上的 Mihomo 读取原订阅中的 `proxies`。服务商自带的 DNS、策略组和规则不会合并，主配置使用统一模板。特殊私有格式仍需服务商提供 Mihomo 可解析的订阅。
 
 ## 本地验证
