@@ -1,0 +1,22 @@
+{
+  "name": "clash-converter",
+  "version": "1.0.0",
+  "description": "Provider-only Clash configuration compiler for OpenClash and Mihomo",
+  "scripts": {
+    "check": "tsc --noEmit && wrangler deploy --dry-run",
+    "dev": "wrangler dev --local",
+    "deploy": "wrangler deploy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260927.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.141.0"
+  }
+}

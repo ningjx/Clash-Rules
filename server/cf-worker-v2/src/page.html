@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clash 配置转换器</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#172033;background:#f6f7fb}*{box-sizing:border-box}body{margin:0}.container{max-width:760px;margin:0 auto;padding:56px 20px 70px}.head{text-align:center;margin-bottom:36px}.logo{display:inline-grid;place-items:center;width:54px;height:54px;border-radius:15px;background:#4f46e5;color:#fff;font-size:28px;box-shadow:0 8px 24px #4f46e540}h1{font-size:28px;letter-spacing:-.03em;margin:18px 0 7px}.subtitle{color:#64748b;margin:0;line-height:1.6}.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 7px 25px #1824470b;padding:26px;margin-bottom:20px}h2{font-size:17px;margin:0 0 18px}.note{font-size:14px;line-height:1.7;color:#475569;background:#eef2ff;border-radius:10px;padding:13px 15px;margin:0 0 20px}.field{margin-bottom:18px}label{display:block;font-size:14px;font-weight:650;margin-bottom:8px}input,textarea{width:100%;border:1px solid #d9dce4;border-radius:9px;padding:12px 13px;font:inherit;font-size:14px;color:#172033;background:#fff;outline:none}input:focus,textarea:focus{border-color:#4f46e5;box-shadow:0 0 0 3px #4f46e521}textarea{min-height:116px;resize:vertical;line-height:1.5}.help{font-size:12px;color:#64748b;margin:7px 0 0;line-height:1.5}.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}.btn{border:0;border-radius:9px;padding:12px 18px;background:#4f46e5;color:#fff;font:inherit;font-weight:650;cursor:pointer}.btn:hover{background:#4338ca}.btn.secondary{background:#eef2ff;color:#4338ca}.actions{display:flex;gap:10px;flex-wrap:wrap}#result{display:none}#result.show{display:block}.status{font-size:14px;margin:0 0 14px}.status.error{color:#b91c1c}.status.ok{color:#047857}.link{display:block;word-break:break-all;background:#f8fafc;border:1px solid #e5e7eb;padding:12px;border-radius:9px;font-size:13px;margin:10px 0;color:#334155}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}footer{text-align:center;color:#94a3b8;font-size:12px;margin-top:26px}@media(max-width:550px){.container{padding:32px 14px}.card{padding:20px}.row{grid-template-columns:1fr}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<main class="container">
+  <header class="head"><div class="logo">⇄</div><h1>Clash 配置转换器</h1><p class="subtitle">统一分流规则，保留服务商节点与协议配置</p></header>
+  <section class="card">
+    <h2>生成 ProxyProvider 配置</h2>
+    <p class="note">Cloudflare Worker 不下载服务商订阅。生成的配置把订阅地址交给 OpenClash / Mihomo，由你的设备直接拉取节点。请使用 Mihomo 内核。</p>
+    <div class="field"><label for="subs">订阅地址</label><textarea id="subs" spellcheck="false" placeholder="https://provider.example/subscribe?token=..." autocomplete="off"></textarea><p class="help">每行一个 HTTP/HTTPS 地址，最多 8 个。可写成“名称,地址”来指定 Provider 名称。</p></div>
+    <div class="row"><div class="field"><label for="include">包含节点（正则，可选）</label><input id="include" placeholder="香港|HK" autocomplete="off"></div><div class="field"><label for="exclude">排除节点（正则，可选）</label><input id="exclude" placeholder="过期|剩余" autocomplete="off"></div></div>
+    <div class="actions"><button class="btn" id="convert">生成并下载</button><button class="btn secondary" id="link">生成订阅链接</button></div>
+  </section>
+  <section class="card" id="result" aria-live="polite"><h2>结果</h2><p class="status" id="status"></p><div id="links"></div></section>
+  <section class="card"><h2>OpenClash 接入</h2><p class="help">在线订阅转换服务地址填写 <code>https://ning.host/clash</code>；原订阅地址保持不变。也支持 <code>/clash/sub?target=clash&amp;url=...</code> 和 <code>/clash/https://服务商订阅地址</code>。</p></section>
+  <footer>统一模板：ningjx/Clash-Rules · Provider 模式</footer>
+</main>
+<script>
+const subs=document.getElementById('subs'),include=document.getElementById('include'),exclude=document.getElementById('exclude'),result=document.getElementById('result'),status=document.getElementById('status'),links=document.getElementById('links');
+function build(){const lines=subs.value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(!lines.length||lines.length>8)throw Error('请输入 1–8 个订阅地址');const parts=lines.map(line=>{const m=/^([^,]+),(https?:\/\/.*)$/i.exec(line);return m?'provider:'+m[1].trim()+','+m[2]:line});const u=new URL('/clash/sub',location.origin);u.searchParams.set('target','clash');u.searchParams.set('url',parts.join('|'));if(include.value)u.searchParams.set('include',include.value);if(exclude.value)u.searchParams.set('exclude',exclude.value);return u}
+function show(message,error=false){result.classList.add('show');status.textContent=message;status.className='status '+(error?'error':'ok');links.replaceChildren()}
+document.getElementById('link').onclick=()=>{try{const u=build();show('订阅链接已生成。链接含服务商 token，请妥善保存。');const a=document.createElement('a');a.className='link';a.href=u.href;a.textContent=u.href;links.append(a)}catch(e){show(e.message,true)}};
+document.getElementById('convert').onclick=async()=>{try{const u=build();show('正在生成…');const r=await fetch(u);if(!r.ok){const e=await r.json();throw Error(e.error||'生成失败')}const blob=await r.blob();const temp=URL.createObjectURL(blob);const a=document.createElement('a');a.href=temp;a.download='clash-provider.yaml';a.click();setTimeout(()=>URL.revokeObjectURL(temp),30000);show('配置已下载。服务商节点会由 Mihomo 在设备上获取。')}catch(e){show(e.message,true)}};
+</script>
+</body>
+</html>
