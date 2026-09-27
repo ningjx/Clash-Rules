@@ -20,6 +20,8 @@
 2. 在 OpenClash 的在线订阅转换服务地址填写 `https://ning.host/clash`；支持 `/clash?target=clash&url=...` 和 `/clash/sub?target=clash&url=...`。
 3. 浏览器打开 `https://ning.host/clash`，输入一个或多个服务商订阅地址生成配置或链接。
 
+OpenClash 的“订阅转换模板”下拉框属于它通用的 subconverter 界面。本服务始终生成完整的 Mihomo 配置并使用自己的固定规则模板，忽略该下拉框传来的 `config` 参数。若不想使用在线转换界面，可把浏览器生成的完整 Worker 订阅链接直接填入 OpenClash 的“订阅地址”，并关闭“在线订阅转换”。`/clash/version` 提供 OpenClash 的版本探测响应。
+
 `url` 可用 `|` 分隔最多 8 个订阅，也可使用 `provider:名称,https://...`。`include` 和 `exclude` 映射为 Mihomo Provider 正则筛选；`interval` 可设置为 300–86400 秒。`explain=true` 返回脱敏诊断 JSON。`list=true` 会被拒绝。OpenClash 传来的 `config` 参数不改变固定模板。
 
 三份参考 YAML 包含 TUIC、VLESS、AnyTLS、Trojan、Hysteria2、VMess、SS 节点。本 Worker 不解析或重写节点及其扩展字段，由用户设备上的 Mihomo 读取原订阅中的 `proxies`。服务商自带的 DNS、策略组和规则不会合并，主配置使用统一模板。特殊私有格式仍需服务商提供 Mihomo 可解析的订阅。

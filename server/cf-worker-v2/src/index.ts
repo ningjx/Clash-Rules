@@ -130,6 +130,11 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
     if (request.method !== 'GET') return new Response('Method Not Allowed', { status: 405, headers: { Allow: 'GET' } });
+    if (path === '/clash/version') {
+      return new Response('Clash Provider Worker backend version 1.0.0', {
+        headers: { ...privateHeaders, 'Content-Type': 'text/plain; charset=utf-8', 'Access-Control-Allow-Origin': '*' },
+      });
+    }
     if (path === '/clash' || path === '/clash/') {
       if (!url.searchParams.has('url')) return new Response(page, { headers: { ...privateHeaders, 'Content-Type': 'text/html; charset=utf-8', 'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'" } });
     } else if (path !== '/clash/sub' && path !== '/sub' && !path.startsWith('/clash/http://') && !path.startsWith('/clash/https://')) {
