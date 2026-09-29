@@ -384,6 +384,28 @@ rule-providers:
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/local_rules/CustomProxy.yaml
     path: "./rule_provider/CustomProxy.yaml"
     interval: 86400
+  # MetaCubeX：中国域名 / 非中国域名 / 中国IP 三层兜底
+  cn_domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs
+    path: "./rule_provider/cn_domain.mrs"
+    interval: 86400
+  geolocation-!cn:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs
+    path: "./rule_provider/geolocation-not-cn.mrs"
+    interval: 86400
+  cn_ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs
+    path: "./rule_provider/cn_ip.mrs"
+    interval: 86400  
 #规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件
 #自动生成规则BEGIN
   Microsoft:
@@ -469,17 +491,40 @@ rules:
   - RULE-SET,OpenAI,OpenAI
   - RULE-SET,Claude,Claude
 #自动生成分流规则END
+  # 应用、本地及明确直连
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
   - RULE-SET,direct,DIRECT
+
+  # 局域网 IP
   - RULE-SET,lancidr,DIRECT,no-resolve
-  - RULE-SET,cncidr,DIRECT,no-resolve
   - GEOIP,LAN,DIRECT,no-resolve
+
+  # 中国域名优先直连
+  - RULE-SET,cn_domain,DIRECT
+
+  # 国际流媒体
+  - RULE-SET,streaming,其它国际流媒体
+
+  # 明确需要代理的域名
+  - RULE-SET,proxy,默认节点
+
+  # 非中国域名
+  - RULE-SET,geolocation-!cn,默认节点
+
+  # ----------------------------
+  # IP 层兜底
+  # ----------------------------
+
+  # 主中国 IP 判断：
+  # 不加 no-resolve，允许域名没匹配时解析 IP 判断
+  - RULE-SET,cn_ip,DIRECT
+
+  # 保留旧规则作为保险，但不重复触发 DNS 解析
+  - RULE-SET,cncidr,DIRECT,no-resolve
   - GEOIP,CN,DIRECT,no-resolve
 
-  - RULE-SET,streaming,其它国际流媒体
-  - RULE-SET,proxy,默认节点
-  
+  # 最终策略仍然由你手动决定
   - MATCH,未知流量
