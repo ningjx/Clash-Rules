@@ -163,7 +163,7 @@ export default {
       const template = await loadTemplate();
       const output = compile(template, subscriptions, { include, exclude, interval, providerProxy });
       if (params.get('explain') === 'true') return json({ mode: 'mihomo-proxy-provider', providers: subscriptions.length, groups: YAML.parse(output)['proxy-groups'].length, remote_subscription_fetch: false, template: TEMPLATE_URL });
-      return new Response(output, { headers: { ...privateHeaders, 'Content-Type': 'application/yaml; charset=utf-8', 'Content-Disposition': 'attachment; filename="clash-provider.yaml"' } });
+      return new Response(output, { headers: { ...privateHeaders, 'Content-Type': 'application/yaml; charset=utf-8', 'Content-Disposition': 'attachment; filename=clash-provider.yaml' } });
     } catch (error) {
       const status = typeof error === 'object' && error && 'status' in error ? Number(error.status) : 400;
       const message = error instanceof Error ? error.message : '处理失败';

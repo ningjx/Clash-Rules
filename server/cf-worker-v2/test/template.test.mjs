@@ -28,6 +28,7 @@ test('each conversion reads the current repository template', async () => {
     const second = await worker.fetch(request, {});
     assert.equal(first.status, 200);
     assert.equal(second.status, 200);
+    assert.equal(first.headers.get('content-disposition'), 'attachment; filename=clash-provider.yaml');
     assert.match(await first.text(), /fresh-1\.example/);
     assert.match(await second.text(), /fresh-2\.example/);
     assert.equal(reads, 2);
