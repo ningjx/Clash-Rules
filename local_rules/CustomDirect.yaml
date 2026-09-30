@@ -9,7 +9,7 @@ payload:
   - DOMAIN-SUFFIX,ntp.tencent.com
   - DOMAIN-SUFFIX,time.windows.com
   - DOMAIN-SUFFIX,apple.com
-  - DOMAIN-SUFFIX,assets*.xboxlive.com
+  - DOMAIN-WILDCARD,assets*.xboxlive.com
   - DOMAIN-SUFFIX,adobe.io
   - DOMAIN-SUFFIX,adobestats.io
   - DOMAIN-SUFFIX,ipify.org

@@ -1,5 +1,4 @@
 mirror_site: https://mirror.ning.host
-target_dir: gen_blackmatrix7
 rules:
   - name: Microsoft
     urls: 

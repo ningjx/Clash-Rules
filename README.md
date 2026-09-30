@@ -1,4 +1,4 @@
-# Clash-Rules [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ningjx/Clash-Rules/gen_blackmatrix7.yml?label=blackmatrix7&labelColor=%231E1E1E)](https://github.com/ningjx/Clash-Rules/actions/workflows/gen_blackmatrix7.yml) [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ningjx/Clash-Rules/gen_loyalsoldier.yml?label=loyalsoldier&labelColor=%231E1E1E)](https://github.com/ningjx/Clash-Rules/actions/workflows/gen_loyalsoldier.yml) [![Checks Status](https://img.shields.io/github/checks-status/ningjx/Clash-Rules/master?labelColor=%231E1E1E)](https://github.com/ningjx/Clash-Rules/deployments)
+# Clash-Rules [![Rule backup](https://img.shields.io/github/actions/workflow/status/ningjx/Clash-Rules/update-rules.yml?label=rule%20backup)](https://github.com/ningjx/Clash-Rules/actions/workflows/update-rules.yml)
 
 Clash配置规则集合与JustMySocks订阅转换工具集。本项目整合了多个公开规则源，并提供了跨平台云端部署的订阅转换服务，用于自动将代理配置转换为Clash兼容格式。
 
@@ -40,6 +40,7 @@ Clash配置模板文件，定义了Clash的基础配置结构和策略组定义�
 - `Microsoft.yaml` - 微软服务规则
 - `Amazon​PrimeVideo.yaml` - Amazon Prime Video流媒体规则
 - `Hulu.yaml` - Hulu流媒体规则
+- `OpenAI.yaml`、`Claude.yaml` - AI 服务规则
 
 **特点**:
 - 自动化生成：通过GitHub Actions读取 [configs/config_blackmatrix7.yml](configs/config_blackmatrix7.yml) 配置文件自动更新
@@ -49,27 +50,26 @@ Clash配置模板文件，定义了Clash的基础配置结构和策略组定义�
 #### 2. [gen_loyalsoldier/](gen_loyalsoldier) - 总体分流规则集
 包含来自 [Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules) 项目的通用规则文件。这是作为总体分流基础的规则集，用于将流量分类为不同的路由策略（代理、直连、拒绝等）。
 
-**文件列表**（文本格式，每行一条规则）：
-- `gfw.txt` - GFW列表（需要代理的网站）
+**模板实际引用且每日更新的文件**（扩展名为 `.txt`，内容为 `payload:` YAML）：
 - `direct.txt` - 直连列表（国内主要网站）
 - `cncidr.txt` - 中国IP段CIDR列表
 - `lancidr.txt` - 局域网IP段列表
-- `tld-not-cn.txt` - 非中国顶级域名列表
-- `google.txt` - Google相关服务
 - `apple.txt` - Apple相关服务
 - `icloud.txt` - iCloud相关服务
-- `greatfire.txt` - GreatwallFirewall相关网站
 - `proxy.txt` - 代理工具相关网站
-- `reject.txt` - 拦截列表（如广告、追踪等）
 - `applications.txt` - 应用程序相关域名
-- `telegramcidr.txt` - Telegram服务IP段
 - `private.txt` - 私有IP段
+
+目录中的其他旧文件保留作历史备份，不再由工作流更新，也不在当前模板中加载。
 
 **特点**：
 - 作为总体分流的基础规则，优先级较低
 - 定期自动更新，覆盖主流应用和网络基础设施
 
-#### 3. [local_rules/](local_rules) - 本地自定义规则
+#### 3. [gen_metacubex/](gen_metacubex) - MetaCubeX MRS 备份
+备份当前模板引用的 `cn`、`geolocation-!cn` 域名集及 `cn` IP 集。模板通过本仓库地址加载这些 MRS 文件；上游同步失败时保留已有有效备份。
+
+#### 4. [local_rules/](local_rules) - 本地自定义规则
 项目维护的自定义规则，补充和优化来自其他源的规则。
 
 **文件列表**（YAML格式）：
@@ -83,69 +83,41 @@ Clash配置模板文件，定义了Clash的基础配置结构和策略组定义�
 - 添加用户特定需求的域名
 - 与其他规则源的冲突解决
 
-#### 4. [vercel/](vercel) - Vercel云端部署方案
+#### 5. [vercel/](vercel) - Vercel云端部署方案
 使用Vercel Serverless Functions部署的JustMySocks订阅转换服务。详见：[vercel/README.md](vercel/README.md)
 
-#### 5. [aliyunesa/](aliyunesa) - 阿里云ESA边缘计算方案
+#### 6. [aliyunesa/](aliyunesa) - 阿里云ESA边缘计算方案
 使用阿里云ESA(Edge Serverless Application)部署的JustMySocks订阅转换服务。详见：[aliyunesa/README.md](aliyunesa/README.md)
 
-#### 6. [worker/](worker) - Cloudflare Workers方案
+#### 7. [worker/](worker) - Cloudflare Workers方案
 使用Cloudflare Workers部署的JustMySocks订阅转换服务。详见：[worker/README.md](worker/README.md)
 
 ## 业务逻辑说明
 
 ### 规则处理流程
 
-```
-配置文件
-├─→ configs/config_blackmatrix7.yml (指定服务规则配置)
-│   ├─ mirror_site: 镜像站点
-│   ├─ target_dir: 输出目录
-│   └─ rules: 规则列表（含URLs、默认代理等）
-│   ↓
-│   gen_blackmatrix7.yml (GitHub Actions工作流)
-│   ↓
-│   scripts/gen_blackmatrix7.js (Node.js处理脚本)
-│   ↓
-│   [gen_blackmatrix7/] (生成服务YAML规则文件)
-│   ↓
-│   ClashConfigTemp.yaml (自动更新proxy-groups、规则来源和分流逻辑)
-│   ↓
-│   用户按需使用
-│
-└─→ Loyalsoldier/clash-rules (总体分流规则)
-    ↓
-    gen_loyalsoldier.yml (GitHub Actions工作流)
-    ↓
-    [gen_loyalsoldier/] (生成总体分流文本规则)
-    ↓
-    用户作为基础规则引入Clash配置
+`configs/config_blackmatrix7.yml` 定义需要合并的服务细分规则及其策略组默认选项；`configs/rule_sources.yml` 列出模板引用的 Loyalsoldier 与 MetaCubeX 上游文件。每日运行的 `.github/workflows/update-rules.yml` 调用 `scripts/update_rules.py`，把三类规则备份到 `gen_blackmatrix7/`、`gen_loyalsoldier/`、`gen_metacubex/`，并重建模板中标记的三个自动生成区块。
 
-工作流执行步骤：
-    ↓
-1. 读取 configs/config_blackmatrix7.yml 配置
-2. 遍历配置中的每个规则
-3. 检查规则URL可用性
-4. 下载并处理规则内容
-5. 生成YAML格式规则文件
-6. 更新ClashConfigTemp.yaml中的三个区块：
-   - 代理配置（含default_proxy优先级）
-   - 规则提供者配置
-   - 分流规则配置
-7. 清理临时文件
-8. 提交变更
+脚本按文件校验下载结果。一个 blackmatrix7 规则由多个来源合并时，必须全部下载成功，才会替换本仓库的备份；上游失效时继续使用已有且有效的备份。缺少有效备份则使工作流失败，不会提交空文件。所有规则 Provider 都指向本仓库，模板里的优先级依次为自定义规则、服务细分规则、明确直连/代理规则、中国域名和非中国域名、IP 兜底。
+
+本地运行：
+
+```powershell
+python -m pip install -r scripts/requirements.txt
+python -m unittest discover -s tests -p test_rules.py
+python scripts/update_rules.py --offline  # 只校验现有备份并重建模板
+python scripts/update_rules.py            # 从上游刷新备份
 ```
 
 **配置文件格式说明**（configs/config_blackmatrix7.yml）：
 ```yaml
 mirror_site: https://mirror.ning.host          # 镜像站点用于加速URL访问
-target_dir: gen_blackmatrix7                    # 规则输出目录
 rules:
   - name: Microsoft                             # 规则名称
     urls:                                       # 规则源URLs（支持多个）
       - https://raw.githubusercontent.com/...
       - https://raw.githubusercontent.com/...
-    default_proxy: Direct                       # 可选：默认代理（优先级最高）
+    default_proxy: DIRECT                       # 可选：默认代理（优先级最高）
   - name: YouTube
     urls:
       - https://raw.githubusercontent.com/...
@@ -154,7 +126,7 @@ rules:
 
 **规则加载顺序说明**：
 - 指定服务规则（gen_blackmatrix7）优先级高，精确匹配特定应用
-- 总体分流规则（gen_loyalsoldier）作为基础，处理未被指定规则覆盖的流量
+- 本仓库备份的 Loyalsoldier 和 MetaCubeX 规则作为大范围分流基础
 - 本地自定义规则可补充和修正两种规则集的遗漏或冲突
 
 ### 订阅转换流程
@@ -276,8 +248,7 @@ GET /justmysocks?service=SERVICE_ID&id=SUBSCRIPTION_GUID&useDomain=true
 
 ## 更新周期
 
-- **blackmatrix7规则**：每日自动更新
-- **loyalsoldier规则**：每日自动更新
+- **当前模板引用的 blackmatrix7、Loyalsoldier 和 MetaCubeX 规则**：同一个工作流每日更新一次
 - **本地规则**：手动维护
 - **规则缓存**：建议设置为86400秒（每日）
 

@@ -1,0 +1,49 @@
+name: Backup and update rule sets
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rule-backup-master
+  cancel-in-progress: false
+
+jobs:
+  update-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r scripts/requirements.txt
+
+      - name: Test rule generator
+        run: python -m unittest discover -s tests -p 'test_rules.py'
+
+      - name: Refresh backups and template
+        run: python scripts/update_rules.py
+
+      - name: Commit and push changed rules
+        run: |
+          git add -- ClashConfigTemp.yaml gen_blackmatrix7 gen_loyalsoldier gen_metacubex
+          if git diff --cached --quiet; then
+            echo "Rule files are unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update mirrored rule sets"
+          git pull --rebase origin master
+          git push origin HEAD:master

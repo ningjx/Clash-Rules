@@ -1,0 +1,9 @@
+# 只同步 ClashConfigTemp.yaml 实际引用的上游规则。
+loyalsoldier:
+  domain: [icloud, apple, proxy, direct, private]
+  ipcidr: [cncidr, lancidr]
+  classical: [applications]
+metacubex:
+  cn_domain: geo/geosite/cn.mrs
+  geolocation-!cn: geo/geosite/geolocation-!cn.mrs
+  cn_ip: geo/geoip/cn.mrs
