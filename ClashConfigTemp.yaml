@@ -168,14 +168,6 @@ proxy-groups:
       - DIRECT
 #自动生成代理END
 
-  - name: 其它国际流媒体
-    type: select
-    proxies:
-      - 默认节点
-      - 最快节点
-{ProxiesNames}
-      - DIRECT
-
   - name: 最快节点
     type: url-test
     url: https://www.gstatic.com/generate_204
@@ -259,13 +251,6 @@ rule-providers:
 
 #规则来自https://github.com/ningjx/Clash-Rules  静态文件
 #git 加速 gh.con.sh ning.host
-  streaming:
-    type: http
-    behavior: classical
-    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/local_rules/Streaming.yaml
-    path: "./rule_provider/Streaming.yaml"
-    interval: 86400
-
   CustomDirect:
     type: http
     behavior: classical
@@ -397,8 +382,7 @@ rules:
   - RULE-SET,lancidr,DIRECT,no-resolve
   - GEOIP,LAN,DIRECT,no-resolve
 
-  # 精确流媒体和明确代理域名优先于大范围中国域名
-  - RULE-SET,streaming,其它国际流媒体
+  # 明确代理域名优先于大范围中国域名
   - RULE-SET,proxy,默认节点
 
   # 中国域名直连

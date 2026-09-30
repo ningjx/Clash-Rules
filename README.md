@@ -75,7 +75,7 @@ Clash配置模板文件，定义了Clash的基础配置结构和策略组定义�
 **文件列表**（YAML格式）：
 - `CustomProxy.yaml` - 自定义代理规则（GitHub、Z-Library、platformio等常用工具和服务）
 - `CustomDirect.yaml` - 自定义直连规则（国内服务和本地服务）
-- `Streaming.yaml` - 流媒体和娱乐服务规则补充
+- `Streaming.yaml` - 已停用的流媒体规则备份，当前模板不加载
 
 **用途**：
 - 补充开源规则中缺失的域名
