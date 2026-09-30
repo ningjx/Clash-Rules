@@ -42,7 +42,7 @@ dns:
     - "time.*.com"
     - "ntp.*.com"
     - "+.pool.ntp.org"
-    - ntp.ntsc.ac.cn
+    - "ntp.ntsc.ac.cn"
     - "ntp.*.cn"
     - "ntp1.*.cn"
     - "ntp2.*.cn"
@@ -72,13 +72,6 @@ proxy-groups:
       - 最快节点
 {ProxiesNames}
       - DIRECT
-
-#  - name: "链式代理"
-#    type: relay
-#    proxies:
-#      - proxy1
-#      - proxy2
-#      - proxy3
 
   - name: 未知流量
     type: select
@@ -172,22 +165,26 @@ proxy-groups:
     type: url-test
     url: https://www.gstatic.com/generate_204
     interval: 300
+    tolerance: 50
+    expected-status: 204
     proxies:
 {ProxiesNames}
 
   - name: 自动回退
     type: fallback
-    url: 'http://www.google.com/generate_204'
+    url: https://www.gstatic.com/generate_204
     interval: 300
+    expected-status: 204
     proxies:
       - 负载均衡
 {ProxiesNames}
 
   - name: 负载均衡
     type: load-balance
-    url: 'http://www.google.com/generate_204'
+    url: https://www.gstatic.com/generate_204
     interval: 300
-    strategy: round-robin #consistent-hashing
+    expected-status: 204
+    strategy: consistent-hashing
     proxies:
 {BalanceProxiesNames}
 
@@ -300,11 +297,23 @@ rule-providers:
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/YouTube.yaml
     path: "./rule_provider/YouTube.yaml"
     interval: 86400
+  YouTube_IP:
+    type: http
+    behavior: ipcidr
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/YouTube_IP.yaml
+    path: "./rule_provider/YouTube_IP.yaml"
+    interval: 86400
   Netflix:
     type: http
     behavior: classical
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/Netflix.yaml
     path: "./rule_provider/Netflix.yaml"
+    interval: 86400
+  Netflix_IP:
+    type: http
+    behavior: ipcidr
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/Netflix_IP.yaml
+    path: "./rule_provider/Netflix_IP.yaml"
     interval: 86400
   AmazonPrimeVideo:
     type: http
@@ -336,17 +345,35 @@ rule-providers:
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/Google.yaml
     path: "./rule_provider/Google.yaml"
     interval: 86400
+  Google_IP:
+    type: http
+    behavior: ipcidr
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/Google_IP.yaml
+    path: "./rule_provider/Google_IP.yaml"
+    interval: 86400
   Telegram:
     type: http
     behavior: classical
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/Telegram.yaml
     path: "./rule_provider/Telegram.yaml"
     interval: 86400
+  Telegram_IP:
+    type: http
+    behavior: classical
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/Telegram_IP.yaml
+    path: "./rule_provider/Telegram_IP.yaml"
+    interval: 86400
   OpenAI:
     type: http
     behavior: classical
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/OpenAI.yaml
     path: "./rule_provider/OpenAI.yaml"
+    interval: 86400
+  OpenAI_IP:
+    type: http
+    behavior: classical
+    url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/OpenAI_IP.yaml
+    path: "./rule_provider/OpenAI_IP.yaml"
     interval: 86400
   Claude:
     type: http
@@ -371,6 +398,13 @@ rules:
   - RULE-SET,OpenAI,OpenAI
   - RULE-SET,Claude,Claude
 #自动生成分流规则END
+#自动生成IP分流规则BEGIN
+  - RULE-SET,YouTube_IP,YouTube,no-resolve
+  - RULE-SET,Netflix_IP,Netflix,no-resolve
+  - RULE-SET,Google_IP,Google,no-resolve
+  - RULE-SET,Telegram_IP,Telegram,no-resolve
+  - RULE-SET,OpenAI_IP,OpenAI,no-resolve
+#自动生成IP分流规则END
   # 应用、本地及明确直连
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT

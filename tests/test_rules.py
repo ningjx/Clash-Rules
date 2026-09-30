@@ -12,16 +12,30 @@ class RuleBackupTests(unittest.TestCase):
     def test_every_provider_uses_a_valid_repository_backup(self):
         rules.audit_provider_backups()
 
-    def test_classical_sources_merge_in_order_and_deduplicate(self):
+    def test_service_sources_split_ip_rules_and_deduplicate(self):
         contents = {
-            "first": b"# comment\nDOMAIN,a.example\nDOMAIN,b.example\n",
-            "second": b"DOMAIN,b.example\nDOMAIN,c.example\n",
+            "first": b"# comment\nDOMAIN,a.example\nIP-CIDR,1.2.3.0/24\nPROCESS-NAME,client\n",
+            "second": b"DOMAIN,a.example\nIP-ASN,12345\nIP-CIDR,1.2.3.0/24\n",
         }
         with patch.object(rules, "download", side_effect=contents.__getitem__):
-            result = rules.build_classical(["first", "second"])
-        self.assertEqual(yaml.safe_load(result)["payload"], [
-            "DOMAIN,a.example", "DOMAIN,b.example", "DOMAIN,c.example",
+            domain, ip = rules.build_service_rules(["first", "second"])
+        self.assertEqual(yaml.safe_load(domain)["payload"], [
+            "DOMAIN,a.example", "PROCESS-NAME,client",
         ])
+        self.assertEqual(yaml.safe_load(ip)["payload"], [
+            "IP-CIDR,1.2.3.0/24", "IP-ASN,12345",
+        ])
+        rules.validate_service_yaml(domain, False)
+        self.assertEqual(rules.validate_service_ip(ip), "classical")
+        with self.assertRaisesRegex(ValueError, "mixes IP"):
+            rules.validate_service_yaml(ip, False)
+
+    def test_cidr_only_service_uses_ipcidr_provider_format(self):
+        with patch.object(rules, "download", return_value=b"DOMAIN,video.example\nIP-CIDR,1.2.3.0/24,no-resolve\n"):
+            domain, ip = rules.build_service_rules(["source"])
+        self.assertEqual(yaml.safe_load(domain)["payload"], ["DOMAIN,video.example"])
+        self.assertEqual(yaml.safe_load(ip)["payload"], ["1.2.3.0/24"])
+        self.assertEqual(rules.validate_service_ip(ip), "ipcidr")
 
     def test_failed_update_keeps_valid_backup(self):
         with tempfile.TemporaryDirectory() as folder, patch.object(rules, "ROOT", Path(folder)):
@@ -45,11 +59,14 @@ class RuleBackupTests(unittest.TestCase):
             with patch.object(rules, "TEMPLATE", template):
                 rules.regenerate_template([{
                     "name": "Example", "urls": ["unused"], "default_proxy": "DIRECT",
-                }], "")
+                }], "", {"Example": "ipcidr"})
             text = template.read_text(encoding="utf-8")
             self.assertIn("RULE-SET,CustomProxy,默认节点", text)
             self.assertIn("RULE-SET,Example,Example", text)
             self.assertIn("https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/Example.yaml", text)
+            self.assertIn("https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/Example_IP.yaml", text)
+            self.assertIn("RULE-SET,Example_IP,Example,no-resolve", text)
+            self.assertIn("  Example_IP:\n    type: http\n    behavior: ipcidr", text)
             self.assertNotIn("RULE-SET,YouTube,YouTube", text)
 
 

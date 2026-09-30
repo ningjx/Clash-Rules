@@ -15,10 +15,11 @@ Mihomo 从上到下匹配规则，先命中的规则决定策略。当前模板�
 | 优先级 | 规则 | 用途 |
 | --- | --- | --- |
 | 1 | `CustomProxy`、`CustomDirect` | 手动指定代理或直连 |
-| 2 | blackmatrix7 服务规则 | Netflix、YouTube、OpenAI 等服务单独选策略 |
-| 3 | Loyalsoldier 通用规则 | 应用、私有网络及明确直连或代理的域名 |
-| 4 | MetaCubeX 域名与 IP 规则 | 中国／非中国域名分流，中国 IP 兜底 |
-| 5 | `MATCH` | 交给“未知流量”策略组 |
+| 2 | blackmatrix7 域名／进程规则 | Netflix、YouTube、OpenAI 等服务单独选策略 |
+| 3 | blackmatrix7 IP 规则 | 只匹配已有目标 IP，不为匹配规则额外触发 DNS 查询 |
+| 4 | Loyalsoldier 通用规则 | 应用、私有网络及明确直连或代理的域名 |
+| 5 | MetaCubeX 域名与 IP 规则 | 中国／非中国域名分流，中国 IP 兜底 |
+| 6 | `MATCH` | 交给“未知流量”策略组 |
 
 `rules/local_rules/Streaming.yaml` 已停用，仅作备份。`rules/gen_loyalsoldier/` 中未被模板引用的旧文件也不会自动更新。
 
@@ -28,12 +29,14 @@ Mihomo 从上到下匹配规则，先命中的规则决定策略。当前模板�
 | --- | --- |
 | [ClashConfigTemp.yaml](ClashConfigTemp.yaml) | DNS、策略组、规则顺序和 Provider 地址 |
 | [rules/local_rules/](rules/local_rules) | 手动维护的代理与直连例外 |
-| [rules/gen_blackmatrix7/](rules/gen_blackmatrix7) | 来自 [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script) 的服务细分规则 |
+| [rules/gen_blackmatrix7/](rules/gen_blackmatrix7) | 来自 [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script) 的服务细分规则；`服务名.yaml` 为域名／进程规则，`服务名_IP.yaml` 为目标 IP 规则 |
 | [rules/gen_loyalsoldier/](rules/gen_loyalsoldier) | 来自 [Loyalsoldier](https://github.com/Loyalsoldier/clash-rules) 的通用规则 |
 | [rules/gen_metacubex/](rules/gen_metacubex) | 来自 [MetaCubeX](https://github.com/MetaCubeX/meta-rules-dat) 的 MRS 规则备份 |
 | [configs/](configs) | 上游规则来源及服务策略组配置 |
 
 模板中的规则 Provider 都从本仓库读取文件。上游规则每天由 [GitHub Actions](.github/workflows/update-rules.yml) 备份一次；下载或校验失败时保留已有的有效文件，缺少有效备份则让工作流失败。
+
+服务规则统一从上游 Clash `.list` 读取，再由 Python 按规则类型拆分；这样多来源的 Microsoft 和其他服务采用同一流程，也能在上游新增 IP 规则时自动生成对应备份与引用。纯 CIDR 备份使用 `ipcidr`，含 `IP-ASN` 等规则的备份使用 `classical`。服务 IP 规则使用 `no-resolve`，因此域名请求若只靠 IP 才能识别服务，可能落入后续通用规则；这是避免服务规则提前触发 DNS 解析的取舍。
 
 ## 修改规则
 
