@@ -19,7 +19,7 @@ const request = new Request('https://worker.example/clash/sub?target=clash&url=h
 test('each conversion reads the current repository template', async () => {
   let reads = 0;
   const fetchMock = mock.method(globalThis, 'fetch', async url => {
-    assert.equal(url, 'https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/ClashConfigTemp.yaml');
+    assert.equal(url, 'https://raw.githubusercontent.com/ningjx/Clash-Rules/master/ClashConfigTemp.yaml');
     reads++;
     return new Response(template.replace('time.is', `fresh-${reads}.example`), { status: 200 });
   });

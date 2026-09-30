@@ -1,7 +1,7 @@
 import YAML from 'yaml';
 import page from './page.html';
 
-const TEMPLATE_URL = 'https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/ClashConfigTemp.yaml';
+const TEMPLATE_URL = 'https://raw.githubusercontent.com/ningjx/Clash-Rules/master/ClashConfigTemp.yaml';
 const MARKER = '__CLASH_PROVIDER_ALL__';
 const MAX_TEMPLATE_BYTES = 512_000;
 const MAX_INPUT_LENGTH = 16_384;
@@ -112,8 +112,11 @@ function compile(source: string, subscriptions: Subscription[], options: { inclu
 
 async function loadTemplate(): Promise<string> {
   let response: Response;
-  try { response = await fetch(TEMPLATE_URL, { redirect: 'error', headers: { Accept: 'text/plain' }, signal: AbortSignal.timeout(4000) }); }
-  catch { fail('获取仓库模板失败，请稍后重试', 502); }
+  try { response = await fetch(TEMPLATE_URL, { headers: { Accept: 'text/plain' }, signal: AbortSignal.timeout(15000) }); }
+  catch (error) {
+    console.error('Repository template fetch failed:', error instanceof Error ? `${error.name}: ${error.message}` : String(error));
+    fail(`获取仓库模板失败（${error instanceof Error ? error.message : '未知错误'}）`, 502);
+  }
   if (!response.ok) fail(`获取仓库模板失败（HTTP ${response.status}）`, 502);
   const reported = Number(response.headers.get('content-length'));
   if (reported > MAX_TEMPLATE_BYTES) fail('公共模板过大', 502);
