@@ -1,68 +1,48 @@
-port: 7890
-socks-port: 7891
-redir-port: 7892
 mixed-port: 7893
-tproxy-port: 7895
-allow-lan: true
+allow-lan: false
 ipv6: false
-bind-address: "*"
 mode: rule
-# info / warning / error / debug / silent
 log-level: error
-# RESTful web API listening address
-external-controller: 0.0.0.0:9090
-secret: ''
 
 dns:
   enable: true
   ipv6: false
-  listen: 0.0.0.0:7874
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
-  nameserver:
+  default-nameserver:
     - 223.5.5.5
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
     - 119.29.29.29
-    - 114.114.114.114
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
   fallback:
     - https://dns.cloudflare.com/dns-query
-    - tls://dns.google:853
-    - tls://1.1.1.1:853
     - tls://8.8.8.8:853
-    - https://jp.tiar.app/dns-query
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    fallback-lazy-query: true
+  # 基础例外及原有自定义域名；其他设备和应用例外由客户端按需添加
   fake-ip-filter:
-    - "+.nflxvideo.net"
-    - "+.media.dssott.com"
     - "*.lan"
+    - "*.local"
     - "*.localdomain"
+    - "*.home.arpa"
+    - "*.localhost"
     - "*.example"
     - "*.invalid"
-    - "*.localhost"
     - "*.test"
-    - "*.local"
-    - "*.home.arpa"
-    - ntp.ntsc.ac.cn
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "localhost.ptlogin2.qq.com"
+    - "localhost.sec.qq.com"
     - "time.*.com"
-    - "time.*.gov"
-    - "time.*.edu.cn"
-    - "time.*.apple.com"
-    - "time-ios.apple.com"
-    - "time1.*.com"
-    - "time2.*.com"
-    - "time3.*.com"
-    - "time4.*.com"
-    - "time5.*.com"
-    - "time6.*.com"
-    - "time7.*.com"
     - "ntp.*.com"
-    - "ntp1.*.com"
-    - "ntp2.*.com"
-    - "ntp3.*.com"
-    - "ntp4.*.com"
-    - "ntp5.*.com"
-    - "ntp6.*.com"
-    - "ntp7.*.com"
+    - "+.pool.ntp.org"
+    - ntp.ntsc.ac.cn
     - "ntp.*.cn"
     - "ntp1.*.cn"
     - "ntp2.*.cn"
@@ -71,80 +51,9 @@ dns:
     - "ntp5.*.cn"
     - "ntp6.*.cn"
     - "ntp7.*.cn"
-    - "*.time.edu.cn"
-    - "*.ntp.org.cn"
-    - "+.pool.ntp.org"
-    - "time1.cloud.tencent.com"
     - "+.music.163.com"
-    - "*.126.net"
-    - "musicapi.taihe.com"
-    - "music.taihe.com"
-    - "songsearch.kugou.com"
-    - "trackercdn.kugou.com"
-    - "*.kuwo.cn"
-    - "api-jooxtt.sanook.com"
-    - "api.joox.com"
-    - "joox.com"
     - "+.y.qq.com"
-    - "streamoc.music.tc.qq.com"
-    - "mobileoc.music.tc.qq.com"
-    - "isure.stream.qqmusic.qq.com"
-    - "dl.stream.qqmusic.qq.com"
-    - "aqqmusic.tc.qq.com"
-    - "amobile.music.tc.qq.com"
-    - "*.xiami.com"
     - "+.music.migu.cn"
-    - "+.msftconnecttest.com"
-    - "+.msftncsi.com"
-    - "localhost.ptlogin2.qq.com"
-    - "localhost.sec.qq.com"
-    - "+.qq.com"
-    - "+.tencent.com"
-    - "+.srv.nintendo.net"
-    - "*.n.n.srv.nintendo.net"
-    - "+.stun.playstation.net"
-    - "xbox.*.*.microsoft.com"
-    - "*.*.xboxlive.com"
-    - "xbox.*.microsoft.com"
-    - "xnotify.xboxlive.com"
-    - "+.battlenet.com.cn"
-    - "+.wotgame.cn"
-    - "+.wggames.cn"
-    - "+.wowsgame.cn"
-    - "+.wargaming.net"
-    - "proxy.golang.org"
-    - "stun.*.*"
-    - "stun.*.*.*"
-    - "+.stun.*.*"
-    - "+.stun.*.*.*"
-    - "+.stun.*.*.*.*"
-    - "+.stun.*.*.*.*.*"
-    - "heartbeat.belkin.com"
-    - "*.linksys.com"
-    - "*.linksyssmartwifi.com"
-    - "*.router.asus.com"
-    - "mesu.apple.com"
-    - "swscan.apple.com"
-    - "swquery.apple.com"
-    - "swdownload.apple.com"
-    - "swcdn.apple.com"
-    - "swdist.apple.com"
-    - "lens.l.google.com"
-    - "stun.l.google.com"
-    - "na.b.g-tun.com"
-    - "*.square-enix.com"
-    - "*.finalfantasyxiv.com"
-    - "*.ffxiv.com"
-    - "*.ff14.sdo.com"
-    - "ff.dorado.sdo.com"
-    - "*.mcdn.bilivideo.cn"
-    - "shark007.net"
-    - "Mijia Cloud"
-    - "+.cmbchina.com"
-    - "+.cmbimg.com"
-    - "local.adguard.org"
-    - "+.sandai.net"
-    - "+.n0808.com"
     - "+.services.googleapis.cn"
     - "+.xn--ngstr-lra8j.cn"
     - "+.mijia.tech"
@@ -384,6 +293,28 @@ rule-providers:
     url: https://mirror.ning.host/https://raw.githubusercontent.com/ningjx/Clash-Rules/master/local_rules/CustomProxy.yaml
     path: "./rule_provider/CustomProxy.yaml"
     interval: 86400
+  # MetaCubeX：中国域名 / 非中国域名 / 中国IP 三层兜底
+  cn_domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs
+    path: "./rule_provider/cn_domain.mrs"
+    interval: 86400
+  geolocation-!cn:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs
+    path: "./rule_provider/geolocation-not-cn.mrs"
+    interval: 86400
+  cn_ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs
+    path: "./rule_provider/cn_ip.mrs"
+    interval: 86400
 #规则来自https://github.com/ningjx/Clash-Rules/auto_generate  自动生成文件
 #自动生成规则BEGIN
   Microsoft:
@@ -469,17 +400,40 @@ rules:
   - RULE-SET,OpenAI,OpenAI
   - RULE-SET,Claude,Claude
 #自动生成分流规则END
+  # 应用、本地及明确直连
   - RULE-SET,applications,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,icloud,DIRECT
   - RULE-SET,apple,DIRECT
   - RULE-SET,direct,DIRECT
-  - RULE-SET,lancidr,DIRECT,no-resolve
-  - RULE-SET,cncidr,DIRECT,no-resolve
-  - GEOIP,LAN,DIRECT,no-resolve
-  - GEOIP,CN,DIRECT,no-resolve
 
+  # 局域网 IP
+  - RULE-SET,lancidr,DIRECT,no-resolve
+  - GEOIP,LAN,DIRECT,no-resolve
+
+  # 中国域名优先直连
+  - RULE-SET,cn_domain,DIRECT
+
+  # 国际流媒体
   - RULE-SET,streaming,其它国际流媒体
+
+  # 明确需要代理的域名
   - RULE-SET,proxy,默认节点
 
+  # 非中国域名
+  - RULE-SET,geolocation-!cn,默认节点
+
+  # ----------------------------
+  # IP 层兜底
+  # ----------------------------
+
+  # 主中国 IP 判断：
+  # 不加 no-resolve，允许域名没匹配时解析 IP 判断
+  - RULE-SET,cn_ip,DIRECT
+
+  # 保留旧规则作为保险，但不重复触发 DNS 解析
+  - RULE-SET,cncidr,DIRECT,no-resolve
+  - GEOIP,CN,DIRECT,no-resolve
+
+  # 最终策略仍然由你手动决定
   - MATCH,未知流量

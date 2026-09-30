@@ -15,11 +15,15 @@ Clash配置规则集合与JustMySocks订阅转换工具集。本项目整合了�
 
 #### [ClashConfigTemp.yaml](ClashConfigTemp.yaml)
 Clash配置模板文件，定义了Clash的基础配置结构和策略组定义。包含：
-- 端口配置（HTTP、SOCKS、混合代理端口）
-- DNS配置（国内国际DNS分流、FakeIP设置）
-- 日志和API设置
+- 混合代理端口和本机监听默认值；OpenClash 等客户端可覆写运行时端口
+- DNS配置（节点域名专用解析、国内外 DNS 回退、Fake-IP 设置）
+- 日志设置；控制接口由客户端按自身环境配置
 - 代理策略组模板（快速测试、负载均衡等）
 - 代理路由规则模板（通过占位符如`{ProxyList}`、`{ProxiesNames}`等填充）
+
+模板中的占位符需要先由转换服务填充，不能把原始模板直接导入客户端。生成后的完整配置可交给 Mihomo 内核、OpenClash 或 Clash Verge Rev 使用；端口、控制接口和 TUN 等客户端运行参数由客户端按需覆写。
+
+`dns.fake-ip-filter` 保留跨客户端的基础例外及原模板中不属于 OpenClash 自带列表的自定义域名（如 `time.is`、国内 NTP、音乐和米家域名）。OpenClash 的自定义 Fake-IP 过滤列表需要在插件中启用才会合并；其他设备和应用专用例外请在所用客户端按需添加。
 
 ### 📁 文件夹说明
 
