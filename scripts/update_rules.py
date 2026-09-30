@@ -16,6 +16,7 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
+RULES_DIR = ROOT / "rules"
 TEMPLATE = ROOT / "ClashConfigTemp.yaml"
 BM_CONFIG = ROOT / "configs/config_blackmatrix7.yml"
 SOURCES_CONFIG = ROOT / "configs/rule_sources.yml"
@@ -152,7 +153,7 @@ def regenerate_template(rules: list[dict], mirror_site: str) -> None:
         groups += ["{ProxiesNames}" if choice == "{ProxiesNames}" else f"      - {choice}" for choice in choices]
         providers += [
             f"  {name}:", "    type: http", "    behavior: classical",
-            f"    url: {local_url(mirror_site, f'gen_blackmatrix7/{name}.yaml')}",
+            f"    url: {local_url(mirror_site, f'rules/gen_blackmatrix7/{name}.yaml')}",
             f'    path: "./rule_provider/{name}.yaml"', "    interval: 86400",
         ]
         routes.append(f"  - RULE-SET,{name},{name}")
@@ -210,16 +211,16 @@ def main() -> int:
     bm_rules = bm["rules"]
     for rule in bm_rules:
         name = rule["name"]
-        path = ROOT / "gen_blackmatrix7" / f"{name}.yaml"
+        path = RULES_DIR / "gen_blackmatrix7" / f"{name}.yaml"
         mirror(path, lambda rule=rule: build_classical(rule["urls"]),
                lambda data: validate_yaml(data, "classical"), args.offline, warnings)
     for behavior, names in sources["loyalsoldier"].items():
         for name in names:
-            path = ROOT / "gen_loyalsoldier" / f"{name}.txt"
+            path = RULES_DIR / "gen_loyalsoldier" / f"{name}.txt"
             mirror(path, lambda name=name: download(f"{RAW_LOYAL}/{name}.txt"),
                    lambda data, behavior=behavior: validate_yaml(data, behavior), args.offline, warnings)
     for name, upstream_path in sources["metacubex"].items():
-        path = ROOT / "gen_metacubex" / upstream_path
+        path = RULES_DIR / "gen_metacubex" / upstream_path
         mirror(path, lambda upstream_path=upstream_path: download(f"{RAW_META}/{upstream_path}"),
                validate_mrs, args.offline, warnings)
     regenerate_template(bm_rules, bm.get("mirror_site", ""))

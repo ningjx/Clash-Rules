@@ -37,7 +37,7 @@ jobs:
 
       - name: Commit and push changed rules
         run: |
-          git add -- ClashConfigTemp.yaml gen_blackmatrix7 gen_loyalsoldier gen_metacubex
+          git add -- ClashConfigTemp.yaml rules/gen_blackmatrix7 rules/gen_loyalsoldier rules/gen_metacubex
           if git diff --cached --quiet; then
             echo "Rule files are unchanged"
             exit 0

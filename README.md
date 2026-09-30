@@ -27,7 +27,7 @@ Clash配置模板文件，定义了Clash的基础配置结构和策略组定义�
 
 ### 📁 文件夹说明
 
-#### 1. [gen_blackmatrix7/](gen_blackmatrix7) - 指定服务规则集
+#### 1. [rules/gen_blackmatrix7/](rules/gen_blackmatrix7) - 指定服务规则集
 包含来自 [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) 项目的各类服务规则文件。这些是针对特定应用和平台的详细规则，用于精确控制各服务的流量转发。
 
 **文件列表**（YAML格式，包含域名和IP段规则）:
@@ -47,7 +47,7 @@ Clash配置模板文件，定义了Clash的基础配置结构和策略组定义�
 - 配置驱动：在配置文件中定义规则源URL、名称和默认代理，即可自动生成对应的规则文件
 - 灵活管理：修改配置文件可轻松添加、删除或调整指定服务规则
 
-#### 2. [gen_loyalsoldier/](gen_loyalsoldier) - 总体分流规则集
+#### 2. [rules/gen_loyalsoldier/](rules/gen_loyalsoldier) - 总体分流规则集
 包含来自 [Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules) 项目的通用规则文件。这是作为总体分流基础的规则集，用于将流量分类为不同的路由策略（代理、直连、拒绝等）。
 
 **模板实际引用且每日更新的文件**（扩展名为 `.txt`，内容为 `payload:` YAML）：
@@ -66,10 +66,10 @@ Clash配置模板文件，定义了Clash的基础配置结构和策略组定义�
 - 作为总体分流的基础规则，优先级较低
 - 定期自动更新，覆盖主流应用和网络基础设施
 
-#### 3. [gen_metacubex/](gen_metacubex) - MetaCubeX MRS 备份
+#### 3. [rules/gen_metacubex/](rules/gen_metacubex) - MetaCubeX MRS 备份
 备份当前模板引用的 `cn`、`geolocation-!cn` 域名集及 `cn` IP 集。模板通过本仓库地址加载这些 MRS 文件；上游同步失败时保留已有有效备份。
 
-#### 4. [local_rules/](local_rules) - 本地自定义规则
+#### 4. [rules/local_rules/](rules/local_rules) - 本地自定义规则
 项目维护的自定义规则，补充和优化来自其他源的规则。
 
 **文件列表**（YAML格式）：
@@ -96,7 +96,7 @@ Clash配置模板文件，定义了Clash的基础配置结构和策略组定义�
 
 ### 规则处理流程
 
-`configs/config_blackmatrix7.yml` 定义需要合并的服务细分规则及其策略组默认选项；`configs/rule_sources.yml` 列出模板引用的 Loyalsoldier 与 MetaCubeX 上游文件。每日运行的 `.github/workflows/update-rules.yml` 调用 `scripts/update_rules.py`，把三类规则备份到 `gen_blackmatrix7/`、`gen_loyalsoldier/`、`gen_metacubex/`，并重建模板中标记的三个自动生成区块。
+`configs/config_blackmatrix7.yml` 定义需要合并的服务细分规则及其策略组默认选项；`configs/rule_sources.yml` 列出模板引用的 Loyalsoldier 与 MetaCubeX 上游文件。每日运行的 `.github/workflows/update-rules.yml` 调用 `scripts/update_rules.py`，把三类规则备份到 `rules/gen_blackmatrix7/`、`rules/gen_loyalsoldier/`、`rules/gen_metacubex/`，并重建模板中标记的三个自动生成区块。
 
 脚本按文件校验下载结果。一个 blackmatrix7 规则由多个来源合并时，必须全部下载成功，才会替换本仓库的备份；上游失效时继续使用已有且有效的备份。缺少有效备份则使工作流失败，不会提交空文件。所有规则 Provider 都指向本仓库，模板里的优先级依次为自定义规则、服务细分规则、明确直连/代理规则、中国域名和非中国域名、IP 兜底。
 
@@ -170,19 +170,19 @@ rule-providers:
   # 黑名单规则（需代理的网站）
   netflix:
     type: http
-    url: https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Netflix.yaml
+    url: https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/Netflix.yaml
     interval: 86400
 
   # 白名单规则（直连网站）
   gfw:
     type: http
-    url: https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_loyalsoldier/gfw.txt
+    url: https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_loyalsoldier/gfw.txt
     interval: 86400
 
   # 自定义规则
   custom-proxy:
     type: http
-    url: https://raw.githubusercontent.com/ningjx/Clash-Rules/master/local_rules/CustomProxy.yaml
+    url: https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/local_rules/CustomProxy.yaml
     interval: 86400
 ```
 
@@ -235,7 +235,7 @@ GET /justmysocks?service=SERVICE_ID&id=SUBSCRIPTION_GUID&useDomain=true
 
 #### 添加自定义规则
 
-1. 修改或创建 [local_rules/](local_rules) 下的yaml文件
+1. 修改或创建 [rules/local_rules/](rules/local_rules) 下的yaml文件
 2. 按照Clash规则格式添加payload
 
 #### 修改Clash配置模板

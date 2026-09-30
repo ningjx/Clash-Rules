@@ -25,8 +25,8 @@ class RuleBackupTests(unittest.TestCase):
 
     def test_failed_update_keeps_valid_backup(self):
         with tempfile.TemporaryDirectory() as folder, patch.object(rules, "ROOT", Path(folder)):
-            backup = Path(folder) / "gen_blackmatrix7" / "Test.yaml"
-            backup.parent.mkdir()
+            backup = Path(folder) / "rules" / "gen_blackmatrix7" / "Test.yaml"
+            backup.parent.mkdir(parents=True)
             backup.write_text("payload:\n  - DOMAIN,old.example\n", encoding="utf-8")
             warnings = []
             rules.mirror(backup, lambda: (_ for _ in ()).throw(OSError("gone")),
@@ -49,7 +49,7 @@ class RuleBackupTests(unittest.TestCase):
             text = template.read_text(encoding="utf-8")
             self.assertIn("RULE-SET,CustomProxy,默认节点", text)
             self.assertIn("RULE-SET,Example,Example", text)
-            self.assertIn("https://raw.githubusercontent.com/ningjx/Clash-Rules/master/gen_blackmatrix7/Example.yaml", text)
+            self.assertIn("https://raw.githubusercontent.com/ningjx/Clash-Rules/master/rules/gen_blackmatrix7/Example.yaml", text)
             self.assertNotIn("RULE-SET,YouTube,YouTube", text)
 
 
