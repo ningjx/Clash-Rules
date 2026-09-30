@@ -1,6 +1,5 @@
 import YAML from 'yaml';
 import page from './page.html';
-import bundledTemplate from './template.yaml';
 
 const TEMPLATE_URL = 'https://raw.githubusercontent.com/ningjx/Clash-Rules/refs/heads/master/ClashConfigTemp.yaml';
 const MARKER = '__CLASH_PROVIDER_ALL__';
@@ -114,11 +113,12 @@ function compile(source: string, subscriptions: Subscription[], options: { inclu
 async function loadTemplate(): Promise<string> {
   let response: Response;
   try { response = await fetch(TEMPLATE_URL, { redirect: 'error', headers: { Accept: 'text/plain' }, signal: AbortSignal.timeout(4000) }); }
-  catch { return bundledTemplate; }
-  if (!response.ok) return bundledTemplate;
+  catch { fail('获取仓库模板失败，请稍后重试', 502); }
+  if (!response.ok) fail(`获取仓库模板失败（HTTP ${response.status}）`, 502);
   const reported = Number(response.headers.get('content-length'));
   if (reported > MAX_TEMPLATE_BYTES) fail('公共模板过大', 502);
-  const text = await response.text();
+  let text: string;
+  try { text = await response.text(); } catch { fail('读取仓库模板失败，请稍后重试', 502); }
   if (new TextEncoder().encode(text).length > MAX_TEMPLATE_BYTES) fail('公共模板过大', 502);
   return text;
 }

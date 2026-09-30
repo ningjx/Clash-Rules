@@ -1,6 +1,6 @@
 # Clash ProxyProvider Worker
 
-这个目录是一个独立的 Cloudflare Worker 项目，供 Cloudflare Workers Builds 直接连接本仓库部署。它使用仓库根目录的 `ClashConfigTemp.yaml` 对应的固定公共模板，将服务商订阅地址写入 Mihomo `proxy-providers`；Worker 不下载服务商配置或节点。
+这个目录是一个独立的 Cloudflare Worker 项目，供 Cloudflare Workers Builds 直接连接本仓库部署。每次生成配置时，它从仓库 `master` 分支读取 `ClashConfigTemp.yaml`，将服务商订阅地址写入 Mihomo `proxy-providers`；Worker 不下载服务商配置或节点。
 
 ## Cloudflare Git 集成
 
@@ -36,4 +36,4 @@ npm run check
 npm run dev
 ```
 
-`src/template.yaml` 是仓库根目录模板的随包快照；运行时先读取固定的 GitHub Raw 模板，读取失败时使用此快照。根目录模板变更后，应同步更新快照。
+Worker 不内置模板，也不使用本地快照。运行时从 GitHub Raw 读取仓库 `master` 分支的模板；读取失败、返回非成功状态或模板无效时，本次转换会返回错误，不会使用旧模板生成配置。模板变更需推送到 `master`，之后新请求才会读取更新内容；GitHub Raw 的缓存可能造成短暂延迟。

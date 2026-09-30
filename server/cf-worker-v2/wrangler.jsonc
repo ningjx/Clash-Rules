@@ -5,6 +5,6 @@
   "compatibility_date": "2026-09-27",
   "compatibility_flags": ["nodejs_compat"],
   "routes": [{ "pattern": "ning.host/clash*", "zone_name": "ning.host" }],
-  "rules": [{ "type": "Text", "globs": ["**/*.html", "**/*.yaml"], "fallthrough": true }],
+  "rules": [{ "type": "Text", "globs": ["**/*.html"], "fallthrough": true }],
   "observability": { "enabled": true, "head_sampling_rate": 0.1 }
 }
