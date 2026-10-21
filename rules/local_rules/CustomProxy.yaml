@@ -72,4 +72,6 @@ payload:
   - DOMAIN-SUFFIX,registry-1.docker.io
   - DOMAIN-SUFFIX,auth.docker.io
   - DOMAIN-SUFFIX,index.docker.io
+  - DOMAIN-SUFFIX,tavily.com
+  - DOMAIN-SUFFIX,exa.ai
   - DOMAIN-SUFFIX,production.cloudflare.docker.com
