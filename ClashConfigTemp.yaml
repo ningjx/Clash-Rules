@@ -9,18 +9,32 @@ dns:
   ipv6: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+  respect-rules: false
+
+  # 用于解析 DNS 服务器自身的域名
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
+
+  # 解析代理节点的域名，避免依赖代理自身
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
+
+  # DIRECT 出站使用的 DNS
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  direct-nameserver-follow-policy: false
+
+  # 通用解析
   nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
+  # 境外备用 DNS，明确经过代理查询
   fallback:
-    - https://dns.cloudflare.com/dns-query
-    - tls://8.8.8.8:853
+    - "https://cloudflare-dns.com/dns-query#默认节点"
+    - "https://dns.google/dns-query#默认节点"
   fallback-filter:
     geoip: true
     geoip-code: CN
